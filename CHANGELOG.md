@@ -1,17 +1,13 @@
 # Next Move Theory — Changelog
 
-What changed in the Next Move Theory canon + skills. Newest release is at the top.
+What changed in the Next Move Theory Canon + Skills Plugin. Newest bundle entry
+is at the top.
 
-Each entry's **Summary** line is what the installed skills show you when a newer
-version is available. To update to the latest at any time, run from your project
-root:
-
-```bash
-curl -fsSL https://nextmovetheory.com/install.sh | bash
-```
-
-or use the `/nmt-upgrade` skill (Codex: `$nmt-upgrade`). Windows (PowerShell):
-`irm https://nextmovetheory.com/install.ps1 | iex`.
+The primary distribution is the user-global `next-move-theory` Plugin. Install
+and update it through the Client-native flows in
+[`docs/installation.md`](docs/installation.md) and
+[`docs/updates.md`](docs/updates.md). The shell/PowerShell installers and
+`nmt-upgrade` remain available only as the one-release Legacy transition path.
 
 ## Versioning
 
@@ -22,11 +18,28 @@ Theory** as SemVer `MAJOR.MINOR.PATCH`:
 - **MINOR** — a significant methodology update (new or reworked theses).
 - **PATCH** — small skill updates and methodology patches.
 
-The current version is the top entry below. The installer records it in
-`.nmt-version`; the skills read `https://nextmovetheory.com/version` on launch to
-tell you when you're behind and what changed since your version. (The README also
-shows the methodology maturity badges — Advanced JTBD `v3.4 · stable` and Next
-Move Theory `v0.6 · in active development`.)
+The current bundle version is the top entry below. The Legacy installer records
+it in `.nmt-version`; the Plugin Clients use their own installed Plugin version
+state. (The README also shows the methodology maturity badges — Advanced JTBD
+`v3.4 · stable` and Next Move Theory `v0.6 · in active development`.)
+
+---
+
+## 1.0.0 — Self-contained global Plugin bundle
+**Summary:** One `next-move-theory` Plugin bundles the Canon and all eight Skills
+for user-global Codex and Claude Code installation without Consumer-project
+instruction injection.
+**Status:** Repository package contract; public marketplace release is separate.
+
+- Added repository-root Codex and Claude manifests and marketplace catalogs.
+- Consolidated the package around one hand-maintained `skills/` source tree and
+  the exact bundled `Next-Move-Theory-Canon/` root.
+- Made `nmt-chat` the model-invoked router and kept Client differences in
+  adapter/reference boundaries.
+- Documented Client-native installation and updates, the Legacy installers, and
+  the explicit no-migration boundary.
+- Kept `install.sh`, `install.ps1`, and `nmt-upgrade` as the transition-only
+  project-mutating path.
 
 ---
 

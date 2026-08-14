@@ -1,14 +1,37 @@
 # Next Move Theory — rules for your AI agent
 
-Drop this file into your project as `CLAUDE.md` (Claude Code) or `AGENTS.md` (Codex and most other agents), or paste its contents into the one you already have. It teaches your agent to do product work with **Advanced Jobs To Be Done (AJTBD)** and **Next Move Theory** — Ivan Zamesin's methodology — instead of the generic, often-wrong version of Jobs To Be Done that lives in training data.
+## Distribution boundary
 
-**Pair it with the canon.** This file carries the working theses; the full depth lives in the canon. Clone it and keep it reachable from your project:
+This file is a repository contributor and Legacy-installer source. It is not
+copied into a Consumer project by the user-global `next-move-theory` Plugin.
+For the supported installation, use [`docs/installation.md`](docs/installation.md)
+and let the Client keep the Plugin, Canon, and Skills in user state. The Legacy
+shell/PowerShell installers may still inject this file between their existing
+markers in a Consumer project for one transition release; that path is
+project-mutating and is documented separately.
+
+When a methodology task is running inside the Plugin, load the relevant
+progressive-disclosure pointer in `references/` and then the named file in the
+bundled `Next-Move-Theory-Canon/`. The client-specific installed-Canon anchors
+are defined in `references/canon-routing.md`.
+
+When this file is present as a contributor or Legacy source, it teaches an
+agent to do product work with **Advanced Jobs To Be Done (AJTBD)** and **Next
+Move Theory** — Ivan Zamesin's methodology — instead of the generic,
+often-wrong version of Jobs To Be Done that lives in training data. The
+user-global Plugin does not require this file in the Consumer project.
+
+**Pair it with the canon.** This file carries the working theses; the full depth lives in the bundled Canon. In a user-global Plugin installation, Skills reach it through the client-specific anchors in `references/canon-routing.md`. The Legacy installer still clones this repository when a project-local transition install is explicitly requested:
 
 ```bash
 git clone https://github.com/zamesin/Next-Move-Theory-Canon-and-Skills.git
 ```
 
-When a task touches product strategy, Jobs, segmentation, value, positioning, growth, or validation, **open the relevant canon file (see the routing table at the end) and read it before answering** — do not answer from a generic memory of "JTBD."
+When a task touches product strategy, Jobs, segmentation, value, positioning,
+growth, or validation, **open the relevant Canon file (see the routing table at
+the end) and read it before answering** — do not answer from a generic memory
+of "JTBD." Resolve the path through `references/canon-routing.md` when this
+file is used with the Plugin.
 
 ---
 
@@ -86,7 +109,7 @@ When a task touches product strategy, Jobs, segmentation, value, positioning, gr
 
 ## Where to read in the canon
 
-When a task matches one of the situations below, **open that file and read the relevant part before answering.** Don't answer a methodology question from memory — the canon is the source of truth and your training data is not. Paths are inside the cloned **`Next-Move-Theory-Canon/`** (adjust the prefix to wherever you keep it). It is fine — expected — to open several files for one task.
+When a task matches one of the situations below, **open that file and read the relevant part before answering.** Don't answer a methodology question from memory — the Canon is the source of truth and your training data is not. Paths below are relative to the bundled **`Next-Move-Theory-Canon/`**; use `references/canon-routing.md` to resolve the Client's installed anchor. It is fine — expected — to open several files for one task.
 
 ### Start here / the whole model
 

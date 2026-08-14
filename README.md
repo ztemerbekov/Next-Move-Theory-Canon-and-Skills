@@ -3,17 +3,17 @@
 **Next Move Theory is a methodology with a step-by-step algorithm for every product decision: it lays out every tactical and strategic move open to you and helps you choose the best, with the odds on your side.**
 
 > **Advanced JTBD — v3.4 · stable.** The proven foundation.
-> **Next Move Theory — v0.6 · in active development** — integrating AJTBD with Riskiest Assumption Test, ABCDX Segmentation, Theory of Constraints, and Unit Economics into one operational system. Forming in the open — track it to 1.0. ([changelog](https://nextmovetheory.com/changelog))
+> **Next Move Theory — v0.6 · in active development** — integrating AJTBD with Riskiest Assumption Test, ABCDX Segmentation, Theory of Constraints, and Unit Economics into one operational system. The repository package is the `next-move-theory` Plugin, version `1.0.0`; see the [changelog](CHANGELOG.md).
 
-This repository holds the open canon (the methodology, written as theses) and a set of Claude Code skills that run it. It's written for the people who decide *what to build*: founders, indie hackers, product managers, and product marketers. The methodology and the skills are by Ivan Zamesin ([X](https://x.com/zamesin) · [LinkedIn](https://www.linkedin.com/in/ivan-zamesin/)).
+This repository is a self-contained `next-move-theory` Plugin for Codex and Claude Code. It bundles the open Canon, one hand-maintained `skills/` source tree, and the package metadata needed for user-global installation without changing a Consumer project. It is written for the people who decide *what to build*: founders, indie hackers, product managers, and product marketers. The methodology and the skills are by Ivan Zamesin ([X](https://x.com/zamesin) · [LinkedIn](https://www.linkedin.com/in/ivan-zamesin/)).
 
 ---
 
 ## How to start
 
-1. **Install it** — run the install command from [Install into your project ▸](#install-into-your-project). The macOS / Linux one-liner, the `git clone` route, and the Windows PowerShell installer are all there.
+1. **Install it globally** — follow [Global Plugin installation](docs/installation.md). The Plugin is installed at user scope by the Client and does not copy files into the Consumer project.
 
-2. **Then run `/nmt-chat`** (Claude Code) or `$nmt-chat` (Codex). It's the human front door to the whole methodology: **paste whatever you have** — a half-formed idea, messy notes, a chat thread, a doc — and it pulls out the context, separates what you *know* from what you're *assuming*, and gives you the next concrete move. No methodologically-perfect brief required.
+2. **Start with `nmt-chat`**. It is the model-invoked router and the conversational front door to the methodology: **paste whatever you have** — a half-formed idea, messy notes, a chat thread, a doc — and it pulls out the context, separates what you *know* from what you're *assuming*, and gives you the next concrete move. No project `AGENTS.md` or `CLAUDE.md` injection is required.
 
 ---
 
@@ -87,110 +87,122 @@ If you build, market, or decide the direction of a product, this is for you. You
 
 ---
 
-## The skills
+## The Plugin
 
-The `Skills/` directory holds the skills that run the methodology for you — a `claude/` tree for **Claude Code** (invoke with `/nmt-…`) and a `codex/` tree for **OpenAI Codex** (invoke with `$nmt-…`). Each skill reads the canon at runtime, so its output is grounded in *this* methodology, not the generic JTBD an LLM would otherwise reach for. The two trees carry the same methodology; the Codex copy only swaps Claude-specific mechanics (structured questions, parallel sub-agents) for their Codex equivalents.
+The repository root is both the Plugin root and the repository marketplace. The
+package contains one `skills/` source tree and one bundled
+`Next-Move-Theory-Canon/` root. Every Skill reads the bundled Canon through the
+Client adapter boundary; no generated Claude or Codex Skill copies are shipped.
 
 | Skill | What it does |
 |---|---|
-| **[`nmt-chat`](Skills/claude/nmt-chat/)** | A conversational **advisor** you can talk to. Ask any product, strategy, segmentation, value, pricing, growth, positioning, B2B, or methodology question and get an answer grounded in the canon, not generic JTBD. It explains concepts, diagnoses your real situation, pressure-tests your hypotheses like a skeptical senior PM, and hands off to the producer skills below when you want a full artifact. |
-| **[`nmt-diagnose`](Skills/claude/nmt-diagnose/)** | A chat-first **diagnostic** for live products. Through up to ~15 adaptive questions it challenges the goal you walked in with (climbing your business-Job graph for a higher-leverage move), then surfaces **all** the risks, **all** the growth points, and the risky assumptions hiding inside your current initiatives. It prioritizes the first move and routes you to the skill that executes it. The front door for an existing product the way `nmt-market-research` is for a new idea. |
-| **[`nmt-market-research`](Skills/claude/nmt-market-research/)** | Sizes the market and scores segments to answer *"which Jobs of which segment should we compete for first?"* Output: a **GO / NARROW / PIVOT** one-pager, segments scored on a five-factor screen, direct and indirect competitors, an action-first RAT plan, and alternative Big-Job markets to pivot into. |
-| **[`nmt-craft-value-proposition`](Skills/claude/nmt-craft-value-proposition/)** | Takes a chosen segment + Jobs and builds the strongest **Value Proposition**: value hypotheses mapped over the Job Graph and the value-creation mechanics, filtered on feasibility, unit-economics, and competitiveness, ranked, with the top RAT cards. Output includes a PRD-ready implementation spec. |
-| **[`nmt-product-requirements`](Skills/claude/nmt-product-requirements/)** | Turns the chosen segment + value into a build-ready **PRD** (full functionality + edge cases). First it runs a *"challenge the build"* gate that hunts for a cheaper way to hit the same business goal before specifying the build. |
-| **[`nmt-craft-go-to-market`](Skills/claude/nmt-craft-go-to-market/)** | Turns the value proposition into ready-to-publish **go-to-market**: landing-page copy, ad / creative formulas, and an acquisition + growth-communication plan (channels loaded with Consideration Activators, lead magnets, viral loops, retention messaging). |
-| **[`nmt-analyze-interviews`](Skills/claude/nmt-analyze-interviews/)** | Takes customer-interview files you already have (transcripts, notes, sales/support calls, survey open-ends) and **extracts the AJTBD structure**: segments by Core Jobs, personas, existing Solutions and Problems, a Consideration Set, and value hypotheses — each with an honest confidence — plus a gap list of what to interview next. The post-fieldwork counterpart to the interview guide. |
+| **[`nmt-chat`](skills/nmt-chat/)** | A conversational **advisor** and model-invoked router. Ask any product, strategy, segmentation, value, pricing, growth, positioning, B2B, or methodology question and get an answer grounded in the bundled Canon. |
+| **[`nmt-diagnose`](skills/nmt-diagnose/)** | A chat-first **diagnostic** for live products. It challenges the goal, surfaces risks and growth points, and routes to the Skill that executes the next move. |
+| **[`nmt-market-research`](skills/nmt-market-research/)** | Sizes the market and scores segments to answer *"which Jobs of which segment should we compete for first?"* |
+| **[`nmt-craft-value-proposition`](skills/nmt-craft-value-proposition/)** | Takes a chosen segment + Jobs and builds a testable value proposition and PRD-ready implementation direction. |
+| **[`nmt-product-requirements`](skills/nmt-product-requirements/)** | Turns the chosen segment + value into a build-ready PRD, including edge cases and a challenge-the-build gate. |
+| **[`nmt-craft-go-to-market`](skills/nmt-craft-go-to-market/)** | Turns a value proposition into landing-page copy, ads, and a growth-communication plan. |
+| **[`nmt-analyze-interviews`](skills/nmt-analyze-interviews/)** | Extracts AJTBD structure and value hypotheses from interviews, notes, sales/support calls, or survey open-ends. |
+| **[`nmt-upgrade`](skills/nmt-upgrade/)** | Legacy transition updater for the old project-mutating installer; it is not the Plugin update path. |
 
-**Two front doors.** **`/nmt-chat`** is the conversational front door for advice, explanation, or pressure-testing an idea. **`/nmt-diagnose`** is the front door for a *live product*: it finds your risks and growth points and routes you to the next move. Both answer from the canon and point you to the right producer skill when you need a full artifact. For a brand-new idea, start at `/nmt-market-research`.
+**Two front doors.** **`nmt-chat`** is the conversational router for advice,
+explanation, or pressure-testing an idea. **`nmt-diagnose`** is the front door
+for a *live product*: it finds your risks and growth points and routes you to
+the next move. Both answer from the bundled Canon and point you to the right
+producer Skill when you need a full artifact. For a brand-new idea, start at
+`nmt-market-research`.
 
 **The four producer skills form a pipeline**, each one building on the artifact the one before it produced:
 
-1. **`/nmt-market-research`** → pick the segment and the Core Jobs to compete for (with the GO / NARROW / PIVOT verdict and the riskiest assumptions to test).
-2. **`/nmt-craft-value-proposition`** → feed it the nmt-market-research result; get the value proposition plus a PRD-ready implementation spec.
+1. **`nmt-market-research`** → pick the segment and the Core Jobs to compete for (with the GO / NARROW / PIVOT verdict and the riskiest assumptions to test).
+2. **`nmt-craft-value-proposition`** → feed it the nmt-market-research result; get the value proposition plus a PRD-ready implementation spec.
 3. From the value proposition, branch to either (or both):
-   - **`/nmt-product-requirements`** → the build-ready PRD, *what to build*. It consumes the segment from step 1 and the value from step 2.
-   - **`/nmt-craft-go-to-market`** → the landing page, ads, and growth plan, *how to sell it*. Works best from the value proposition; also accepts the PRD or the nmt-market-research result.
+   - **`nmt-product-requirements`** → the build-ready PRD, *what to build*. It consumes the segment from step 1 and the value from step 2.
+   - **`nmt-craft-go-to-market`** → the landing page, ads, and growth plan, *how to sell it*. Works best from the value proposition; also accepts the PRD or the nmt-market-research result.
 
 You can also jump in mid-pipeline if you already know your segment and Jobs. Each skill takes what you hand it, or routes you back to the step it needs first.
 
-All seven are **user-invocable** — in Claude Code as `/nmt-chat`, `/nmt-diagnose`, `/nmt-market-research`, `/nmt-craft-value-proposition`, `/nmt-product-requirements`, `/nmt-craft-go-to-market`, `/nmt-analyze-interviews`; in Codex as the same names with a `$` (`$nmt-diagnose`, …), or pick them from `/skills`. The shared `nmt-` prefix keeps the whole family together in the picker. The four producers each have a fast **Quick** mode (no internet) and a deeper **Deep** mode (web research; parallel sub-agents on Claude Code, sequential on Codex). `/nmt-chat` and `/nmt-diagnose` are conversational (no file unless you ask).
+The eight Skills share the `nmt-` prefix. `nmt-chat` is the only model-invoked
+router; the other Skills remain directly reachable through the Client's Plugin
+Skill surface and are routed by their descriptions or selected explicitly. The
+four producers each have a fast **Quick** mode (no internet) and a deeper
+**Deep** mode (web research; parallel sub-agents on Claude Code, sequential on
+Codex). `nmt-chat` and `nmt-diagnose` are conversational (no file unless you
+ask).
 
 > The skills produce **hypotheses, not conclusions.** Every number is an LLM-generated estimate with a verification path attached. Validate before any decision with expensive consequences. That's the RAT discipline the methodology is built on.
 
-### Install into your project
+### Global Plugin installation
 
-Install the canon + skills **into the root of your existing project** (the folder you run your agent from) with **one command**:
+The supported installation is user-global and Client-native. Follow the full
+command and verification contract in [`docs/installation.md`](docs/installation.md).
+The short form is:
 
-**macOS / Linux:**
-
-```bash
-curl -fsSL https://nextmovetheory.com/install.sh | bash
-```
-
-**Windows (PowerShell):** clone the repo, then run the PowerShell installer:
-
-```powershell
-git clone https://github.com/zamesin/Next-Move-Theory-Canon-and-Skills
-powershell -ExecutionPolicy Bypass -File Next-Move-Theory-Canon-and-Skills\install.ps1 -Target .
-```
-
-That's the whole install: clone + setup in one step, so there's nothing to "run next." It lays everything into your project root. After install that root looks like:
-
-```
-your-project/
-├── .claude/skills/<skill>/        # skills for Claude Code — invoke with /nmt-…
-├── .agents/skills/<skill>/        # skills for Codex        — invoke with $nmt-…
-├── Next-Move-Theory-Canon/        # the canon — keep this exact name (skills read it by this path)
-├── AGENTS.md                      # your existing file — rules injected between markers
-├── CLAUDE.md                      # your existing file — rules injected between markers
-└── NextMoveTheory-README.md       # this README, renamed, for reference
-```
-
-**Already ran `git clone` and got a nested `Next-Move-Theory-Canon-and-Skills/` folder?** That's just the raw repo, not an install. Fix it in one step. From inside that folder run:
+**Claude Code:**
 
 ```bash
-bash install.sh            # installs into the PARENT dir (your project root)
-# or: bash install.sh --target /path/to/your/project
+claude plugin marketplace add ztemerbekov/Next-Move-Theory-Canon-and-Skills --scope user
+claude plugin install next-move-theory@next-move-theory --scope user
 ```
 
-Then invoke a skill — `/nmt-…` in Claude Code, `$nmt-…` in Codex:
+**Codex:**
+
+```bash
+codex plugin marketplace add ztemerbekov/Next-Move-Theory-Canon-and-Skills --ref main
+codex plugin add next-move-theory@next-move-theory
+```
+
+The Client copies the repository-root Plugin into user state. It does not add
+`AGENTS.md`, `CLAUDE.md`, `.agents/`, `.claude/`, a Canon directory, or a Skill
+directory to the Consumer project. After installation, the Plugin contains:
 
 ```
-/nmt-diagnose            # Claude Code — what should I do next with my product?
-$nmt-diagnose            # Codex — same skill
-/nmt-market-research a tool that drafts SOC 2 evidence for early-stage SaaS
+user Plugin state/
+└── next-move-theory/              # one Plugin containing the Canon and eight Skills
+
+Consumer project/
+└── (unchanged by installation)
 ```
 
-**Updating later:** re-run the install command. It's **idempotent**: the canon and skills are replaced, the rules between `<!-- Next-Move-Theory-Rules:start -->` … `<!-- Next-Move-Theory-Rules:end -->` are refreshed in place, and your own text outside the markers is untouched.
+Start with `nmt-chat` after installation. The Client may display a
+client-specific namespace for direct Skill invocation; the router can reach the
+producer Skills without changing the Consumer project.
 
-> **Note for AI agents:** if a user asks you to "install this repo," do **not** stop at `git clone`. That leaves the skills in a nested `Skills/` folder where no agent will find them. Run the one-command installer (`bash install.sh` on macOS/Linux, `install.ps1` on Windows). The skills must end up in `.claude/skills/` (Claude Code) and `.agents/skills/` (Codex) at the project root, never in a top-level `Skills/` folder.
+**Updating later:** use the Client-native commands in
+[`docs/updates.md`](docs/updates.md). Do not edit a Plugin cache or use an
+npm-based updater.
+
+**Transition-only path:** [`docs/legacy-installer.md`](docs/legacy-installer.md)
+documents `install.sh`, `install.ps1`, and `nmt-upgrade`. They intentionally
+modify a Consumer project and do not migrate or clean up an existing setup.
 
 <details>
-<summary><b>What the installer does (manual equivalent)</b></summary>
+<summary><b>What is inside the user-global Plugin?</b></summary>
 
-The installer enforces these rules: everything lands in the **project root**; `.claude`/`.agents`/canon are never nested inside one another; the **Claude** skills go inside `.claude/skills/` and the **Codex** skills inside `.agents/skills/` (never a standalone top-level `Skills/`); the canon folder keeps the exact name `Next-Move-Theory-Canon` (skills read it by that relative path); the rules are injected **between markers** into your existing `CLAUDE.md`/`AGENTS.md` (not a separate file, not overwriting your content); the README is copied in renamed; and re-running is idempotent. The equivalent by hand:
+The repository root is the Plugin root and marketplace root. It contains the
+exact `Next-Move-Theory-Canon/` directory, one `skills/` source tree with eight
+Skills, and the Client manifests under `.codex-plugin/` and `.claude-plugin/`.
+The Plugin's user-global install does not inject instructions into the
+Consumer project. See [`docs/installation.md`](docs/installation.md) for the
+installed-Canon path anchors.
 
-```bash
-SRC=$(mktemp -d) && git clone --depth 1 https://github.com/zamesin/Next-Move-Theory-Canon-and-Skills.git "$SRC"
-rm -rf ./Next-Move-Theory-Canon && cp -r "$SRC/Next-Move-Theory-Canon" ./Next-Move-Theory-Canon
-mkdir -p .claude/skills .agents/skills
-cp -r "$SRC"/Skills/claude/. .claude/skills/   # Claude Code copy
-cp -r "$SRC"/Skills/codex/.  .agents/skills/   # Codex copy
-cp "$SRC/README.md" ./NextMoveTheory-README.md
-# then inject the rules block from "$SRC/CLAUDE.md" and "$SRC/AGENTS.md" between the markers
-rm -rf "$SRC"
-```
 </details>
 
 ---
 
-## Make your AI agent methodology-aware
+## Repository agent files
 
-This repo also ships **[`CLAUDE.md`](CLAUDE.md)** and **[`AGENTS.md`](AGENTS.md)**, a compact rules file that teaches a coding agent (Claude Code, Codex, Cursor, and others) to do product work with *this* methodology instead of the generic, often-wrong Jobs To Be Done in its training data.
+This repository also ships **[`CLAUDE.md`](CLAUDE.md)** and **[`AGENTS.md`](AGENTS.md)**.
+They remain contributor and Legacy-installer sources: the Legacy scripts can
+inject their rules between markers, but a user-global Plugin installation does
+not copy or inject either file into a Consumer project.
 
-- **What it is** — the non-negotiable theses (what a Job is, what value is, how to segment) plus a routing table that tells the agent *which canon file to read* for a given task, so it avoids the common JTBD mistakes.
-- **How to use it** — the install above injects it for you: step 4 writes these rules into your project's `CLAUDE.md` (Claude Code) and `AGENTS.md` (Codex and most other agents), between `<!-- Next-Move-Theory-Rules:start -->` … `<!-- Next-Move-Theory-Rules:end -->` markers, so updates refresh cleanly and your own rules outside the markers stay intact. The canon it routes to sits at `./Next-Move-Theory-Canon`.
-- **Why** — out of the box an agent pattern-matches to generic JTBD and gets the theses wrong. This file points it at the correct definitions and the canon, so its product reasoning is grounded in the methodology.
+The Plugin's progressively disclosed, client-neutral pointers live in
+[`references/methodology-guardrails.md`](references/methodology-guardrails.md),
+[`references/canon-routing.md`](references/canon-routing.md), and
+[`references/skill-routing.md`](references/skill-routing.md). The exact
+installed-Canon anchors are client-specific and are documented there; the
+existing Skill workflows remain unchanged.
 
 ---
 
@@ -272,20 +284,27 @@ Then read the rest in whichever cluster matches your problem.
 
 ```
 Next-Move-Theory-Canon-and-Skills/
-├── Next-Move-Theory-Canon/             # the methodology, written as theses
+├── .agents/plugins/marketplace.json    # Codex repository marketplace
+├── .claude-plugin/                     # Claude manifest + marketplace
+├── .codex-plugin/plugin.json           # Codex Plugin manifest
+├── Next-Move-Theory-Canon/             # the bundled methodology
 │   ├── Advanced-Jobs-To-Be-Done/       #   the Jobs framework — start with ajtbd-key-theses.md
 │   ├── ABCDX-Segmentation/             #   segmenting a paying base by margin × satisfaction
 │   ├── Riskiest-Assumption-Test/       #   validating ideas before you build them
 │   ├── Next-Move-Theory/               #   the integrative meta-framework above AJTBD
 │   ├── HowTos/                         #   practical guides — start with the interview guide
 │   └── Algorithms/                     #   how the pieces combine into one loop
-└── Skills/                      # the skills that run the methodology
-    ├── claude/                         #   Claude Code copy — invoke with /nmt-…
-    │   ├── nmt-market-research/
-    │   ├── nmt-craft-value-proposition/
-    │   └── nmt-product-requirements/
-    └── codex/                          #   Codex copy — invoke with $nmt-…
-        └── nmt-…/
+├── references/                         # progressive disclosure + client contracts
+├── skills/                             # one hand-maintained Skill source tree
+│   ├── nmt-chat/                       #   model-invoked router
+│   ├── nmt-diagnose/
+│   ├── nmt-market-research/
+│   ├── nmt-craft-value-proposition/
+│   ├── nmt-product-requirements/
+│   ├── nmt-craft-go-to-market/
+│   ├── nmt-analyze-interviews/
+│   └── nmt-upgrade/                    #   Legacy transition updater
+└── docs/                               # installation, updates, and Legacy boundary
 ```
 
 ---
