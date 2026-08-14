@@ -14,19 +14,20 @@ The Canon remains at the exact `Next-Move-Theory-Canon/` path and remains a
 single root. The shared producer and readability contracts are now under
 `references/` and are byte-preserved.
 
-The old Claude and Codex trees were not deleted. Because this development
-environment uses a case-insensitive filesystem, `Skills/` and `skills/` cannot
-coexist as separate physical directories. The old trees were therefore moved
-without content changes to:
+The old Claude and Codex trees were retained as immutable migration evidence
+under:
 
 ```text
 docs/migration/legacy-inputs/Skills/claude/
 docs/migration/legacy-inputs/Skills/codex/
 ```
 
-They are read-only migration evidence. Ticket #16 owns their final retirement
-after parity and clean-environment acceptance; they are not part of the
-authoritative `skills/` source tree.
+They are not package source and are not discovered by either Client. The
+authoritative package source is only the lower-case `skills/` tree. The
+repository-level `Skills/` directories are retired after the final parity and
+acceptance inventory; the preserved copies remain only under
+`docs/migration/legacy-inputs/` so the byte-level parity proof stays
+reproducible.
 
 ## Mechanical transformations
 
@@ -44,8 +45,8 @@ Only the locked allowlist was applied to the new source:
 - no workflow step, question, mode, handoff, output contract, methodology rule,
   or completion gate was rewritten.
 
-No generated Client-specific Skill tree was created. The preserved Codex tree is
-only a comparison input until final parity closes it out.
+No generated Client-specific Skill tree was created. The preserved Claude and
+Codex trees are comparison inputs only; they are not editable source trees.
 
 ## Verification
 
@@ -78,5 +79,6 @@ adapter slices; the source consolidation keeps the reviewed baseline intact.
 ## Scope boundary
 
 This ticket does not claim manifest validation, adapter drift validation,
-clean-environment runtime smoke, update behavior, or final removal of the
-legacy evidence trees. Those are owned by #15, #18, #19, #14, #17, and #16.
+clean-environment runtime smoke, or update behavior. Those are recorded by
+#15, #18, #19, #14, and #17. The final inventory and remaining evidence
+boundary are recorded in [`final-inventory-and-acceptance-status.md`](final-inventory-and-acceptance-status.md).
