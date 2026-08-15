@@ -5,30 +5,21 @@ The primary distribution is one user-global `next-move-theory` Plugin, version
 The Plugin bundles the exact `Next-Move-Theory-Canon/` directory and one
 `skills/` tree containing all eight Skills.
 
-## Claude Code
+## Install
 
-Add the repository marketplace and install at user scope:
+Use the installer command for your platform:
 
-```bash
-claude plugin marketplace add ztemerbekov/Next-Move-Theory-Canon-and-Skills --scope user
-claude plugin install next-move-theory@next-move-theory --scope user
-```
-
-Claude Code copies the Plugin into its user-scoped Plugin state/cache. The
-installed Skills resolve the Canon through
-`${CLAUDE_PLUGIN_ROOT}/Next-Move-Theory-Canon/`.
-
-## Codex
-
-Add the Git marketplace at the locked `main` ref and install the Plugin:
+macOS, Linux, and other Unix-like systems:
 
 ```bash
-codex plugin marketplace add ztemerbekov/Next-Move-Theory-Canon-and-Skills --ref main
-codex plugin add next-move-theory@next-move-theory
+npx install latest
 ```
 
-Codex resolves the Canon from the installed Plugin-relative path
-`../../Next-Move-Theory-Canon/` used by the shared Skills.
+Windows PowerShell:
+
+```powershell
+irm https://nextmovetheory.com/install.ps1 | iex
+```
 
 ## After installation
 

@@ -134,22 +134,20 @@ ask).
 
 ### Global Plugin installation
 
-The supported installation is user-global and Client-native. Follow the full
-command and verification contract in [`docs/installation.md`](docs/installation.md).
-The short form is:
+The supported installation is user-global. Use the installer command for your
+platform, then follow the verification contract in
+[`docs/installation.md`](docs/installation.md).
 
-**Claude Code:**
+**macOS, Linux, and other Unix-like systems:**
 
 ```bash
-claude plugin marketplace add ztemerbekov/Next-Move-Theory-Canon-and-Skills --scope user
-claude plugin install next-move-theory@next-move-theory --scope user
+npx install latest
 ```
 
-**Codex:**
+**Windows PowerShell:**
 
-```bash
-codex plugin marketplace add ztemerbekov/Next-Move-Theory-Canon-and-Skills --ref main
-codex plugin add next-move-theory@next-move-theory
+```powershell
+irm https://nextmovetheory.com/install.ps1 | iex
 ```
 
 The Client copies the repository-root Plugin into user state. It does not add
