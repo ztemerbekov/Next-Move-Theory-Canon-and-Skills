@@ -31,7 +31,7 @@ SKILLS = (
     "nmt-product-requirements",
     "nmt-upgrade",
 )
-CANON_PROBE = "Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md"
+CANON_PROBE = "skills/nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md"
 AUTH_FAILURE_RE = re.compile(
     r"(?:not logged in|login required|authentication required|unauthorized|api key)",
     re.IGNORECASE,
@@ -286,12 +286,15 @@ def installed_contract(plugin_root: Path) -> tuple[bool, str]:
     expected = set(SKILLS)
     if actual != expected:
         return False, f"Skill inventory differs: expected={sorted(expected)}, actual={sorted(actual)}"
-    canon = plugin_root / "Next-Move-Theory-Canon"
+    canon = plugin_root / "skills/nmt-chat/references/Next-Move-Theory-Canon"
     if not canon.is_dir():
         return False, "installed bundled Canon root is missing"
-    nested = [path for path in canon.rglob("*") if path.is_dir() and path.name == canon.name]
-    if nested:
-        return False, f"nested Canon root found at {nested[0]}"
+    canon_roots = [
+        path for path in plugin_root.rglob("Next-Move-Theory-Canon")
+        if path.is_dir() and ".git" not in path.parts
+    ]
+    if canon_roots != [canon]:
+        return False, f"expected one Canon payload root, found {canon_roots}"
     probe = plugin_root / CANON_PROBE
     if not probe.is_file():
         return False, f"Canon probe is missing: {CANON_PROBE}"

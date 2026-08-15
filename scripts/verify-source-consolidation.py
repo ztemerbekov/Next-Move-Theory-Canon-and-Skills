@@ -26,6 +26,7 @@ SKILLS = (
     "nmt-product-requirements",
     "nmt-upgrade",
 )
+CANON_ROOT = Path("skills/nmt-chat/references/Next-Move-Theory-Canon")
 
 
 def digest(path: Path) -> str:
@@ -46,23 +47,45 @@ def normalize_candidate(text: str, skill_name: str) -> str:
     # mechanics file; keep the correction in the explicit parity allowlist.
     if skill_name == "nmt-analyze-interviews":
         text = text.replace(
-            "`../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/"
+            "`../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/"
             "value-creation-mechanics.md`; cited as provenance",
             "`Next-Move-Theory-Canon/Next-Move-Theory/mechanics-catalog.md`; "
             "cited as provenance",
         )
 
-    text = text.replace(
-        "../../references/producer-contract.md", "../PRODUCER-CONTRACT.md"
-    )
-    text = text.replace(
-        "../../references/readability-contract.md", "../READABILITY-CONTRACT.md"
-    )
+    for source in (
+        "../../references/producer-contract.md",
+        "../nmt-chat/references/producer-contract.md",
+    ):
+        text = text.replace(source, "../PRODUCER-CONTRACT.md")
+    for source in (
+        "../../references/readability-contract.md",
+        "../nmt-chat/references/readability-contract.md",
+    ):
+        text = text.replace(source, "../READABILITY-CONTRACT.md")
     text = re.sub(r"^user-invocable: true\n", "", text, flags=re.MULTILINE)
 
     # nmt-upgrade is the Legacy workflow.  Its project-root Canon paths must
     # remain untouched; all other Skills use the Plugin-relative path.
-    if skill_name != "nmt-upgrade":
+    if skill_name == "nmt-chat":
+        text = re.sub(
+            r"(?<![A-Za-z0-9-])references/Next-Move-Theory-Canon/",
+            "Next-Move-Theory-Canon/",
+            text,
+        )
+    elif skill_name == "nmt-upgrade":
+        text = re.sub(
+            r"\n\*\*Installed-suite Canon anchor\.\*\*.*?project-root target\.\n\n",
+            "\n",
+            text,
+            flags=re.DOTALL,
+        )
+    elif skill_name != "nmt-upgrade":
+        text = re.sub(
+            r"(?<![A-Za-z0-9-])\.\./nmt-chat/references/Next-Move-Theory-Canon/",
+            "Next-Move-Theory-Canon/",
+            text,
+        )
         text = re.sub(
             r"(?<![A-Za-z0-9-])\.\./\.\./Next-Move-Theory-Canon/",
             "Next-Move-Theory-Canon/",
@@ -84,6 +107,11 @@ def check_skill(repo: Path, name: str, failures: list[str]) -> None:
 
     baseline_files = {p.relative_to(baseline) for p in baseline.rglob("*") if p.is_file()}
     candidate_files = {p.relative_to(candidate) for p in candidate.rglob("*") if p.is_file()}
+    if name == "nmt-chat":
+        candidate_files = {
+            relative for relative in candidate_files
+            if relative.parts[0] != "references"
+        }
     if baseline_files != candidate_files:
         failures.append(
             f"{name}: file inventory differs: baseline={sorted(baseline_files)} "
@@ -141,7 +169,7 @@ def main() -> int:
         check_skill(repo, name, failures)
 
     for name in ("producer-contract.md", "readability-contract.md"):
-        reference = repo / "references" / name
+        reference = repo / "skills/nmt-chat/references" / name
         baseline = repo / "docs/migration/legacy-inputs/Skills/claude" / (
             "PRODUCER-CONTRACT.md" if name.startswith("producer") else "READABILITY-CONTRACT.md"
         )
@@ -154,19 +182,26 @@ def main() -> int:
 
     if not (repo / "docs/migration/legacy-inputs/Skills/codex").is_dir():
         failures.append("missing preserved Codex migration evidence tree")
-    if (repo / "Next-Move-Theory-Canon/Next-Move-Theory-Canon").exists():
-        failures.append("nested Next-Move-Theory-Canon directory detected")
+    canon_roots = [
+        path for path in repo.rglob("Next-Move-Theory-Canon")
+        if path.is_dir() and ".git" not in path.parts
+    ]
+    if canon_roots != [repo / CANON_ROOT]:
+        relative = [path.relative_to(repo).as_posix() for path in canon_roots]
+        failures.append(f"expected one Canon payload root at {CANON_ROOT}, found {relative}")
+    if (repo / "references").exists():
+        failures.append("retired root references/ directory exists")
 
     for path in sorted((repo / "skills").glob("*/SKILL.md")):
         text = path.read_text(encoding="utf-8")
         if "user-invocable:" in text:
             failures.append(f"{path.relative_to(repo)}: non-portable user-invocable metadata remains")
 
-        for relative in re.findall(
-            r"(?<![A-Za-z0-9-])(\.\./\.\./Next-Move-Theory-Canon/"
-            r"[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)*)",
-            text,
-        ):
+        canon_pattern = (
+            r"(?<![A-Za-z0-9-])((?:references/|\.\./nmt-chat/references/)"
+            r"Next-Move-Theory-Canon/[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)*)"
+        )
+        for relative in re.findall(canon_pattern, text):
             if "..." in relative:
                 continue
             target = (path.parent / relative).resolve()
@@ -176,10 +211,12 @@ def main() -> int:
                 )
 
         for relative in re.findall(
-            r"(?<![A-Za-z0-9-])(\.\./\.\./references/"
+            r"(?<![A-Za-z0-9-])(\.\./nmt-chat/references/"
             r"[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)*)",
             text,
         ):
+            if "Next-Move-Theory-Canon" in relative:
+                continue
             target = (path.parent / relative).resolve()
             if not target.is_file():
                 failures.append(

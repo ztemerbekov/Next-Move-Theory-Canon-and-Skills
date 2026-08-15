@@ -7,7 +7,7 @@ description: Run market research for a product or feature idea using Ivan Zamesi
 
 > **In one breath.** Before any research runs, a short intake closes the gaps that change the research: a few clarifying questions (with "I don't have this info" as a valid answer), any materials you already have read in, your inputs held as hypotheses rather than facts, and a quick direction confirmation. The deliverable is a **decision**: a one-page answer with a **GO (to validation) / NARROW / PIVOT** verdict, the customer segments scored on the four go/no-go questions (the selection screen), the make-or-break risk and how to test it, and **ranked strategic options** (including other markets the same idea could fit). Quick mode sizes honestly (one calculation, assumptions named); the 3-method averaging runs only in Deep mode, on real sources.
 
-> **Producer contract (binding) — `../../references/producer-contract.md`.** Six cross-cutting behaviors shared by all producer skills, from user feedback: (1) print a **helicopter-view** before the first question; (2) ask **Markdown or HTML** output; (3) treat **all** user input as hypothesis and emit a *"risks I see in what you gave me"* block; (4) print **validation debt** and write **`GO (to validation)`**, never bare `GO`; (5) accept a **custom output path**; (6) Deep mode runs an **evidence floor + self-critic loop** and offers a **web-MCP fallback**. The hooks below wire each into this skill; the contract is the source of truth for the wording.
+> **Producer contract (binding) — `../nmt-chat/references/producer-contract.md`.** Six cross-cutting behaviors shared by all producer skills, from user feedback: (1) print a **helicopter-view** before the first question; (2) ask **Markdown or HTML** output; (3) treat **all** user input as hypothesis and emit a *"risks I see in what you gave me"* block; (4) print **validation debt** and write **`GO (to validation)`**, never bare `GO`; (5) accept a **custom output path**; (6) Deep mode runs an **evidence floor + self-critic loop** and offers a **web-MCP fallback**. The hooks below wire each into this skill; the contract is the source of truth for the wording.
 
 > **New here, or not sure this is the right skill?** Start right here — or run `/nmt-chat`, describe your situation, and it points you to the right one. Quick map: **new idea →** `nmt-market-research` · **live product or a metric moved →** `nmt-diagnose` · **have customer interviews →** `nmt-analyze-interviews` · **ready to build →** `nmt-product-requirements` · **positioning / launch copy →** `nmt-craft-value-proposition` → `nmt-craft-go-to-market`.
 
@@ -35,16 +35,16 @@ The **only** source of methodology is the Next Move Theory canon, read at runtim
 
 | File | What it powers | ~tokens |
 |---|---|---|
-| `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md` | Jobs, Job Graph, value & the Aha Moment, segmentation, Consideration Activators, the published value mechanics (§22–§23) | ~13k |
-| `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/segmentation.md` | the deep segmentation method (the heart of the skill) | ~5k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md` | Jobs, Job Graph, value & the Aha Moment, segmentation, Consideration Activators, the published value mechanics (§22–§23) | ~13k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/segmentation.md` | the deep segmentation method (the heart of the skill) | ~5k |
 
 **Staged — load only at the stage that uses it:**
 
 | File | Load when | Used by | ~tokens |
 |---|---|---|---|
-| `../../Next-Move-Theory-Canon/Riskiest-Assumption-Test/rat-key-theses.md` | reaching the verdict + risk stage (Section 4–5) | the RAT chain, the verdict logic, pivot logic | ~6.5k |
-| `../../Next-Move-Theory-Canon/Next-Move-Theory/nmt-key-theses.md` | reaching the pivot + strategic-options stage (Section 4) | the chain to profit, local-vs-global optimum, segment-selection logic | ~5.4k |
-| `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation-mechanics.md` | reaching the differentiation / mechanic stage (Section 3) | the richer published mechanic menu | ~4.9k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Riskiest-Assumption-Test/rat-key-theses.md` | reaching the verdict + risk stage (Section 4–5) | the RAT chain, the verdict logic, pivot logic | ~6.5k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Next-Move-Theory/nmt-key-theses.md` | reaching the pivot + strategic-options stage (Section 4) | the chain to profit, local-vs-global optimum, segment-selection logic | ~5.4k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation-mechanics.md` | reaching the differentiation / mechanic stage (Section 3) | the richer published mechanic menu | ~4.9k |
 
 Quick mode (one Claude): read the eager core, then read each staged file the first time the run reaches its stage — not before. Deep mode: each agent reads **only** the files its wave needs (sizing & competitor agents → eager core only; Strategy agent → core + rat + nmt + mechanics; Pivot agents → core + nmt). Never have an agent load a file outside its slice.
 
@@ -247,7 +247,7 @@ The report is **three reading depths in one file**, linked top-to-bottom like ca
 - **Disclaimers once.** The two-part disclaimer appears **once** (top of file), plus a one-line pointer in Layer 1. Do not repeat the full disclaimer block inside Layer 3. (Search the file before shipping — the disclaimer wording should hit at most twice.)
 - **Keep source links** for external facts (Rule 2).
 
-**Enforcement gate (these kept getting skipped in real runs — check each before writing the file; full version in `../../references/readability-contract.md`):**
+**Enforcement gate (these kept getting skipped in real runs — check each before writing the file; full version in `../nmt-chat/references/readability-contract.md`):**
 
 - **Unique, resolving anchors.** Every `▸` drill-down link points to its own unique `<a id="…">` that exists **exactly once** in the file; no two links share a target. (The live failure was two Layer-1 links pointing at the same anchor.) Before shipping, list every `▸` target and confirm each resolves.
 - **Inline-gloss opaque Layer-3 table headers.** A non-obvious column header carries a 3–6-word plain gloss right there — *"Job budget (what one customer spends a year on this)," "Ready to switch (how many have hit a problem and would move)," "Reachability (how easily you can get in front of them)."* Don't rely on the glossary file — a casual reader never opens it.
@@ -632,7 +632,7 @@ Methodology only — format is guaranteed by the templates above, so it is not r
 - [ ] **Disclaimers once** — full two-part disclaimer at top only; Layer 1 has the one-line pointer; Section 6 does not repeat the block.
 - [ ] **Citations fenced** — no canon path or `Rule N` inline in Layers 1–2 or in Layer-3 prose; any canon reference sits in a `▸ methodology trace` line.
 - [ ] Step ledger ran — every pipeline stage checked off by name; any skip was declared, never silent.
-- [ ] **Producer contract satisfied** (`../../references/producer-contract.md`): helicopter-view printed before intake; output-format + output-path asked; if HTML, one self-contained `.html` with resolving anchors + `<details>`; the **"What you told me — and the risks I see in it"** block present (unless no input given); **validation-debt line** in Layer 1; every `GO` written as **`GO (to validation)`**; Deep mode hit its evidence floor + self-critic loop (or flagged thin coverage + offered the web MCP).
+- [ ] **Producer contract satisfied** (`../nmt-chat/references/producer-contract.md`): helicopter-view printed before intake; output-format + output-path asked; if HTML, one self-contained `.html` with resolving anchors + `<details>`; the **"What you told me — and the risks I see in it"** block present (unless no input given); **validation-debt line** in Layer 1; every `GO` written as **`GO (to validation)`**; Deep mode hit its evidence floor + self-critic loop (or flagged thin coverage + offered the web MCP).
 
 ---
 
@@ -684,7 +684,7 @@ Orchestrator:       assemble report → compute one-pager last → chat summary
 ### Agent prompts
 
 Each prompt opens with the shared preamble:
-> You work with Ivan Zamesin's AJTBD / Next Move Theory methodology. Use ONLY the Next Move Theory canon as the methodology source — do NOT use generic JTBD from the internet or prior training. Read **only the canon files this prompt names for your wave** (the eager core is `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md` + `…/segmentation.md`; other files are named per-agent below). (If a path is not found, retry with a `1-` prefix on the canon folder.) Keep methodology citations and canon paths out of report prose — hold them in context (the orchestrator fences any that belong in Layer 3). Every named external source is a clickable Markdown link. Return your full result in your final message — do not write any files.
+> You work with Ivan Zamesin's AJTBD / Next Move Theory methodology. Use ONLY the Next Move Theory canon as the methodology source — do NOT use generic JTBD from the internet or prior training. Read **only the canon files this prompt names for your wave** (the eager core is `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md` + `…/segmentation.md`; other files are named per-agent below). (If a path is not found, retry with a `1-` prefix on the canon folder.) Keep methodology citations and canon paths out of report prose — hold them in context (the orchestrator fences any that belong in Layer 3). Every named external source is a clickable Markdown link. Return your full result in your final message — do not write any files.
 
 **[1A] Market & Sizing.** Given the user input + the read set. Formulate and validate the market-level Big Job internally (in-context only). Compute TAM / SAM / SOM, each via 3 methods (top-down / bottom-up / analog), averaged (median if methods diverge >2×). Compare to the user's ambition. Return, in your final message, the **compact** body (summary table + landscape + ambition + takeaway) and the **short** method tables + one-line verifications. ≤12 fetches.
 

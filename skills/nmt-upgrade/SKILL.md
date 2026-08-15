@@ -14,6 +14,11 @@ description: >-
 
 # nmt-upgrade — update to the latest canon + skills
 
+**Installed-suite Canon anchor.** When this Skill is installed with the full
+suite, the bundled Canon is available at
+`../nmt-chat/references/Next-Move-Theory-Canon/`. This packaging pointer does
+not change the Legacy updater's project-root target.
+
 Re-runs the official Next Move Theory installer from the **project root**. The
 installer clones the public repo
 (`zamesin/Next-Move-Theory-Canon-and-Skills`, branch `main`) and refreshes,

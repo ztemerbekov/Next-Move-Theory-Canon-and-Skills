@@ -28,13 +28,13 @@ The output is a single file. **The default the reader sees is short** — a one-
 2. **Layer 2 — The reasoning (opt-in, plain English):** *how we got here* for each Layer-1 claim — what the customer wants most, why you'd win, the before→after, the moment it clicks for them (the Aha moment) in plain terms, the riskiest bet — each linking down to the full work.
 3. **Layer 3 — The full work (opt-in/collapsed):** the value-move tables, before→after, competitor matrix, test cards, the **PRD-ready implementation spec** `/nmt-product-requirements` consumes, and the methodology appendix.
 
-> **Producer contract (binding) — `../../references/producer-contract.md`.** Six cross-cutting behaviors shared by all producer skills, from user feedback: (1) print a **helicopter-view** before the first question; (2) ask **Markdown or HTML** output; (3) treat **all** user input as hypothesis and emit a *"risks I see in what you gave me"* block; (4) print **validation debt** and write any go-ahead as **`GO (to validation)`**, never a bare "build it now"; (5) accept a **custom output path**; (6) Deep mode runs an **evidence floor + self-critic loop** and offers a **web-MCP fallback**. The hooks below wire each into this skill; the contract is the source of truth for the wording.
+> **Producer contract (binding) — `../nmt-chat/references/producer-contract.md`.** Six cross-cutting behaviors shared by all producer skills, from user feedback: (1) print a **helicopter-view** before the first question; (2) ask **Markdown or HTML** output; (3) treat **all** user input as hypothesis and emit a *"risks I see in what you gave me"* block; (4) print **validation debt** and write any go-ahead as **`GO (to validation)`**, never a bare "build it now"; (5) accept a **custom output path**; (6) Deep mode runs an **evidence floor + self-critic loop** and offers a **web-MCP fallback**. The hooks below wire each into this skill; the contract is the source of truth for the wording.
 
 ---
 
 ## Core methodological principle
 
-**Source of truth — `../../Next-Move-Theory-Canon/` in the project root.** Do NOT use generic interpretations of Jobs To Be Done from the internet or LLM training. Ivan Zamesin's AJTBD diverges substantially. Five mis-defaults to never propagate (per project `CLAUDE.md`):
+**Source of truth — `../nmt-chat/references/Next-Move-Theory-Canon/` in the project root.** Do NOT use generic interpretations of Jobs To Be Done from the internet or LLM training. Ivan Zamesin's AJTBD diverges substantially. Five mis-defaults to never propagate (per project `CLAUDE.md`):
 
 - A **Job** is a desired *transition* — State A (situation) → expected outcome (State B), `in order to` perform a higher-level Job. Not "a struggle for progress."
 - **Value** is greater energy efficiency for the brain in performing a Job, measured against the brain's prediction. The **Aha Moment** is the customer-experience of value beating prediction; the **Problem** is value falling below it. **Never use the abbreviations PPE / NPE** (per Rule 22) — write *Aha Moment* / *Problem*.
@@ -90,7 +90,7 @@ The value-proposition document is **three reading depths in one file**, linked t
 - **Disclaimers once.** The two-part disclaimer appears **once** (top of file), plus a one-line pointer in Layer 1. Do not repeat the full disclaimer block inside Layer 3. (Search the file before shipping — the disclaimer wording should hit at most twice.)
 - **Keep source links** for external facts (Rule 2).
 
-**Enforcement gate (these kept getting skipped in real runs — check each before writing the file; full version in `../../references/readability-contract.md`):**
+**Enforcement gate (these kept getting skipped in real runs — check each before writing the file; full version in `../nmt-chat/references/readability-contract.md`):**
 
 - **Unique, resolving anchors.** Every `▸` drill-down link points to its own unique `<a id="…">` that exists **exactly once**; no two links share a target. The live failure for this skill was two different Layer-1 links both pointing at `#l2-bet`, and `l3-value`+`l3-segment` stacked on one heading — give each its own anchor. Before shipping, list every `▸` target and confirm each resolves to one place.
 - **Inline-gloss opaque Layer-3 table headers.** A non-obvious column header carries a 3–6-word plain gloss right there. Don't rely on the glossary file — a casual reader never opens it.
@@ -107,23 +107,23 @@ The **only** source of methodology is the Next Move Theory canon, read at runtim
 
 | File | What it powers | ~tokens |
 |---|---|---|
-| `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation.md` | The value formula (§3), 6 cost dimensions (§8), success criteria (§9), the 8 criteria-priority orders (§10), **the criteria→mechanics map (§11)**, the Aha Moment (§12), move-up / kill-a-Job (§14), the invisible-product North Star (§20) — defines the segment's dominant criteria and seeds the mechanics | ~8k |
-| `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation-mechanics.md` | The ~26 foundational mechanics — the generation catalog spine S3 walks | ~4.9k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation.md` | The value formula (§3), 6 cost dimensions (§8), success criteria (§9), the 8 criteria-priority orders (§10), **the criteria→mechanics map (§11)**, the Aha Moment (§12), move-up / kill-a-Job (§14), the invisible-product North Star (§20) — defines the segment's dominant criteria and seeds the mechanics | ~8k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation-mechanics.md` | The ~26 foundational mechanics — the generation catalog spine S3 walks | ~4.9k |
 
 **Staged — load only at the stage that uses it:**
 
 | File | Load when | Used by | ~tokens |
 |---|---|---|---|
-| `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/segmentation.md` | confirming the segment root at intake / S1 | segment root, sub-segment vs new segment | ~5k |
-| `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/job-structure.md` | building the success-criteria list (S1) | the 8 Job elements, success criteria (direction + level), 3 fidelity levels | ~4k |
-| `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/critical-chain.md` | building the graph substrate (S2 — Aha-placement stage) | Critical Chain of Jobs, breaks/cycles/hand-offs, Aha placement, Previous/Next Job | ~5k |
-| `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/behaviour-change.md` | reaching the forces / Aha stage (S3, §7 proof, §12 forces) | forces of behaviour change, Consideration Activators, Class 1/2, habit reuse | ~6k |
-| `../../Next-Move-Theory-Canon/Next-Move-Theory/nmt-key-theses.md` | reaching the unit-economics filter (S4) | §4 chain-to-profit (LTV > CAC, payback, target margin per unit) + §5 Consequence 2 (segment budget covers cost-to-serve) | ~5.4k |
-| `../../Next-Move-Theory-Canon/Riskiest-Assumption-Test/rat-key-theses.md` | reaching the RAT-cards stage (S5) | the RAT chain, the RAT formula, custom risks | ~6.5k |
-| `../../Next-Move-Theory-Canon/Algorithms/the-algorithm.md` | when the strategic spine needs framing (S0 routing / S6) | the market → segment → value → de-risk spine this skill's value step sits inside | ~4k |
-| `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/communication.md` | synthesizing the artifact (S6, §0 one-liner) | the one-liner formula and value-prop language | ~3k |
-| `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/job-graph.md` | only when the graph substrate needs care (S2 — levels, many-to-many, directional moves) | the graph substrate | ~5k |
-| `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/consideration-activators.md` | only when Big-Job communication / fear reduction needs depth (S3, S6) | Consideration Activators, fear reduction | ~4k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/segmentation.md` | confirming the segment root at intake / S1 | segment root, sub-segment vs new segment | ~5k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/job-structure.md` | building the success-criteria list (S1) | the 8 Job elements, success criteria (direction + level), 3 fidelity levels | ~4k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/critical-chain.md` | building the graph substrate (S2 — Aha-placement stage) | Critical Chain of Jobs, breaks/cycles/hand-offs, Aha placement, Previous/Next Job | ~5k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/behaviour-change.md` | reaching the forces / Aha stage (S3, §7 proof, §12 forces) | forces of behaviour change, Consideration Activators, Class 1/2, habit reuse | ~6k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Next-Move-Theory/nmt-key-theses.md` | reaching the unit-economics filter (S4) | §4 chain-to-profit (LTV > CAC, payback, target margin per unit) + §5 Consequence 2 (segment budget covers cost-to-serve) | ~5.4k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Riskiest-Assumption-Test/rat-key-theses.md` | reaching the RAT-cards stage (S5) | the RAT chain, the RAT formula, custom risks | ~6.5k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Algorithms/the-algorithm.md` | when the strategic spine needs framing (S0 routing / S6) | the market → segment → value → de-risk spine this skill's value step sits inside | ~4k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/communication.md` | synthesizing the artifact (S6, §0 one-liner) | the one-liner formula and value-prop language | ~3k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/job-graph.md` | only when the graph substrate needs care (S2 — levels, many-to-many, directional moves) | the graph substrate | ~5k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/consideration-activators.md` | only when Big-Job communication / fear reduction needs depth (S3, S6) | Consideration Activators, fear reduction | ~4k |
 
 Quick mode (one Claude): read the eager core, then read each staged file the first time the run reaches its stage — not before. Deep mode: **each agent reads only the files its wave needs** (the [S1] dominant-criteria agent → eager core + `segmentation.md` + `job-structure.md`; [S2] job-graph → `critical-chain.md` (+ `job-graph.md` if needed); [G*] mechanic generators → eager core + `behaviour-change.md`; [F] feasibility → `nmt-key-theses.md`; [RAT] → `rat-key-theses.md`; [SYN] → `communication.md`). Never have an agent load a file outside its slice.
 
@@ -643,7 +643,7 @@ The current §0–§12 substance, kept whole, sitting below the plain layers. Ad
 - [ ] ≤3 unvalidated assumptions stacked in the chosen prop
 - [ ] §11 implementation spec is PRD-ready
 - [ ] Every external source is a clickable link
-- [ ] **Producer contract satisfied** (`../../references/producer-contract.md`): helicopter-view printed before intake; output-format + output-path asked; if HTML, one self-contained `.html` with resolving anchors + `<details>`; the **"What you told me — and the risks I see in it"** block present (unless no input given); **validation-debt line** in Layer 1; the next step framed as **validate first, not build** (no bare "build it now"); on hand-off from nmt-market-research, asked what debt has been retired; Deep mode hit its evidence floor + self-critic loop (or flagged thin coverage + offered the web MCP).
+- [ ] **Producer contract satisfied** (`../nmt-chat/references/producer-contract.md`): helicopter-view printed before intake; output-format + output-path asked; if HTML, one self-contained `.html` with resolving anchors + `<details>`; the **"What you told me — and the risks I see in it"** block present (unless no input given); **validation-debt line** in Layer 1; the next step framed as **validate first, not build** (no bare "build it now"); on hand-off from nmt-market-research, asked what debt has been retired; Deep mode hit its evidence floor + self-critic loop (or flagged thin coverage + offered the web MCP).
 
 ## What this enables next
 1. `/nmt-product-requirements` — feed it the implementation spec (the PRD hand-off section) directly; it becomes the PRD's segment + value + risk input.
@@ -672,7 +672,7 @@ The current §0–§12 substance, kept whole, sitting below the plain layers. Ad
 Same S0→S6 chain, but substantive stages are parallelized and web-grounded. Agents are spawned with the `Agent` tool, `subagent_type: "general-purpose"`, `run_in_background: true`. **Each agent returns its full result in its final message — no per-agent files.** The orchestrator holds those returns in context and writes the single output file at the end. Every external source is a clickable link.
 
 **Shared preamble for every agent:**
-> You work with Ivan Zamesin's AJTBD / Next Move Theory methodology. Use ONLY the canon files this prompt names for your wave as the methodology source — do NOT use generic JTBD from the internet or prior training, and do NOT read files outside your slice (the eager core is `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation.md` + `…/value-creation-mechanics.md`; other files are named per-agent below). (If a path is not found, retry with a `1-` prefix on the canon folder.) Write *Aha Moment* / *Problem*, never PPE / NPE. **Keep methodology citations and canon paths out of report prose** — hold them in context; the orchestrator fences any that belong in Layer 3 into a `▸ methodology trace` line. Every named external source is a clickable Markdown link. **Return your full result in your final message — do not write any files.**
+> You work with Ivan Zamesin's AJTBD / Next Move Theory methodology. Use ONLY the canon files this prompt names for your wave as the methodology source — do NOT use generic JTBD from the internet or prior training, and do NOT read files outside your slice (the eager core is `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation.md` + `…/value-creation-mechanics.md`; other files are named per-agent below). (If a path is not found, retry with a `1-` prefix on the canon folder.) Write *Aha Moment* / *Problem*, never PPE / NPE. **Keep methodology citations and canon paths out of report prose** — hold them in context; the orchestrator fences any that belong in Layer 3 into a `▸ methodology trace` line. Every named external source is a clickable Markdown link. **Return your full result in your final message — do not write any files.**
 
 **Deep-mode QA — evidence floor, self-critic loop, web-MCP fallback (`PRODUCER-CONTRACT.md §6`):**
 
@@ -755,7 +755,7 @@ Produce a `⚠️ Methodology violation` warning (not silent output) for any of:
 - [ ] If path C: reduced-confidence flag at top of `result.md`.
 - [ ] **Step ledger:** every stage S0–S6 checked off by name; a skipped stage or gate was declared to the user, never silent.
 - [ ] **User claims stayed hypotheses:** ledger claims tagged (data / observation / hunch); the primary value prop does not rest primarily on a single unverified user hunch without saying so.
-- [ ] **Producer contract satisfied** (`../../references/producer-contract.md`): helicopter-view printed before intake; output-format + output-path asked; if HTML, one self-contained `.html` with resolving anchors + `<details>`; the **"What you told me — and the risks I see in it"** block present (unless no input given); **validation-debt line** in Layer 1; the next step framed as **validate first, not build** (no bare "build it now"); on hand-off from nmt-market-research, asked what validation debt has been retired and re-tagged anything still unvalidated; Deep mode hit its evidence floor + self-critic loop (or flagged thin coverage + offered the web MCP).
+- [ ] **Producer contract satisfied** (`../nmt-chat/references/producer-contract.md`): helicopter-view printed before intake; output-format + output-path asked; if HTML, one self-contained `.html` with resolving anchors + `<details>`; the **"What you told me — and the risks I see in it"** block present (unless no input given); **validation-debt line** in Layer 1; the next step framed as **validate first, not build** (no bare "build it now"); on hand-off from nmt-market-research, asked what validation debt has been retired and re-tagged anything still unvalidated; Deep mode hit its evidence floor + self-critic loop (or flagged thin coverage + offered the web MCP).
 
 ---
 

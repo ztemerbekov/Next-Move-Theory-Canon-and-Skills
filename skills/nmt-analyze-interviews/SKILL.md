@@ -29,7 +29,7 @@ description: >-
 
 > **v1 in one breath.** You already ran the interviews; this skill pulls the methodology out of them. It takes **one or many** interview files (transcripts, notes, sales calls, support logs, survey open-ends — AJTBD or not, good or bad), asks **which business task** you're solving (and helps you pick one if you can't), then reads **each interview in its own subagent** — a fan-out that keeps the run from ever overflowing context no matter how many large transcripts you load. Each interview is distilled to the AJTBD constructs with an **honest confidence** (a clean Core-Job extraction vs. a weak hypothesis) and **per-interview feedback** (what was found, what's missing, whether this interview can serve your task). The distillations are clustered into **segments by similar Core Jobs + similar success criteria + similar priority order**, and each segment's confidence is **computed from its supporting interviews' confidence**. Output — one report: data-quality summary, segments with personas, structured Solutions + Problems, a Consideration Set per segment, value hypotheses, and what to interview next.
 
-> **Producer contract (binding) — `../../references/producer-contract.md`.** Six cross-cutting behaviors shared by all producer skills: (1) print a **helicopter-view** before the first question; (2) ask **Markdown or HTML** output; (3) treat **all** user input as hypothesis and emit a *"risks I see in what you gave me"* block — here the inputs are interviews, so this becomes the per-interview quality read; (4) print **validation framing** — extracted Jobs are hypotheses with a confidence, only as strong as the interviews behind them; (5) accept a **custom output path**; (6) Deep mode runs an **evidence floor + self-critic loop** and offers a **web-MCP fallback**. The hooks below wire each into this skill.
+> **Producer contract (binding) — `../nmt-chat/references/producer-contract.md`.** Six cross-cutting behaviors shared by all producer skills: (1) print a **helicopter-view** before the first question; (2) ask **Markdown or HTML** output; (3) treat **all** user input as hypothesis and emit a *"risks I see in what you gave me"* block — here the inputs are interviews, so this becomes the per-interview quality read; (4) print **validation framing** — extracted Jobs are hypotheses with a confidence, only as strong as the interviews behind them; (5) accept a **custom output path**; (6) Deep mode runs an **evidence floor + self-critic loop** and offers a **web-MCP fallback**. The hooks below wire each into this skill.
 
 > **New here, or not sure this is the right skill?** Start right here — or run `/nmt-chat`, describe your situation, and it points you to the right one. Quick map: **new idea →** `nmt-market-research` · **live product or a metric moved →** `nmt-diagnose` · **have customer interviews →** `nmt-analyze-interviews` · **ready to build →** `nmt-product-requirements` · **positioning / launch copy →** `nmt-craft-value-proposition` → `nmt-craft-go-to-market`.
 
@@ -69,24 +69,24 @@ The **only** source of methodology is the Next Move Theory canon, read at runtim
 
 | File | What it powers | ~tokens |
 |---|---|---|
-| `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md` | the whole model: Job, Job Graph, value, the Aha Moment, the segmentation root | ~13k |
-| `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/segmentation.md` | clustering into segments; causal vs. symptomatic criteria; persona = causal criteria | ~5k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md` | the whole model: Job, Job Graph, value, the Aha Moment, the segmentation root | ~13k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/segmentation.md` | clustering into segments; causal vs. symptomatic criteria; persona = causal criteria | ~5k |
 
 **Each distiller subagent reads (its slice only):**
 
 | File | Why | ~tokens |
 |---|---|---|
-| `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/job-structure.md` | the eight Job elements + the per-element extraction question + the quality signals | ~9k |
-| `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/job-types-and-properties.md` | typing the Job (Fake / Tax / Orientation / Emotional / Viral / Regular); the Fake-Job past-behaviour test | ~5k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/job-structure.md` | the eight Job elements + the per-element extraction question + the quality signals | ~9k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/job-types-and-properties.md` | typing the Job (Fake / Tax / Orientation / Emotional / Viral / Regular); the Fake-Job past-behaviour test | ~5k |
 
 **Staged — the orchestrator loads only at the stage that uses it:**
 
 | File | Load when | Used by | ~tokens |
 |---|---|---|---|
-| `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/consideration-activators.md` | writing the Consideration Set per segment | the four-slot container + the five Activators | ~4k |
-| `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/critical-chain.md` | the task is conversion / retention / acquisition | Previous / Next Jobs, chain breaks, Aha placement | ~6k |
-| `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/behaviour-change.md` | extracting switching barriers / fears | the blockers, Solution-as-label, habit, fears | ~10k |
-| `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation-mechanics.md` | generating value hypotheses (Section 5) | the published mechanic menu | ~5k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/consideration-activators.md` | writing the Consideration Set per segment | the four-slot container + the five Activators | ~4k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/critical-chain.md` | the task is conversion / retention / acquisition | Previous / Next Jobs, chain breaks, Aha placement | ~6k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/behaviour-change.md` | extracting switching barriers / fears | the blockers, Solution-as-label, habit, fears | ~10k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation-mechanics.md` | generating value hypotheses (Section 5) | the published mechanic menu | ~5k |
 
 > **Path note.** Use the paths above. If a file is not found, retry with a `1-` prefix on the canon folder (`1-Next-Move-Theory-Canon/...`) — the source repo orders folders with a numeric prefix the public repo strips.
 
@@ -160,7 +160,7 @@ Then **document language.** Default to **English**; if the user writes in anothe
 
 ## STAGE 1 — The business task (asked first — it is the spec on the extraction)
 
-The chosen business task changes *what to dig for and at what altitude* — the canon: *"the shortlisted mechanics are the spec on the research… without them you interview blind"* (`../../Next-Move-Theory-Canon/Algorithms/the-algorithm.md`). So pin it before extracting. Run this waterfall:
+The chosen business task changes *what to dig for and at what altitude* — the canon: *"the shortlisted mechanics are the spec on the research… without them you interview blind"* (`../nmt-chat/references/Next-Move-Theory-Canon/Algorithms/the-algorithm.md`). So pin it before extracting. Run this waterfall:
 
 1. **Ask directly** (`AskUserQuestion`) — *"What business task are you trying to solve with these interviews?"* — offer the menu below.
 2. **If the user can't name one** → *"Describe in your own words what you're trying to figure out or fix."* (free text).
@@ -168,7 +168,7 @@ The chosen business task changes *what to dig for and at what altitude* — the 
 4. **If you can't confidently map it** → propose the **2–4 most likely tasks** (`AskUserQuestion`) and let the user pick.
 5. **If several tasks apply** → ask them to rank; the top one drives extraction emphasis, the rest are secondary.
 
-**Business-task menu** (distilled from the canon's Algorithms + mechanics catalog — `../../Next-Move-Theory-Canon/Algorithms/the-algorithm.md`, `../../Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation-mechanics.md`; cited as provenance, no need to read them for the menu):
+**Business-task menu** (distilled from the canon's Algorithms + mechanics catalog — `../nmt-chat/references/Next-Move-Theory-Canon/Algorithms/the-algorithm.md`, `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation-mechanics.md`; cited as provenance, no need to read them for the menu):
 
 - **Create value / beat competitors** — perform the Jobs more efficiently than the alternatives.
 - **Increase conversion to sale / activate customers into value** — repair the path to the first Aha Moment.

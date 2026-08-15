@@ -10,7 +10,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-REGISTRY = ROOT / "references" / "client-adapters.md"
+REGISTRY = ROOT / "skills" / "nmt-chat" / "references" / "client-adapters.md"
 EXPECTED_ADAPTERS = {
     "Invocation spelling and namespacing",
     "Interactive-question tooling and limits",
@@ -29,11 +29,11 @@ EXPECTED_SKILLS = {
     "nmt-upgrade",
 }
 EXPECTED_SHARED_REFERENCES = {
-    "references/producer-contract.md",
-    "references/readability-contract.md",
-    "references/canon-routing.md",
-    "references/skill-routing.md",
-    "references/methodology-guardrails.md",
+    "skills/nmt-chat/references/producer-contract.md",
+    "skills/nmt-chat/references/readability-contract.md",
+    "skills/nmt-chat/references/canon-routing.md",
+    "skills/nmt-chat/references/skill-routing.md",
+    "skills/nmt-chat/references/methodology-guardrails.md",
 }
 INVENTORY_RE = re.compile(r"^\| `([^`]+)` \| `([0-9a-f]{64})` \|$", re.MULTILINE)
 HEADING_RE = re.compile(r"^### \d+\. (.+)$", re.MULTILINE)
@@ -53,6 +53,7 @@ def source_files() -> set[str]:
     skills = {
         path.relative_to(ROOT).as_posix()
         for path in (ROOT / "skills").rglob("*.md")
+        if "Next-Move-Theory-Canon" not in path.parts and path != REGISTRY
     }
     return skills | EXPECTED_SHARED_REFERENCES
 
@@ -149,6 +150,16 @@ def validate_source_boundary(errors: list[str]) -> None:
         errors.append("a second Client-specific Skill tree exists under skills/")
     if any(child.name == "Skills" for child in ROOT.iterdir()):
         errors.append("retired root Skills/ tree exists beside the shared source")
+    canon_roots = [
+        path for path in ROOT.rglob("Next-Move-Theory-Canon")
+        if path.is_dir() and ".git" not in path.parts
+    ]
+    expected_canon = ROOT / "skills/nmt-chat/references/Next-Move-Theory-Canon"
+    if canon_roots != [expected_canon]:
+        relative = [path.relative_to(ROOT).as_posix() for path in canon_roots]
+        errors.append(f"Canon payload inventory differs: expected={[expected_canon.relative_to(ROOT).as_posix()]}, got={relative}")
+    if (ROOT / "references").exists():
+        errors.append("retired root references/ directory exists")
 
     for path_string in source_files():
         path = ROOT / path_string

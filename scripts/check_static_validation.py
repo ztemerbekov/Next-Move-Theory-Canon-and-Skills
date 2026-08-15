@@ -57,12 +57,23 @@ CANON_FILES = frozenset(
         "Riskiest-Assumption-Test/rat-key-theses.md",
     }
 )
+CANON_ROOT = Path("skills/nmt-chat/references/Next-Move-Theory-Canon")
+SHARED_REFERENCE_FILES = frozenset(
+    {
+        "canon-routing.md",
+        "client-adapters.md",
+        "methodology-guardrails.md",
+        "producer-contract.md",
+        "readability-contract.md",
+        "skill-routing.md",
+    }
+)
 CANON_PATH_RE = re.compile(
-    r"(?<![A-Za-z0-9-])(\.\./\.\./Next-Move-Theory-Canon/"
-    r"[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)*)"
+    r"(?<![A-Za-z0-9-])((?:references/|\.\./nmt-chat/references/)"
+    r"Next-Move-Theory-Canon/[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)*)"
 )
 REFERENCE_PATH_RE = re.compile(
-    r"(?<![A-Za-z0-9-])(\.\./\.\./references/"
+    r"(?<![A-Za-z0-9-])(\.\./nmt-chat/references/"
     r"[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)*)"
 )
 OLD_REFERENCE_RE = re.compile(r"\.\./(?:PRODUCER|READABILITY)-CONTRACT\.md")
@@ -272,9 +283,9 @@ def check_versions(root: Path, errors: list[str]) -> None:
 
 
 def check_inventory(root: Path, errors: list[str]) -> None:
-    canon = root / "Next-Move-Theory-Canon"
+    canon = root / CANON_ROOT
     if not canon.is_dir():
-        errors.append("Next-Move-Theory-Canon: bundled Canon root is missing")
+        errors.append(f"{CANON_ROOT}: bundled Canon root is missing")
     else:
         actual = {
             path.relative_to(canon).as_posix()
@@ -283,16 +294,37 @@ def check_inventory(root: Path, errors: list[str]) -> None:
         }
         if actual != CANON_FILES:
             errors.append(
-                "Next-Move-Theory-Canon: exact inventory changed; "
+                f"{CANON_ROOT}: exact inventory changed; "
                 f"missing={sorted(CANON_FILES - actual)}, unexpected={sorted(actual - CANON_FILES)}"
             )
-        nested = [
-            path.relative_to(root).as_posix()
-            for path in canon.rglob("*")
-            if path.is_dir() and path.name == "Next-Move-Theory-Canon"
-        ]
-        if nested:
-            errors.append(f"Next-Move-Theory-Canon: nested Canon root found at {nested[0]}")
+
+    canon_roots = sorted(
+        path.relative_to(root).as_posix()
+        for path in root.rglob("Next-Move-Theory-Canon")
+        if path.is_dir() and ".git" not in path.parts
+    )
+    expected_canon_root = CANON_ROOT.as_posix()
+    if canon_roots != [expected_canon_root]:
+        errors.append(
+            "Next-Move-Theory-Canon: expected exactly one physical payload root; "
+            f"found={canon_roots}"
+        )
+
+    shared_root = root / "skills/nmt-chat/references"
+    actual_shared = {
+        path.name
+        for path in shared_root.iterdir()
+        if path.is_file()
+    } if shared_root.is_dir() else set()
+    if actual_shared & {"Next-Move-Theory-Canon"}:
+        actual_shared.remove("Next-Move-Theory-Canon")
+    if actual_shared != SHARED_REFERENCE_FILES:
+        errors.append(
+            "skills/nmt-chat/references/: shared-reference inventory changed; "
+            f"expected={sorted(SHARED_REFERENCE_FILES)}, actual={sorted(actual_shared)}"
+        )
+    if (root / "references").exists():
+        errors.append("references/: retired root shared-reference directory remains")
 
     skills_root = root / "skills"
     if not skills_root.is_dir():
@@ -374,6 +406,8 @@ def check_frontmatter_and_paths(root: Path, errors: list[str]) -> None:
 
         for match in REFERENCE_PATH_RE.finditer(text):
             target = match.group(1)
+            if "Next-Move-Theory-Canon" in target:
+                continue
             resolved = (path.parent / target).resolve()
             line = text.count("\n", 0, match.start()) + 1
             try:
@@ -390,12 +424,40 @@ def check_frontmatter_and_paths(root: Path, errors: list[str]) -> None:
             add_error(errors, root, path, line, "retired shared-contract path remains")
 
 
+def check_required_anchors(root: Path, errors: list[str]) -> None:
+    producer_skills = SKILLS - {"nmt-chat", "nmt-upgrade"}
+    for skill in sorted(SKILLS):
+        path = root / "skills" / skill / "SKILL.md"
+        if not path.is_file():
+            continue
+        text = path.read_text(encoding="utf-8")
+        anchor = (
+            "references/Next-Move-Theory-Canon/"
+            if skill == "nmt-chat"
+            else "../nmt-chat/references/Next-Move-Theory-Canon/"
+        )
+        if anchor not in text:
+            errors.append(f"{path.relative_to(root)}: required Canon anchor is not declared: {anchor}")
+        elif not (path.parent / anchor).resolve().is_dir():
+            errors.append(f"{path.relative_to(root)}: required Canon anchor does not resolve: {anchor}")
+
+        if skill in producer_skills:
+            contract = "../nmt-chat/references/producer-contract.md"
+            if contract not in text:
+                errors.append(
+                    f"{path.relative_to(root)}: producer Skill does not declare shared contract: {contract}"
+                )
+            elif not (path.parent / contract).resolve().is_file():
+                errors.append(f"{path.relative_to(root)}: shared producer contract does not resolve: {contract}")
+
+
 def check_package_contract(root: Path) -> list[str]:
     errors: list[str] = []
     check_manifests(root, errors)
     check_versions(root, errors)
     check_inventory(root, errors)
     check_frontmatter_and_paths(root, errors)
+    check_required_anchors(root, errors)
     return errors
 
 
@@ -427,8 +489,6 @@ def copy_package_fixture(source: Path, destination: Path) -> None:
         ".agents",
         ".claude-plugin",
         ".codex-plugin",
-        "Next-Move-Theory-Canon",
-        "references",
         "skills",
         "docs",
         "CHANGELOG.md",
@@ -449,12 +509,20 @@ def run_negative_fixture_tests() -> list[str]:
 
         nested_fixture = fixture_root / "nested-canon"
         copy_package_fixture(ROOT, nested_fixture)
-        nested = nested_fixture / "Next-Move-Theory-Canon" / "fixture" / "Next-Move-Theory-Canon"
+        nested = nested_fixture / CANON_ROOT / "fixture" / "Next-Move-Theory-Canon"
         nested.mkdir(parents=True)
         (nested / "unexpected.md").write_text("fixture\n", encoding="utf-8")
         nested_errors = check_package_contract(nested_fixture)
-        if not any("nested Canon root" in error for error in nested_errors):
-            failures.append("self-test: nested Canon fixture was not rejected")
+        if not any("exactly one physical payload root" in error for error in nested_errors):
+            failures.append("self-test: duplicate Canon fixture was not rejected")
+
+        missing_anchor_fixture = fixture_root / "missing-anchor"
+        copy_package_fixture(ROOT, missing_anchor_fixture)
+        missing_probe = missing_anchor_fixture / CANON_ROOT / "Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md"
+        missing_probe.unlink()
+        missing_errors = check_package_contract(missing_anchor_fixture)
+        if not any("Canon path does not resolve" in error for error in missing_errors):
+            failures.append("self-test: missing Canon anchor fixture was not rejected")
 
         metadata_fixture = fixture_root / "user-invocable"
         copy_package_fixture(ROOT, metadata_fixture)

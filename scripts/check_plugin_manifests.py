@@ -23,6 +23,7 @@ SKILLS = {
     "nmt-upgrade",
 }
 PROHIBITED = {"agents", "hooks", "mcpServers", "apps"}
+CANON_ROOT = ROOT / "skills/nmt-chat/references/Next-Move-Theory-Canon"
 
 
 def read_json(relative: str) -> dict[str, Any]:
@@ -109,12 +110,34 @@ def check() -> None:
     assert_equal(codex_entry.get("category"), "Productivity", "Codex marketplace category")
     assert_no_prohibited(codex_marketplace, "Codex marketplace")
 
-    canon = ROOT / "Next-Move-Theory-Canon"
+    canon = CANON_ROOT
     if not canon.is_dir():
-        raise AssertionError("bundled Canon root is missing")
-    nested = list(canon.rglob("Next-Move-Theory-Canon"))
-    if nested:
-        raise AssertionError(f"nested Canon root found: {nested[0].relative_to(ROOT)}")
+        raise AssertionError("bundled Canon payload is missing")
+    canon_roots = [
+        path for path in ROOT.rglob("Next-Move-Theory-Canon")
+        if path.is_dir() and ".git" not in path.parts
+    ]
+    if canon_roots != [CANON_ROOT]:
+        relative = [path.relative_to(ROOT).as_posix() for path in canon_roots]
+        raise AssertionError(f"expected exactly one Canon payload root, found: {relative}")
+
+    shared_root = ROOT / "skills/nmt-chat/references"
+    expected_shared = {
+        "canon-routing.md",
+        "client-adapters.md",
+        "methodology-guardrails.md",
+        "producer-contract.md",
+        "readability-contract.md",
+        "skill-routing.md",
+    }
+    actual_shared = {path.name for path in shared_root.iterdir() if path.is_file()}
+    if actual_shared != expected_shared:
+        raise AssertionError(
+            f"shared-reference inventory differs: expected={sorted(expected_shared)}, "
+            f"actual={sorted(actual_shared)}"
+        )
+    if (ROOT / "references").exists():
+        raise AssertionError("retired root references/ directory remains")
 
 
 def main() -> int:
