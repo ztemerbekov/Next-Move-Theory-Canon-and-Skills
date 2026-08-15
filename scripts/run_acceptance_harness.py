@@ -369,13 +369,33 @@ def run_prompt(
 def run_static_gate(report: dict[str, Any]) -> bool:
     record, stdout, stderr = command(
         "static-validation",
-        [sys.executable, str(ROOT / "scripts/check_static_validation.py")],
+        [sys.executable, "-B", str(ROOT / "scripts/check_static_validation.py")],
         cwd=ROOT,
         timeout=180,
     )
     add_command(report, record)
     passed = record["status"] == "pass"
     add_check(report, "static-validation", "pass" if passed else "fail", redact((stdout + stderr)[-800:]))
+    return passed
+
+
+def run_skills_cli_gate(report: dict[str, Any]) -> bool:
+    """Prove the supported npx flow without using the operator's global state."""
+
+    record, stdout, stderr = command(
+        "skills-cli-install-update-negative",
+        [sys.executable, "-B", str(ROOT / "scripts/check_skills_cli_packaging.py"), "--mode", "both"],
+        cwd=ROOT,
+        timeout=900,
+    )
+    add_command(report, record)
+    passed = record["status"] == "pass"
+    add_check(
+        report,
+        "skills-cli-install-update-negative",
+        "pass" if passed else "fail",
+        redact((stdout + stderr)[-1600:]),
+    )
     return passed
 
 
@@ -666,6 +686,9 @@ def main() -> int:
         "temporary_state_cleaned": True,
     }
     if not run_static_gate(report):
+        report["status"] = "fail"
+        return write_report(report, args.report)
+    if not run_skills_cli_gate(report):
         report["status"] = "fail"
         return write_report(report, args.report)
 

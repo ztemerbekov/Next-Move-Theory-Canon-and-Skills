@@ -1,32 +1,42 @@
 # Clean-environment acceptance harness
 
-The implementation for Wayfinder ticket [#14](https://github.com/ztemerbekov/Next-Move-Theory-Canon-and-Skills/issues/14)
+The implementation for Wayfinder tickets [#14](https://github.com/ztemerbekov/Next-Move-Theory-Canon-and-Skills/issues/14)
+and [#24](https://github.com/ztemerbekov/Next-Move-Theory-Canon-and-Skills/issues/24)
 is the repository-local `scripts/run_acceptance_harness.py` command. It tests
-the installed package boundary; it does not inspect or rewrite the contents of
-the eight Skills.
+the installed package boundary and the supported `npx skills` flow; it does
+not inspect or rewrite the contents of the eight Skills.
 
 ## What it isolates
 
 Each run creates temporary state outside the repository:
 
 - a disposable Codex home and marketplace source;
+- disposable `HOME`, `XDG_CONFIG_HOME`, and npm cache directories for the
+  `skills` CLI;
 - a disposable unrelated Git Consumer with a baseline commit;
 - a first package snapshot and a temporary `1.0.1` update snapshot;
 - a JSON report containing command status, package fingerprints, file hashes,
   and before/after Consumer comparisons.
 
 The temporary state is removed when the run ends. The harness never writes to
-the Consumer or the checkout, never relies on a literal cache-version path,
-and redacts credential-shaped output. The repository static suite runs before
-any client operation.
+real user-global Skill or Client directories, the Consumer, or the checkout;
+it never relies on a literal cache-version path and redacts credential-shaped
+output. The repository static suite runs before any client operation.
 
 ## Commands
 
-Run the static gates plus installation, discovery, bundled-Canon, update, and
+Run the static gates plus isolated npx copy/symlink installation, idempotent
+reinstall, unsupported partial-install, discovery, bundled-Canon, update, and
 Consumer-cleanliness checks for Codex without model credentials:
 
 ```bash
 python3 scripts/run_acceptance_harness.py --client codex
+```
+
+To run only the networked npx installation/update/negative gate:
+
+```bash
+python3 scripts/check_skills_cli_packaging.py --mode both
 ```
 
 Without an authenticated Codex runtime, the report still proves installation,
@@ -64,6 +74,15 @@ the same report. It is useful for a status snapshot, but it cannot claim a
 full two-client runtime pass while Claude remains at that boundary.
 
 ## Checks recorded
+
+The npx skills gate records:
+
+1. the documented eight-Skill command for both Codex and Claude Code targets;
+2. every installed Skill's Canon and shared-reference path;
+3. copy and symlink behavior, including a limitation report when symlinks are
+   unavailable;
+4. repeated install/update fingerprints and unchanged Consumer files; and
+5. an explicit unsupported result when a partial command omits `nmt-chat`.
 
 For Codex, a successful authenticated run records:
 
