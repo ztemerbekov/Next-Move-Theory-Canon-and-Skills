@@ -3,11 +3,13 @@
 What changed in the Next Move Theory Canon + Skills Plugin. Newest bundle entry
 is at the top.
 
-The primary distribution is the user-global `next-move-theory` Plugin. Install
-and update it through the Client-native flows in
+The primary distribution is the user-global `next-move-theory` suite. Install
+and update it through the `skills` CLI flow in
 [`docs/installation.md`](docs/installation.md) and
-[`docs/updates.md`](docs/updates.md). The shell/PowerShell installers and
-`nmt-upgrade` remain available only as the one-release Legacy transition path.
+[`docs/updates.md`](docs/updates.md). The repository no longer ships the old
+shell/PowerShell installers. `nmt-upgrade` is not the supported global
+installation or update path; it retains unchanged Legacy-only behavior for
+existing project-local setups.
 
 ## Versioning
 
@@ -18,9 +20,9 @@ Theory** as SemVer `MAJOR.MINOR.PATCH`:
 - **MINOR** — a significant methodology update (new or reworked theses).
 - **PATCH** — small skill updates and methodology patches.
 
-The current bundle version is the top entry below. The Legacy installer records
-it in `.nmt-version`; the Plugin Clients use their own installed Plugin version
-state. (The README also shows the methodology maturity badges — Advanced JTBD
+The current bundle version is the top entry below. Existing Legacy project-local
+setups may record it in `.nmt-version`; the `skills` CLI manages the installed
+suite snapshot in Client user state. (The README also shows the methodology maturity badges — Advanced JTBD
 `v3.4 · stable` and Next Move Theory `v0.6 · in active development`.)
 
 ---
@@ -32,14 +34,19 @@ instruction injection.
 **Status:** Repository package contract; public marketplace release is separate.
 
 - Added repository-root Codex and Claude manifests and marketplace catalogs.
-- Consolidated the package around one hand-maintained `skills/` source tree and
-  the exact bundled `Next-Move-Theory-Canon/` root.
+- Consolidated the package around one hand-maintained `skills/` source tree;
+  the `nmt-chat` payload carries the one physical bundled Canon and shared
+  references.
 - Made `nmt-chat` the model-invoked router and kept Client differences in
   adapter/reference boundaries.
-- Documented Client-native installation and updates, the Legacy installers, and
-  the explicit no-migration boundary.
-- Kept `install.sh`, `install.ps1`, and `nmt-upgrade` as the transition-only
-  project-mutating path.
+- Documented the exact user-global `npx skills@latest add ...` installation and
+  update command, the explicit no-migration boundary, and the unsupported
+  partial-install case.
+- Added `NOTICE.md` with Ivan Zamesin attribution, the original repository,
+  CC BY-NC-SA 4.0 licensing, fork packaging/path changes, and no endorsement.
+- Removed `install.sh` and `install.ps1` from the active release surface; the
+  unchanged `nmt-upgrade` Skill remains only for existing Legacy project-local
+  setups.
 
 ---
 

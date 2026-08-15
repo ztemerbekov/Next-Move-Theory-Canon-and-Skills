@@ -1,57 +1,65 @@
-# Global Plugin installation
+# Global installation
 
-The primary distribution is one user-global `next-move-theory` Plugin, version
-`1.0.0`. The repository root is both the Plugin root and its marketplace root.
-The Plugin bundles the exact `Next-Move-Theory-Canon/` directory and one
-`skills/` tree containing all eight Skills.
+The supported distribution is one user-global `next-move-theory` suite
+installed with the `skills` CLI. It contains all eight Skills and the bundled
+Canon/shared references carried by the `nmt-chat` payload.
 
 ## Install
 
-Use the installer command for your platform:
-
-macOS, Linux, and other Unix-like systems:
+Run this command from any directory:
 
 ```bash
-npx install latest
+npx skills@latest add ztemerbekov/Next-Move-Theory-Canon-and-Skills --skill '*' -a codex -a claude-code -g -y
 ```
 
-Windows PowerShell:
-
-```powershell
-irm https://nextmovetheory.com/install.ps1 | iex
-```
+The command is cross-platform: use it from macOS, Linux, or Windows. The
+intentional `--skill '*'` installs the complete suite; partial Skill selection
+is unsupported because the shared Canon and routing references are packaged
+with `nmt-chat`.
 
 ## After installation
 
-Start with `nmt-chat`. It is the model-invoked router: describe the product
-question in ordinary language and let it route to the appropriate Skill. Direct
-Skill invocation is still available through each Client's Plugin surface, with
-the Client's own namespace or invocation marker if it displays one.
+Start with `nmt-chat`. It is the model-invoked router and conversational front
+door to the methodology. The `skills` CLI may materialize the installed suite
+as a copy or a symlink in each Client's user-global state; follow the CLI's
+reported destination rather than copying files into a project.
 
-The user-global Plugin install changes Client user state only. It does not add
-or modify `AGENTS.md`, `CLAUDE.md`, `.agents/`, `.claude/`,
-`Next-Move-Theory-Canon/`, or a Skill directory in the Consumer project. A
-Consumer project may be changed later when a user explicitly asks a Skill to
-perform work; that is runtime work, not installation residue.
+The install changes Client user state only. It does not add or modify
+`AGENTS.md`, `CLAUDE.md`, `.agents/`, `.claude/`, a Canon directory, or a Skill
+directory in the Consumer project. The one physical bundled Canon and shared
+reference set are resolved from the installed `nmt-chat` payload.
+
+## Update
+
+Repeat the same command to refresh both supported Client targets:
+
+```bash
+npx skills@latest add ztemerbekov/Next-Move-Theory-Canon-and-Skills --skill '*' -a codex -a claude-code -g -y
+```
+
+Do not edit a Client cache by hand, install a partial selection, or use an
+`nmt-upgrade` command as the global suite updater. `nmt-upgrade` retains its
+unchanged Legacy-only behavior for existing project-local setups; it is not
+part of the supported global installation or update path.
+
+## Legacy boundary
+
+This release does not ship `install.sh` or `install.ps1`, and it does not
+promise migration, cleanup, reconciliation, or removal of an existing
+project-local Legacy setup. The supported installation never injects files
+into a Consumer project. Any project changes made later by an explicitly
+invoked Skill are separate runtime work, not installation residue.
 
 ## Verify the package before distribution
 
 From a repository checkout, maintainers can run the local checks without
-authenticating Claude Code:
+authenticating either Client:
 
 ```bash
 python3 scripts/check_plugin_manifests.py
+python3 scripts/check_static_validation.py
 python3 /Users/ztemerbekov/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py .
-claude plugin validate . --strict
 ```
 
-Clean-environment installation, Skill invocation, update, and Consumer
-cleanliness checks are maintained by the acceptance harness. They run in an
-isolated user state and do not use Consumer-project files as installation
-inputs.
-
-## Migration boundary
-
-There is no automatic migration in this release. Existing project-local Legacy
-files are neither scanned nor reconciled by the Plugin install. See
-[`migration.md`](migration.md) before moving an existing setup.
+The clean-environment acceptance harness covers installation, discovery,
+Canon access, update behavior, and Consumer cleanliness in isolated state.

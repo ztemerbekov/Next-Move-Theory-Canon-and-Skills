@@ -1,45 +1,31 @@
-# Plugin updates
+# Suite updates
 
-Updates refresh the Client-managed Plugin snapshot. They do not edit a cache by
-hand, use a package-manager updater, or write into a Consumer project.
-
-## Claude Code
-
-Refresh the marketplace, update the user-scoped Plugin, then start a new Claude
-Code session or use the Client's plugin reload boundary:
+The supported update path is to repeat the same `skills` CLI command used for
+installation. It refreshes the complete eight-Skill suite for Codex and Claude
+Code and preserves the user-global boundary:
 
 ```bash
-claude plugin marketplace update next-move-theory
-claude plugin update next-move-theory@next-move-theory --scope user
+npx skills@latest add ztemerbekov/Next-Move-Theory-Canon-and-Skills --skill '*' -a codex -a claude-code -g -y
 ```
 
-The current session may keep the old loaded snapshot until reload or restart.
-The Skills resolve the current Canon through `${CLAUDE_PLUGIN_ROOT}`, so a cache
-relocation does not require a path edit.
+The `--skill '*'` selection is intentional. Partial updates are unsupported
+because the shared Canon and routing references are carried by the `nmt-chat`
+payload. The CLI may use a copy or symlink in Client user state; do not edit a
+cache directory by hand and do not copy the suite into a Consumer project.
 
-## Codex
-
-Refresh the configured Git marketplace and reinstall the named Plugin snapshot:
-
-```bash
-codex plugin marketplace upgrade next-move-theory
-codex plugin add next-move-theory@next-move-theory
-```
-
-Start a new Codex task after the reinstall. The current CLI has no separate
-`codex plugin update` command; marketplace refresh plus the native `plugin add`
-operation is the update path.
-
-## Version rule
-
-The bundle version is declared by the Client manifests and the changelog. A
-future release must update the Plugin metadata and the documented validation
-evidence together. Do not make a cache-directory edit or install a second
-Client-specific Skill tree to work around a version change.
+After the command completes, start a new Codex task or Claude Code session so
+the Client loads the refreshed snapshot. Verify that `nmt-chat` can reach the
+bundled Canon and route to the other Skills.
 
 ## Legacy boundary
 
-`nmt-upgrade`, `install.sh`, and `install.ps1` refresh the old project-mutating
-layout. They are not Plugin update commands. Their behavior and the explicit
-no-migration boundary are documented in
-[`legacy-installer.md`](legacy-installer.md) and [`migration.md`](migration.md).
+`nmt-upgrade` is unchanged Legacy-only behavior for existing project-local
+setups. It is not the supported global updater, and this repository no longer
+ships the old `install.sh` or `install.ps1` scripts. No migration, cleanup, or
+reconciliation is performed by a suite update.
+
+## Version requests and telemetry
+
+Founder-hosted version requests and any separate telemetry collected by the
+`skills` CLI are unchanged by this repository packaging work. The Skills do
+not gain new telemetry or behavior as part of installation or update.

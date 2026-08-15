@@ -10,9 +10,10 @@ The repository now has one physical lower-case `skills/` directory containing
 exactly the eight direct NMT Skill entry points. It is the only candidate
 editable Skill source tree.
 
-The Canon remains at the exact `Next-Move-Theory-Canon/` path and remains a
-single root. The shared producer and readability contracts are now under
-`references/` and are byte-preserved.
+The Canon remains one physical root at
+`skills/nmt-chat/references/Next-Move-Theory-Canon/`, carried by the `nmt-chat`
+payload. The shared producer and readability contracts are under
+`skills/nmt-chat/references/` and are byte-preserved.
 
 The old Claude and Codex trees were retained as immutable migration evidence
 under:
@@ -33,15 +34,17 @@ reproducible.
 
 Only the locked allowlist was applied to the new source:
 
-- shared contract pointers now resolve through `../../references/`;
-- non-Legacy Canon pointers now resolve through the Plugin-relative
-  `../../Next-Move-Theory-Canon/` path;
+- shared contract pointers now resolve through `../../references/` inside the
+  `nmt-chat` payload;
+- non-Legacy Canon pointers now resolve through the payload-relative
+  `../../references/Next-Move-Theory-Canon/` path;
 - the one objectively broken baseline pointer to the absent internal
   `mechanics-catalog.md` is corrected to the bundled public
   `value-creation-mechanics.md` file;
 - `user-invocable: true` was removed as a redundant Claude extension rejected by
   the current Codex validator;
-- `nmt-upgrade` keeps its project-root Canon paths and Legacy workflow;
+- `nmt-upgrade` keeps its project-root Canon paths and unchanged Legacy
+  workflow;
 - no workflow step, question, mode, handoff, output contract, methodology rule,
   or completion gate was rewritten.
 
@@ -60,9 +63,9 @@ Observed result:
 
 ```text
 PASS: 8 Skills match the Claude baseline after the mechanical allowlist
-PASS: shared contracts are byte-preserved in references/
+PASS: shared contracts are byte-preserved in skills/nmt-chat/references/
 PASS: Codex baseline is preserved as migration evidence
-PASS: Canon has one root and the consolidated tree has eight Skill entries
+PASS: Canon has one root inside nmt-chat and the consolidated tree has eight Skill entries
 ```
 
 The verifier is read-only. It compares every file in each migrated Skill with

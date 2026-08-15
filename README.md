@@ -42,9 +42,9 @@ Next Move Theory is the algorithm behind every product call: how to find product
 
 **More of your bets land.** That's the whole point. Hundreds of companies run on Next Move Theory, and across [dozens of documented cases](http://nextmovetheory.com/cases?utm_source=canon&utm_medium=github) the metrics moved significantly — conversion, retention, revenue, market share.
 
-This canon is the result of the last eight years of my work. Eight years ago I found Jobs To Be Done, saw how much it could become, and made an unreasonable decision: rebuild it from scratch so it would finally yield an algorithm. It only became that when I got lucky and found the science that explains what value really is and how a person changes behavior. That body of science sits in [`scientific-foundations.md`](Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/scientific-foundations.md), and everything else stands on it. On that foundation I rebuilt JTBD into thousands of theses, the core I call Advanced Jobs To Be Done. AJTBD alone still didn't produce the algorithm. To get there I folded in Unit Economics, the Riskiest Assumption Test, ABCDX segmentation, and Goldratt's Theory of Constraints. That integration became Next Move Theory. I've since taught it to more than 13,000 people in my home country, and this public canon is how I give its foundations to the world.
+This canon is the result of the last eight years of my work. Eight years ago I found Jobs To Be Done, saw how much it could become, and made an unreasonable decision: rebuild it from scratch so it would finally yield an algorithm. It only became that when I got lucky and found the science that explains what value really is and how a person changes behavior. That body of science sits in [`scientific-foundations.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/scientific-foundations.md), and everything else stands on it. On that foundation I rebuilt JTBD into thousands of theses, the core I call Advanced Jobs To Be Done. AJTBD alone still didn't produce the algorithm. To get there I folded in Unit Economics, the Riskiest Assumption Test, ABCDX segmentation, and Goldratt's Theory of Constraints. That integration became Next Move Theory. I've since taught it to more than 13,000 people in my home country, and this public canon is how I give its foundations to the world.
 
-**The main algorithm is here in full. Read it in [`the-algorithm.md`](Next-Move-Theory-Canon/Algorithms/the-algorithm.md).** Reading the steps isn't enough, though. For the algorithm to work for you, you have to understand the foundations it runs on: what a Job is, what value is, how to segment, how to test the riskiest assumption first. That is what the rest of this canon is. These are the foundational theses the algorithm stands on, so it works for you instead of reading like an empty checklist.
+**The main algorithm is here in full. Read it in [`the-algorithm.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Algorithms/the-algorithm.md).** Reading the steps isn't enough, though. For the algorithm to work for you, you have to understand the foundations it runs on: what a Job is, what value is, how to segment, how to test the riskiest assumption first. That is what the rest of this canon is. These are the foundational theses the algorithm stands on, so it works for you instead of reading like an empty checklist.
 
 The **skills** turn that algorithm into tools: feed in a product idea and get back a *decision*, not a description.
 
@@ -68,7 +68,7 @@ If you build, market, or decide the direction of a product, this is for you. You
 
 ## What's here — and what's coming
 
-**This public canon is the foundation, about 25% of the whole methodology.** What you have here are the foundational theses of Advanced Jobs To Be Done and Next Move Theory: what a Job is, what value is, how segmentation works, behavior change, the Job Graph, and the Riskiest Assumption Test. It also includes the main algorithm itself ([`the-algorithm.md`](Next-Move-Theory-Canon/Algorithms/the-algorithm.md)).
+**This public canon is the foundation, about 25% of the whole methodology.** What you have here are the foundational theses of Advanced Jobs To Be Done and Next Move Theory: what a Job is, what value is, how segmentation works, behavior change, the Job Graph, and the Riskiest Assumption Test. It also includes the main algorithm itself ([`the-algorithm.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Algorithms/the-algorithm.md)).
 
 **The rest of the methodology is not coming to this public repo.** It lives in the full version, available through the products and courses at **[nextmovetheory.com](http://nextmovetheory.com/?utm_source=canon&utm_medium=github)**. Beyond the foundations here, the full methodology covers:
 
@@ -89,10 +89,11 @@ If you build, market, or decide the direction of a product, this is for you. You
 
 ## The Plugin
 
-The repository root is both the Plugin root and the repository marketplace. The
-package contains one `skills/` source tree and one bundled
-`Next-Move-Theory-Canon/` root. Every Skill reads the bundled Canon through the
-Client adapter boundary; no generated Claude or Codex Skill copies are shipped.
+The repository root carries the Plugin manifests and marketplace metadata. The
+package contains one `skills/` source tree; the `nmt-chat` payload carries the
+one physical Canon and shared references under `skills/nmt-chat/references/`.
+Every Skill reads that bundled payload through the Client adapter boundary; no
+generated Claude or Codex Skill copies are shipped.
 
 | Skill | What it does |
 |---|---|
@@ -103,7 +104,7 @@ Client adapter boundary; no generated Claude or Codex Skill copies are shipped.
 | **[`nmt-product-requirements`](skills/nmt-product-requirements/)** | Turns the chosen segment + value into a build-ready PRD, including edge cases and a challenge-the-build gate. |
 | **[`nmt-craft-go-to-market`](skills/nmt-craft-go-to-market/)** | Turns a value proposition into landing-page copy, ads, and a growth-communication plan. |
 | **[`nmt-analyze-interviews`](skills/nmt-analyze-interviews/)** | Extracts AJTBD structure and value hypotheses from interviews, notes, sales/support calls, or survey open-ends. |
-| **[`nmt-upgrade`](skills/nmt-upgrade/)** | Legacy transition updater for the old project-mutating installer; it is not the Plugin update path. |
+| **[`nmt-upgrade`](skills/nmt-upgrade/)** | Unchanged Legacy-only updater for existing project-local setups; it is not the global suite update path. |
 
 **Two front doors.** **`nmt-chat`** is the conversational router for advice,
 explanation, or pressure-testing an idea. **`nmt-diagnose`** is the front door
@@ -134,25 +135,21 @@ ask).
 
 ### Global Plugin installation
 
-The supported installation is user-global. Use the installer command for your
-platform, then follow the verification contract in
-[`docs/installation.md`](docs/installation.md).
-
-**macOS, Linux, and other Unix-like systems:**
+The supported installation is user-global through the `skills` CLI. Follow the
+full contract in [`docs/installation.md`](docs/installation.md).
 
 ```bash
-npx install latest
+npx skills@latest add ztemerbekov/Next-Move-Theory-Canon-and-Skills --skill '*' -a codex -a claude-code -g -y
 ```
 
-**Windows PowerShell:**
+The command is cross-platform and intentionally installs all eight Skills.
+Partial selection is unsupported because the shared Canon and routing
+references are carried by the `nmt-chat` payload.
 
-```powershell
-irm https://nextmovetheory.com/install.ps1 | iex
-```
-
-The Client copies the repository-root Plugin into user state. It does not add
+The `skills` CLI materializes the suite in Client user state. It does not add
 `AGENTS.md`, `CLAUDE.md`, `.agents/`, `.claude/`, a Canon directory, or a Skill
-directory to the Consumer project. After installation, the Plugin contains:
+directory to the Consumer project. After installation, the user-global suite
+contains:
 
 ```
 user Plugin state/
@@ -166,23 +163,24 @@ Start with `nmt-chat` after installation. The Client may display a
 client-specific namespace for direct Skill invocation; the router can reach the
 producer Skills without changing the Consumer project.
 
-**Updating later:** use the Client-native commands in
-[`docs/updates.md`](docs/updates.md). Do not edit a Plugin cache or use an
-npm-based updater.
+**Updating later:** repeat the same command; the full update boundary is in
+[`docs/updates.md`](docs/updates.md). Do not edit a Client cache or install a
+partial suite.
 
-**Transition-only path:** [`docs/legacy-installer.md`](docs/legacy-installer.md)
-documents `install.sh`, `install.ps1`, and `nmt-upgrade`. They intentionally
-modify a Consumer project and do not migrate or clean up an existing setup.
+**Legacy boundary:** this release does not ship `install.sh` or `install.ps1`.
+`nmt-upgrade` remains unchanged Legacy-only behavior for existing project-local
+setups and is not the global suite update path. There is no supported migration
+or cleanup flow.
 
 <details>
 <summary><b>What is inside the user-global Plugin?</b></summary>
 
-The repository root is the Plugin root and marketplace root. It contains the
-exact `Next-Move-Theory-Canon/` directory, one `skills/` source tree with eight
-Skills, and the Client manifests under `.codex-plugin/` and `.claude-plugin/`.
-The Plugin's user-global install does not inject instructions into the
+The repository root contains the Plugin manifests and marketplace metadata. It
+contains one `skills/` source tree with eight Skills; the `nmt-chat` payload
+contains the physical Canon and shared references under its `references/`
+directory. The user-global install does not inject instructions into the
 Consumer project. See [`docs/installation.md`](docs/installation.md) for the
-installed-Canon path anchors.
+installed payload boundary.
 
 </details>
 
@@ -191,16 +189,14 @@ installed-Canon path anchors.
 ## Repository agent files
 
 This repository also ships **[`CLAUDE.md`](CLAUDE.md)** and **[`AGENTS.md`](AGENTS.md)**.
-They remain contributor and Legacy-installer sources: the Legacy scripts can
-inject their rules between markers, but a user-global Plugin installation does
-not copy or inject either file into a Consumer project.
+They remain contributor and historical Legacy-behavior sources; a user-global
+suite installation does not copy or inject either file into a Consumer project.
 
 The Plugin's progressively disclosed, client-neutral pointers live in
-[`references/methodology-guardrails.md`](references/methodology-guardrails.md),
-[`references/canon-routing.md`](references/canon-routing.md), and
-[`references/skill-routing.md`](references/skill-routing.md). The exact
-installed-Canon anchors are client-specific and are documented there; the
-existing Skill workflows remain unchanged.
+[`skills/nmt-chat/references/methodology-guardrails.md`](skills/nmt-chat/references/methodology-guardrails.md),
+[`skills/nmt-chat/references/canon-routing.md`](skills/nmt-chat/references/canon-routing.md), and
+[`skills/nmt-chat/references/skill-routing.md`](skills/nmt-chat/references/skill-routing.md).
+The existing Skill workflows remain unchanged.
 
 ---
 
@@ -208,12 +204,12 @@ existing Skill workflows remain unchanged.
 
 > **Prefer a nicer reading experience?** The same canon is available in a cleaner, more readable form on the site — [read it at nextmovetheory.com/library/canon](https://nextmovetheory.com/library/canon?utm_source=canon&utm_medium=github).
 
-The canon lives in [`Next-Move-Theory-Canon/`](Next-Move-Theory-Canon/), around two dozen interlinked files. You don't have to read them in order. If you want the fastest path to understanding, read these four key-theses files first, in order:
+The canon lives in [`skills/nmt-chat/references/Next-Move-Theory-Canon/`](skills/nmt-chat/references/Next-Move-Theory-Canon/), around two dozen interlinked files. You don't have to read them in order. If you want the fastest path to understanding, read these four key-theses files first, in order:
 
-1. **[`Next-Move-Theory/nmt-key-theses.md`](Next-Move-Theory-Canon/Next-Move-Theory/nmt-key-theses.md)** — the integrative root: what the whole framework is and how its pillars (AJTBD, Unit Economics, RAT, ABCDX) plus Theory of Constraints — with OKR (Objectives & Key Results) as a supporting methodology — fit into one system. *Start here for the big picture.*
-2. **[`Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md`](Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md)** — the substrate the rest stands on: Jobs, the Job Graph, value and the Aha Moment, segmentation. The core you'll use most.
-3. **[`Riskiest-Assumption-Test/rat-key-theses.md`](Next-Move-Theory-Canon/Riskiest-Assumption-Test/rat-key-theses.md)** — before you build: list the assumptions the idea rests on, rank them by how lethal they are if wrong, and buy the cheapest evidence against the deadliest first.
-4. **[`ABCDX-Segmentation/abcdx-segmentation-key-theses.md`](Next-Move-Theory-Canon/ABCDX-Segmentation/abcdx-segmentation-key-theses.md)** — the theory turned into a concrete operating move on a real customer base: focus the high-margin A/B, fire C/D, and read X as the signal of where to grow next.
+1. **[`Next-Move-Theory/nmt-key-theses.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Next-Move-Theory/nmt-key-theses.md)** — the integrative root: what the whole framework is and how its pillars (AJTBD, Unit Economics, RAT, ABCDX) plus Theory of Constraints — with OKR (Objectives & Key Results) as a supporting methodology — fit into one system. *Start here for the big picture.*
+2. **[`Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md)** — the substrate the rest stands on: Jobs, the Job Graph, value and the Aha Moment, segmentation. The core you'll use most.
+3. **[`Riskiest-Assumption-Test/rat-key-theses.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Riskiest-Assumption-Test/rat-key-theses.md)** — before you build: list the assumptions the idea rests on, rank them by how lethal they are if wrong, and buy the cheapest evidence against the deadliest first.
+4. **[`ABCDX-Segmentation/abcdx-segmentation-key-theses.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/ABCDX-Segmentation/abcdx-segmentation-key-theses.md)** — the theory turned into a concrete operating move on a real customer base: focus the high-margin A/B, fire C/D, and read X as the signal of where to grow next.
 
 Then read the rest in whichever cluster matches your problem.
 
@@ -221,58 +217,58 @@ Then read the rest in whichever cluster matches your problem.
 
 | File | What it teaches |
 |---|---|
-| [`Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md`](Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md) | The foundational theses — the methodology in one document. The map to everything else. |
-| [`Advanced-Jobs-To-Be-Done/scientific-foundations.md`](Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/scientific-foundations.md) | The brain as an energy-budget investor; why needs fail as a unit and Jobs succeed. |
-| [`Advanced-Jobs-To-Be-Done/job-structure.md`](Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/job-structure.md) | The eight elements that fully specify a single Job, element by element, with interview questions. |
+| [`Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md) | The foundational theses — the methodology in one document. The map to everything else. |
+| [`Advanced-Jobs-To-Be-Done/scientific-foundations.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/scientific-foundations.md) | The brain as an energy-budget investor; why needs fail as a unit and Jobs succeed. |
+| [`Advanced-Jobs-To-Be-Done/job-structure.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/job-structure.md) | The eight elements that fully specify a single Job, element by element, with interview questions. |
 
 ### The Job Graph — where strategy lives
 
 | File | What it teaches |
 |---|---|
-| [`Advanced-Jobs-To-Be-Done/job-graph.md`](Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/job-graph.md) | The hierarchy of Jobs around your product; the four levels, defined *relative to your product's reach*. |
-| [`Advanced-Jobs-To-Be-Done/job-types-and-properties.md`](Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/job-types-and-properties.md) | The taxonomy of Jobs — Regular, Orientation, Tax, Fake, Emotional, Viral — as a diagnostic instrument. |
-| [`Advanced-Jobs-To-Be-Done/critical-chain.md`](Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/critical-chain.md) | The Job Graph projected onto time — the lived path a team actually ships, where the Aha Moment fires. |
+| [`Advanced-Jobs-To-Be-Done/job-graph.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/job-graph.md) | The hierarchy of Jobs around your product; the four levels, defined *relative to your product's reach*. |
+| [`Advanced-Jobs-To-Be-Done/job-types-and-properties.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/job-types-and-properties.md) | The taxonomy of Jobs — Regular, Orientation, Tax, Fake, Emotional, Viral — as a diagnostic instrument. |
+| [`Advanced-Jobs-To-Be-Done/critical-chain.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/critical-chain.md) | The Job Graph projected onto time — the lived path a team actually ships, where the Aha Moment fires. |
 
 ### Creating value
 
 | File | What it teaches |
 |---|---|
-| [`Advanced-Jobs-To-Be-Done/value-creation.md`](Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation.md) | The deep canon on value: energy efficiency, success criteria as the specification of value, the Aha Moment. |
-| [`Advanced-Jobs-To-Be-Done/value-creation-mechanics.md`](Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation-mechanics.md) | The foundational catalog of value-creation mechanics — kill a Job, take a Job off the customer, climb a level. |
-| [`Advanced-Jobs-To-Be-Done/behaviour-change.md`](Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/behaviour-change.md) | Why switching is swapping one Job Graph for another; a Solution as a *label* for the sub-graph it installs. |
-| [`Advanced-Jobs-To-Be-Done/customers-attention-management.md`](Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/customers-attention-management.md) | Attention as the metabolic resource every value-creation mechanism routes through. |
+| [`Advanced-Jobs-To-Be-Done/value-creation.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation.md) | The deep canon on value: energy efficiency, success criteria as the specification of value, the Aha Moment. |
+| [`Advanced-Jobs-To-Be-Done/value-creation-mechanics.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation-mechanics.md) | The foundational catalog of value-creation mechanics — kill a Job, take a Job off the customer, climb a level. |
+| [`Advanced-Jobs-To-Be-Done/behaviour-change.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/behaviour-change.md) | Why switching is swapping one Job Graph for another; a Solution as a *label* for the sub-graph it installs. |
+| [`Advanced-Jobs-To-Be-Done/customers-attention-management.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/customers-attention-management.md) | Attention as the metabolic resource every value-creation mechanism routes through. |
 
 ### Reaching and converting customers
 
 | File | What it teaches |
 |---|---|
-| [`Advanced-Jobs-To-Be-Done/consideration-activators.md`](Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/consideration-activators.md) | The five Consideration Activators — what you load into the customer's head to move their choice your way. |
-| [`Advanced-Jobs-To-Be-Done/barrier-removal.md`](Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/barrier-removal.md) | Removing the objective barriers that make a better Job Graph non-executable for a segment. |
-| [`Advanced-Jobs-To-Be-Done/communication.md`](Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/communication.md) | Communication in the language of Jobs — the value-proposition formula and the landing-page structure. |
+| [`Advanced-Jobs-To-Be-Done/consideration-activators.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/consideration-activators.md) | The five Consideration Activators — what you load into the customer's head to move their choice your way. |
+| [`Advanced-Jobs-To-Be-Done/barrier-removal.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/barrier-removal.md) | Removing the objective barriers that make a better Job Graph non-executable for a segment. |
+| [`Advanced-Jobs-To-Be-Done/communication.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/communication.md) | Communication in the language of Jobs — the value-proposition formula and the landing-page structure. |
 
 ### Choosing where to compete
 
 | File | What it teaches |
 |---|---|
-| [`Advanced-Jobs-To-Be-Done/segmentation.md`](Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/segmentation.md) | Segmentation by Job Graph similarity, not demographics — the most expensive cut to get wrong. |
-| [`ABCDX-Segmentation/abcdx-segmentation-key-theses.md`](Next-Move-Theory-Canon/ABCDX-Segmentation/abcdx-segmentation-key-theses.md) | ABCDX — splitting your paying base by margin × satisfaction; refocus on A/B, fire C/D, read X as a signal. |
-| [`Riskiest-Assumption-Test/rat-key-theses.md`](Next-Move-Theory-Canon/Riskiest-Assumption-Test/rat-key-theses.md) | RAT — list the assumptions an idea rests on, rank them by lethality, and buy the cheapest evidence first. |
+| [`Advanced-Jobs-To-Be-Done/segmentation.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/segmentation.md) | Segmentation by Job Graph similarity, not demographics — the most expensive cut to get wrong. |
+| [`ABCDX-Segmentation/abcdx-segmentation-key-theses.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/ABCDX-Segmentation/abcdx-segmentation-key-theses.md) | ABCDX — splitting your paying base by margin × satisfaction; refocus on A/B, fire C/D, read X as a signal. |
+| [`Riskiest-Assumption-Test/rat-key-theses.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Riskiest-Assumption-Test/rat-key-theses.md) | RAT — list the assumptions an idea rests on, rank them by lethality, and buy the cheapest evidence first. |
 
 ### Next Move Theory — the meta-framework above AJTBD
 
 | File | What it teaches |
 |---|---|
-| [`Next-Move-Theory/nmt-key-theses.md`](Next-Move-Theory-Canon/Next-Move-Theory/nmt-key-theses.md) | The integrative root — how AJTBD, Unit Economics, RAT, ABCDX, and Theory of Constraints combine into one system, with OKR as a supporting methodology. *The product is a single organism.* |
-| [`Next-Move-Theory/focus-as-company-attention-management.md`](Next-Move-Theory-Canon/Next-Move-Theory/focus-as-company-attention-management.md) | Focus as pointing the whole company's attention at specific Core Jobs of one segment; the Innovator's Dilemma as focus that ossified. |
-| [`Next-Move-Theory/subtraction.md`](Next-Move-Theory-Canon/Next-Move-Theory/subtraction.md) | Subtraction as the meta-operator across all four pillars — removing Jobs, unprofitable units, risky assumptions, and C/D customers. |
+| [`Next-Move-Theory/nmt-key-theses.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Next-Move-Theory/nmt-key-theses.md) | The integrative root — how AJTBD, Unit Economics, RAT, ABCDX, and Theory of Constraints combine into one system, with OKR as a supporting methodology. *The product is a single organism.* |
+| [`Next-Move-Theory/focus-as-company-attention-management.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Next-Move-Theory/focus-as-company-attention-management.md) | Focus as pointing the whole company's attention at specific Core Jobs of one segment; the Innovator's Dilemma as focus that ossified. |
+| [`Next-Move-Theory/subtraction.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Next-Move-Theory/subtraction.md) | Subtraction as the meta-operator across all four pillars — removing Jobs, unprofitable units, risky assumptions, and C/D customers. |
 
 ### Practice, B2B, and the operating loop
 
 | File | What it teaches |
 |---|---|
-| [`HowTos/basic-ajtbd-interview-guide-and-principles.md`](Next-Move-Theory-Canon/HowTos/basic-ajtbd-interview-guide-and-principles.md) | The practical interview guide — principles and a question bank that reconstruct Jobs, criteria, Aha Moments, and Barriers from what a customer actually did. |
-| [`Advanced-Jobs-To-Be-Done/b2b.md`](Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/b2b.md) | The B2B deal as a Job Graph across roles — and why personal Jobs usually outweigh business Jobs. |
-| [`Algorithms/the-algorithm.md`](Next-Move-Theory-Canon/Algorithms/the-algorithm.md) | How the pieces combine into a single cyclical algorithm — and the anti-patterns that kill products. |
+| [`HowTos/basic-ajtbd-interview-guide-and-principles.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/HowTos/basic-ajtbd-interview-guide-and-principles.md) | The practical interview guide — principles and a question bank that reconstruct Jobs, criteria, Aha Moments, and Barriers from what a customer actually did. |
+| [`Advanced-Jobs-To-Be-Done/b2b.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/b2b.md) | The B2B deal as a Job Graph across roles — and why personal Jobs usually outweigh business Jobs. |
+| [`Algorithms/the-algorithm.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Algorithms/the-algorithm.md) | How the pieces combine into a single cyclical algorithm — and the anti-patterns that kill products. |
 
 > The public canon covers the most foundational theses and mechanics. The full methodology — the product-diagnosis algorithm, the 100+-mechanic catalog, the full unit-economics integration, and more — lives in the products and courses at nextmovetheory.com. **For new theses and book chapters as they're published, subscribe at [nextmovetheory.com](http://nextmovetheory.com/?utm_source=canon&utm_medium=github)** — home to the canon, the books, and the newsletter.
 
@@ -285,16 +281,16 @@ Next-Move-Theory-Canon-and-Skills/
 ├── .agents/plugins/marketplace.json    # Codex repository marketplace
 ├── .claude-plugin/                     # Claude manifest + marketplace
 ├── .codex-plugin/plugin.json           # Codex Plugin manifest
-├── Next-Move-Theory-Canon/             # the bundled methodology
-│   ├── Advanced-Jobs-To-Be-Done/       #   the Jobs framework — start with ajtbd-key-theses.md
-│   ├── ABCDX-Segmentation/             #   segmenting a paying base by margin × satisfaction
-│   ├── Riskiest-Assumption-Test/       #   validating ideas before you build them
-│   ├── Next-Move-Theory/               #   the integrative meta-framework above AJTBD
-│   ├── HowTos/                         #   practical guides — start with the interview guide
-│   └── Algorithms/                     #   how the pieces combine into one loop
-├── references/                         # progressive disclosure + client contracts
 ├── skills/                             # one hand-maintained Skill source tree
-│   ├── nmt-chat/                       #   model-invoked router
+│   ├── nmt-chat/                       #   router + bundled Canon/references payload
+│   │   └── references/
+│   │       ├── Next-Move-Theory-Canon/ #     the bundled methodology
+│   │       ├── canon-routing.md
+│   │       ├── methodology-guardrails.md
+│   │       ├── skill-routing.md
+│   │       ├── producer-contract.md
+│   │       ├── readability-contract.md
+│   │       └── client-adapters.md
 │   ├── nmt-diagnose/
 │   ├── nmt-market-research/
 │   ├── nmt-craft-value-proposition/
@@ -302,7 +298,8 @@ Next-Move-Theory-Canon-and-Skills/
 │   ├── nmt-craft-go-to-market/
 │   ├── nmt-analyze-interviews/
 │   └── nmt-upgrade/                    #   Legacy transition updater
-└── docs/                               # installation, updates, and Legacy boundary
+├── NOTICE.md                           # attribution and fork packaging notice
+└── docs/                               # installation, updates, and migration boundary
 ```
 
 ---
@@ -313,7 +310,7 @@ By 2018 I taught product for a living: customer research, segmentation, intervie
 
 I went deep into Jobs To Be Done and kept its deepest intuition: a person sits in a situation and wants to *transition* into a different state. I left the rest of the machinery behind, because it never told me how to research, segment, choose where to compete, or create value.
 
-It only came together when I got lucky and found the right science. Lisa Feldman Barrett's work led me to allostasis, prediction, and reward prediction error, which is what *value* actually is to a brain managing an energy budget. It also led me to the theories of needs, emotions, habit, identity, and loss aversion that explain how a person changes behavior. That body of science sits in [`scientific-foundations.md`](Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/scientific-foundations.md), and everything else stands on it. On top of it I could finally build a real algorithm for creating value, the core I called **Advanced Jobs To Be Done (AJTBD)**.
+It only came together when I got lucky and found the right science. Lisa Feldman Barrett's work led me to allostasis, prediction, and reward prediction error, which is what *value* actually is to a brain managing an energy budget. It also led me to the theories of needs, emotions, habit, identity, and loss aversion that explain how a person changes behavior. That body of science sits in [`scientific-foundations.md`](skills/nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/scientific-foundations.md), and everything else stands on it. On top of it I could finally build a real algorithm for creating value, the core I called **Advanced Jobs To Be Done (AJTBD)**.
 
 AJTBD alone still wasn't enough. A few more methodologies turned out to be fundamental. First the **Riskiest Assumption Test**. Every initiative is a stack of risky assumptions, any of which might not hold, so you don't just launch and hope. In a sense the idea is already dead and you simply don't yet know what will kill it. RAT is how you find out cheaply, before you've paid for the build. Then **Unit Economics**. A company can only grow and fund its next bets by competing for the Jobs of segments where it can actually earn a target margin. **Goldratt's Theory of Constraints** taught me to find the single bottleneck that limits the system and fix *that*, instead of improving everything at once. Later I added **goal-setting**, an algorithm for finding a company's real growth points. Together it all became **Next Move Theory**.
 
@@ -350,7 +347,7 @@ Found an error in a thesis or a broken link? Open an issue or a pull request.
 
 ## License
 
-The canon and the skills are licensed under [**CC BY-NC-SA 4.0**](https://creativecommons.org/licenses/by-nc-sa/4.0/) (Creative Commons Attribution–NonCommercial–ShareAlike 4.0 International) — see [`LICENSE`](LICENSE). You are free to **share** and **adapt** the material, as long as you:
+The canon and the skills are licensed under [**CC BY-NC-SA 4.0**](https://creativecommons.org/licenses/by-nc-sa/4.0/) (Creative Commons Attribution–NonCommercial–ShareAlike 4.0 International) — see [`LICENSE`](LICENSE) and [`NOTICE.md`](NOTICE.md). This fork changes packaging, paths, documentation, attribution, and validation only; it does not imply endorsement by Ivan Zamesin or the original project. You are free to **share** and **adapt** the material, as long as you:
 
 - **Attribution** — credit Ivan Zamesin and link back to this repository and the license;
 - **NonCommercial** — don't use the material for commercial purposes;

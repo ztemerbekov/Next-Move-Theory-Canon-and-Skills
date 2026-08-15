@@ -28,7 +28,7 @@ python3 scripts/check_plugin_manifests.py
 The check parses all four JSON files, verifies shared identity and version,
 checks the exact eight-Skill inventory and entry points, validates both
 marketplace sources and policy blocks, rejects prohibited runtime components,
-and rejects a nested `Next-Move-Theory-Canon/` directory.
+and rejects a second bundled Canon root outside the `nmt-chat` payload.
 
 ## Client validators
 

@@ -69,7 +69,8 @@ For Codex, a successful authenticated run records:
 
 1. version and isolated login status;
 2. local user-global marketplace installation and Plugin discovery;
-3. exactly eight installed Skills and one bundled Canon root;
+3. exactly eight installed Skills and one bundled Canon root carried by the
+   `nmt-chat` payload;
 4. one direct smoke call per Skill, installed-Canon access, the model-invoked
    `nmt-chat` router, and a negative unrelated route;
 5. native local-fixture reinstall with a changed package fingerprint;
@@ -81,4 +82,5 @@ available for hosted Git sources. The harness marks local marketplace refresh
 as `not_applicable` and still exercises the native reinstall/update boundary.
 
 No command in this harness calls the Legacy installer. Legacy behavior remains
-documented separately in [`../legacy-installer.md`](../legacy-installer.md).
+documented separately in the current [installation](../installation.md) and
+[update](../updates.md) boundary documents.

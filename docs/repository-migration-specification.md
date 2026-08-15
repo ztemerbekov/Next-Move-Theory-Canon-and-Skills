@@ -20,11 +20,13 @@ The final distribution has:
 - one Plugin named `next-move-theory`;
 - one pinned `1.0.0` bundle containing the Canon and all eight Skills;
 - one hand-maintained `skills/` source tree;
-- one hand-authored `references/client-adapters.md` registry;
+- one `nmt-chat` payload containing the single physical Canon and the
+  hand-authored shared references, including `client-adapters.md`;
 - no generated Claude or Codex Skill copies;
 - the existing `nmt-chat` Skill as the only model-invoked router;
-- the existing `install.sh`, `install.ps1`, and `nmt-upgrade` behavior retained as
-  the Legacy transition path;
+- no `install.sh` or `install.ps1` in the active release surface;
+- unchanged `nmt-upgrade` behavior retained only for existing project-local
+  Legacy setups;
 - no default writes to a Consumer `AGENTS.md`, `CLAUDE.md`, `.nmt-version`,
   `.claude/`, `.agents/`, Canon directory, or Skill directory.
 
@@ -44,28 +46,27 @@ the current Codex tree is migration evidence, not a second specification.
 │   └── plugin.json                    # Claude Plugin manifest
 ├── .codex-plugin/
 │   └── plugin.json                    # Codex Plugin manifest
-├── Next-Move-Theory-Canon/            # bundled Canon; exact name preserved
 ├── skills/                            # only editable Skill source tree
 │   ├── nmt-analyze-interviews/
-│   ├── nmt-chat/
+│   ├── nmt-chat/                       # router + bundled payload
+│   │   └── references/
+│   │       ├── Next-Move-Theory-Canon/ # one physical bundled Canon
+│   │       ├── methodology-guardrails.md
+│   │       ├── canon-routing.md
+│   │       ├── skill-routing.md
+│   │       ├── producer-contract.md
+│   │       ├── readability-contract.md
+│   │       └── client-adapters.md
 │   ├── nmt-craft-go-to-market/
 │   ├── nmt-craft-value-proposition/
 │   ├── nmt-diagnose/
 │   ├── nmt-market-research/
 │   ├── nmt-product-requirements/
 │   └── nmt-upgrade/
-├── references/
-│   ├── methodology-guardrails.md
-│   ├── canon-routing.md
-│   ├── skill-routing.md
-│   ├── producer-contract.md
-│   ├── readability-contract.md
-│   └── client-adapters.md
 ├── scripts/                           # static, parity, and smoke tooling
 ├── tests/                             # fixtures and clean-environment tests
-├── docs/                              # installation, updates, Legacy, evidence
-├── install.sh                         # retained Legacy installer
-├── install.ps1                        # retained Legacy installer
+├── docs/                              # installation, updates, migration, evidence
+├── NOTICE.md                          # attribution and fork packaging notice
 ├── AGENTS.md                          # contributor/Legacy source, not installed
 ├── CLAUDE.md                          # contributor/Legacy source, not installed
 ├── CHANGELOG.md
@@ -81,22 +82,22 @@ second package or a Client-specific content tree.
 
 | Current path | Final path or disposition | Operation | Invariant / proof |
 | --- | --- | --- | --- |
-| `Next-Move-Theory-Canon/**` | `Next-Move-Theory-Canon/**` | Retain in place and bundle unchanged | Exact directory name, file inventory, and release digest remain stable. |
+| `Next-Move-Theory-Canon/**` | `skills/nmt-chat/references/Next-Move-Theory-Canon/**` | Carry one physical Canon inside the `nmt-chat` payload | Exact Canon inventory remains stable; every installed Skill resolves this one root. |
 | `Skills/claude/<eight skills>/**` | `skills/<eight skills>/**` | Consolidate the reviewed Claude baseline into the sole source tree; apply only the mechanical allowlist below | No semantic workflow diff; parity gate reports any unexpected sentence or reorder. |
-| `Skills/claude/PRODUCER-CONTRACT.md` | `references/producer-contract.md` | Move byte-preserved shared contract | All producer Skills resolve the new reference; one source only. |
-| `Skills/claude/READABILITY-CONTRACT.md` | `references/readability-contract.md` | Move byte-preserved shared contract | All references resolve; no duplicate contract remains. |
+| `Skills/claude/PRODUCER-CONTRACT.md` | `skills/nmt-chat/references/producer-contract.md` | Move byte-preserved shared contract | All producer Skills resolve the new reference; one source only. |
+| `Skills/claude/READABILITY-CONTRACT.md` | `skills/nmt-chat/references/readability-contract.md` | Move byte-preserved shared contract | All references resolve; no duplicate contract remains. |
 | `Skills/claude/<producer>/references/glossary.md` | `skills/<producer>/references/glossary.md` | Retain beside the Skill | Existing glossary behavior and relative links stay intact. |
 | `Skills/codex/**` | Retired after migration parity passes; never packaged | Use only as the migration comparison input, then remove the duplicate source tree | Final package has one `skills/` tree; the parity report records the baseline. |
-| `AGENTS.md` and `CLAUDE.md` | Same repository paths | Retain as contributor and Legacy-installer sources; update only their agent-facing routing/documentation role | Global Plugin installation never copies or injects either file. |
+| `AGENTS.md` and `CLAUDE.md` | Same repository paths | Retain as contributor sources; update only their agent-facing routing/documentation role | Global suite installation never copies or injects either file. |
 | `README.md` | `README.md` | Update installation, update, Legacy, and Plugin structure sections | Primary path is user-global Plugin installation; Legacy is clearly marked. |
 | `CHANGELOG.md` | `CHANGELOG.md` | Add the `1.0.0` bundle entry while preserving historical entries | Manifest and changelog all declare `1.0.0`; history is not rewritten. |
-| `install.sh` | `install.sh` | Retain behavior for one transition release; label through documentation/comments only if needed | It remains project-mutating Legacy behavior and is not called by global Plugin install. |
-| `install.ps1` | `install.ps1` | Retain behavior for one transition release; label through documentation/comments only if needed | Same Legacy boundary as `install.sh`. |
+| `install.sh` | Removed from active tree | Remove the obsolete project-mutating installer | The supported suite has one `skills` CLI installation path and no Legacy installer command. |
+| `install.ps1` | Removed from active tree | Remove the obsolete project-mutating installer | Same Legacy boundary as `install.sh`. |
 | `Skills/*/nmt-upgrade` workflow | `skills/nmt-upgrade/SKILL.md` | Retain workflow and name; only apply packaging-only path/frontmatter mechanics if required by validation | It continues to invoke the Legacy installer and is not the Plugin updater. |
 | Existing research under `docs/research/` | Same paths | Retain as evidence | Research remains traceable and is not the runtime source of truth. |
-| `docs/installation.md` | New | Document fresh user-global install in Claude Code and Codex | Commands, scope, cache boundary, and zero-Consumer-file guarantee are explicit. |
-| `docs/updates.md` | New | Document Client-native update/reload behavior | No `npx upgrade`, no cache editing, no Skill-driven global update. |
-| `docs/legacy-installer.md` | New | Document `install.sh`, `install.ps1`, and `nmt-upgrade` as transition-only | No migration, cleanup, reconciliation, or removal is promised. |
+| `docs/installation.md` | New | Document the supported user-global `skills` CLI install for both Clients | Command, scope, payload boundary, and zero-Consumer-file guarantee are explicit. |
+| `docs/updates.md` | New | Document `skills` CLI update and Client reload behavior | No `npx upgrade`, no cache editing, no Skill-driven global update. |
+| Legacy installer documentation | Removed from active docs | Do not publish commands for the removed installers | `nmt-upgrade` is documented only as unchanged Legacy-only behavior in the current installation/update docs. |
 | `docs/repository-migration-specification.md` | This file | Lock the implementation contract | Downstream tickets can execute without another architecture decision. |
 | `scripts/**` | New | Add deterministic validators, parity checks, inventory checks, and smoke harness | Every script has a documented input, output, exit status, and no Consumer write. |
 | `tests/**` | New | Add fixtures for both Clients, package snapshots, and Consumer cleanliness | Tests use isolated user state and never credentials or checkout-relative assumptions. |
@@ -106,12 +107,13 @@ second package or a Client-specific content tree.
 The source tree is not manually rewritten for behavior. An implementation script
 may make only these objectively mechanical changes, recording each transformation:
 
-1. Change references to shared contracts from the old `../...` location to the
-   final `../../references/...` location.
-2. Make Canon pointers use the relocation-safe Client adapter contract. Claude
-   reads through `${CLAUDE_PLUGIN_ROOT}/Next-Move-Theory-Canon/...`; Codex reads
-   from the installed Plugin-relative Canon path. No checkout, Consumer, or
-   literal cache-version path is allowed.
+1. Change references to shared contracts to the `nmt-chat` payload anchor:
+   `references/...` from `nmt-chat` and `../nmt-chat/references/...` from every
+   other Skill.
+2. Make Canon pointers use the relocation-safe payload-relative anchor:
+   `references/Next-Move-Theory-Canon/...` from `nmt-chat` and
+   `../nmt-chat/references/Next-Move-Theory-Canon/...` from every other Skill.
+   No checkout, Consumer, or literal cache-version path is allowed.
 3. Remove or normalize the proven Codex-incompatible `user-invocable: true`
    metadata without changing default visibility or model-invocation behavior.
 4. Move repeated shared guardrail, Canon-routing, and Skill-routing blocks to
@@ -119,8 +121,9 @@ may make only these objectively mechanical changes, recording each transformatio
    context pointer that names the condition for loading the reference. The moved
    text is byte-preserved; the pointer is not a new rule.
 5. Represent `/nmt-*` versus `$nmt-*`, interactive input, executor lifecycle, and
-   Client discovery wording through `references/client-adapters.md` rather than
-   maintaining two Skill bodies.
+   Client discovery wording through
+   `skills/nmt-chat/references/client-adapters.md` rather than maintaining two
+   Skill bodies.
 
 Every other changed line is an unexpected semantic diff and fails migration.
 The source and adapter registry are hand-maintained. No generated per-Client
@@ -128,7 +131,7 @@ Skill output is committed or shipped.
 
 ## Client adapter registry
 
-`references/client-adapters.md` is the one adapter source. Each entry must contain
+`skills/nmt-chat/references/client-adapters.md` is the one adapter source. Each entry must contain
 the supported Client, the exact proven incompatibility, the source evidence, the
 portable instruction boundary, and the check that detects drift. The `1.0.0`
 registry contains only:
@@ -162,24 +165,17 @@ Plugin root.
 
 ## Installation and update contract
 
-Documentation uses these user-global flows:
+Documentation uses this single user-global flow for both supported Clients:
 
 ```text
-Claude Code:
-  claude plugin marketplace add ztemerbekov/Next-Move-Theory-Canon-and-Skills --scope user
-  claude plugin install next-move-theory@next-move-theory --scope user
-
-Codex:
-  codex plugin marketplace add ztemerbekov/Next-Move-Theory-Canon-and-Skills --ref main
-  codex plugin add next-move-theory@next-move-theory
+npx skills@latest add ztemerbekov/Next-Move-Theory-Canon-and-Skills --skill '*' -a codex -a claude-code -g -y
 ```
 
-The exact Client command syntax is verified by the clean-environment harness;
-the documentation never tells a user to copy into a Consumer project or edit a
-cache directory. Updates use marketplace refresh plus the Client-native Plugin
-operation, followed by the Client reload/new-session boundary. `nmt-upgrade`
-and the two Legacy installers remain separate and retain their existing
-project-mutating semantics for the transition release.
+The documentation never tells a user to copy into a Consumer project or edit a
+cache directory. Repeat the same command for updates, then start a new Client
+session. Partial Skill selection is unsupported. `nmt-upgrade` remains separate
+and retains its existing project-mutating semantics only for Legacy project-local
+setups; `install.sh` and `install.ps1` are not shipped.
 
 ## Validation and acceptance gates
 

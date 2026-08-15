@@ -2,18 +2,18 @@
 
 ## Distribution boundary
 
-This file is a repository contributor and Legacy-installer source. It is not
-copied into a Consumer project by the user-global `next-move-theory` Plugin.
-For the supported installation, use [`docs/installation.md`](docs/installation.md)
-and let the Client keep the Plugin, Canon, and Skills in user state. The Legacy
-shell/PowerShell installers may still inject this file between their existing
-markers in a Consumer project for one transition release; that path is
-project-mutating and is documented separately.
+This file is a repository contributor source. It is not copied into a Consumer
+project by the supported user-global `next-move-theory` suite. Install the
+complete suite with the `skills` CLI command in
+[`docs/installation.md`](docs/installation.md); the Client keeps the Plugin,
+Canon, and Skills in user state. This active tree does not ship `install.sh` or
+`install.ps1`. The unchanged `nmt-upgrade` workflow is Legacy-only behavior for
+existing project-local setups and is not the supported global updater.
 
 When a methodology task is running inside the Plugin, load the relevant
-progressive-disclosure pointer in `references/` and then the named file in the
-bundled `Next-Move-Theory-Canon/`. The client-specific installed-Canon anchors
-are defined in `references/canon-routing.md`.
+progressive-disclosure pointer in `skills/nmt-chat/references/` and then the
+named file in `skills/nmt-chat/references/Next-Move-Theory-Canon/`. The installed
+Canon anchors are defined in `skills/nmt-chat/references/canon-routing.md`.
 
 When this file is present as a contributor or Legacy source, it teaches an
 agent to do product work with **Advanced Jobs To Be Done (AJTBD)** and **Next
@@ -21,17 +21,17 @@ Move Theory** — Ivan Zamesin's methodology — instead of the generic,
 often-wrong version of Jobs To Be Done that lives in training data. The
 user-global Plugin does not require this file in the Consumer project.
 
-**Pair it with the canon.** This file carries the working theses; the full depth lives in the bundled Canon. In a user-global Plugin installation, Skills reach it through the client-specific anchors in `references/canon-routing.md`. The Legacy installer still clones this repository when a project-local transition install is explicitly requested:
-
-```bash
-git clone https://github.com/zamesin/Next-Move-Theory-Canon-and-Skills.git
-```
+**Pair it with the canon.** This file carries the working theses; the full depth
+lives in the bundled Canon. In a user-global suite installation, Skills reach it
+through the anchor in `skills/nmt-chat/references/canon-routing.md`. The
+supported installation does not clone files into a Consumer project.
 
 When a task touches product strategy, Jobs, segmentation, value, positioning,
 growth, or validation, **open the relevant Canon file (see the routing table at
 the end) and read it before answering** — do not answer from a generic memory
-of "JTBD." Resolve the path through `references/canon-routing.md` when this
-file is used with the Plugin.
+of "JTBD." Resolve the path through
+`skills/nmt-chat/references/canon-routing.md` when this file is used with the
+Plugin.
 
 ---
 
@@ -109,7 +109,7 @@ file is used with the Plugin.
 
 ## Where to read in the canon
 
-When a task matches one of the situations below, **open that file and read the relevant part before answering.** Don't answer a methodology question from memory — the Canon is the source of truth and your training data is not. Paths below are relative to the bundled **`Next-Move-Theory-Canon/`**; use `references/canon-routing.md` to resolve the Client's installed anchor. It is fine — expected — to open several files for one task.
+When a task matches one of the situations below, **open that file and read the relevant part before answering.** Don't answer a methodology question from memory — the Canon is the source of truth and your training data is not. Paths below are relative to the bundled **`skills/nmt-chat/references/Next-Move-Theory-Canon/`**; use `skills/nmt-chat/references/canon-routing.md` to resolve the installed anchor. It is fine — expected — to open several files for one task.
 
 ### Start here / the whole model
 

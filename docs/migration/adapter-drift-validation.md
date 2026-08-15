@@ -6,7 +6,7 @@ and the adapter contract in
 
 ## One adapter source
 
-[`references/client-adapters.md`](../../references/client-adapters.md) is the
+[`skills/nmt-chat/references/client-adapters.md`](../../skills/nmt-chat/references/client-adapters.md) is the
 only hand-authored adapter registry. It contains exactly five proven
 boundaries: invocation spelling/namespacing, interactive-question tooling,
 executor lifecycle, installed-Canon anchors, and Codex frontmatter validator

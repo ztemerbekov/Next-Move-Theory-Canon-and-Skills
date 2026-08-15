@@ -1,33 +1,24 @@
 # Migration boundary
 
-The `1.0.0` Plugin is a fresh user-global installation. It does not migrate an
+The `1.0.0` distribution is a fresh user-global suite. It does not migrate an
 existing project-local Legacy setup.
 
-## What is intentionally not automated
+The supported install and update command is:
 
-The Plugin does not scan, copy, reconcile, rewrite, or delete any of these in a
-Consumer project:
+```bash
+npx skills@latest add ztemerbekov/Next-Move-Theory-Canon-and-Skills --skill '*' -a codex -a claude-code -g -y
+```
 
-- `AGENTS.md` or `CLAUDE.md`;
-- `.agents/` or `.claude/`;
-- `Next-Move-Theory-Canon/`;
-- project-local Skills; or
-- `.nmt-version` and other Legacy state.
+It changes Client user state only. It does not scan, copy, reconcile, rewrite,
+or delete `AGENTS.md`, `CLAUDE.md`, `.agents/`, `.claude/`, a project-local
+Canon, project-local Skills, or `.nmt-version` in a Consumer project.
 
 There is no migration command, cleanup pass, compatibility merge, or promise
-that two installations will be reconciled. This keeps the fresh Plugin
-installation independent of project history and preserves user changes.
+that two installations will be reconciled. Leave an existing Legacy layout in
+place until its owner chooses a separate manual cleanup. The unchanged
+`nmt-upgrade` workflow remains Legacy-only for that existing project-local
+layout and is not a global suite updater.
 
-## Adopting the Plugin beside a Legacy setup
-
-1. Record the Consumer project's current Git status and any local Legacy files.
-2. Install `next-move-theory` at user scope using
-   [`installation.md`](installation.md).
-3. Start a new Client session and verify that `nmt-chat` routes to the bundled
-   Skills and Canon.
-4. Leave the Legacy files in place until the owner chooses a separate manual
-   cleanup. The Plugin does not remove or reconcile them.
-
-If the Legacy layout and the Plugin produce different results, treat that as a
-separate compatibility decision; do not modify a Skill or a Client cache as an
-implicit migration fix.
+For the package-level source tree and acceptance evidence, see the
+[repository migration specification](repository-migration-specification.md)
+and [migration checks](migration/).

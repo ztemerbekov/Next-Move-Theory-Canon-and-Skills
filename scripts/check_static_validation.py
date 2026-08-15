@@ -12,6 +12,7 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
+from check_public_distribution import validate as validate_public_distribution
 
 ROOT = Path(__file__).resolve().parents[1]
 PLUGIN = "next-move-theory"
@@ -539,6 +540,15 @@ def run_negative_fixture_tests() -> list[str]:
 
 def main() -> int:
     failures = run_existing_checks()
+
+    print("== public distribution contract ==")
+    public_errors = validate_public_distribution()
+    if public_errors:
+        failures.extend(f"public distribution: {error}" for error in public_errors)
+        for error in public_errors:
+            print(f"FAIL: {error}")
+    else:
+        print("PASS: install/update docs, NOTICE, removed Legacy artifacts, and local links")
 
     print("== package contract ==")
     package_errors = check_package_contract(ROOT)

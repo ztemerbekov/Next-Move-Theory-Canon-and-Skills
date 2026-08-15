@@ -12,12 +12,13 @@ observed.
   `next-move-theory` Plugin at version `1.0.0`.
 - `skills/` is the one editable, hand-maintained Skill source tree and contains
   the eight NMT Skill entry points.
-- `Next-Move-Theory-Canon/` is the one bundled Canon root and is available from
-  the installed Plugin package.
-- `references/` contains the shared routing, methodology, adapter, producer,
-  and readability contracts.
+- `skills/nmt-chat/references/Next-Move-Theory-Canon/` is the one bundled Canon
+  root, carried by the `nmt-chat` payload in the installed suite.
+- `skills/nmt-chat/references/` contains the shared routing, methodology,
+  adapter, producer, and readability contracts.
 - `scripts/` and `docs/` contain static validation, adapter drift, acceptance,
-  installation, update, and Legacy-installer instructions.
+  installation, update, and migration-boundary instructions. The active tree
+  does not ship the old shell or PowerShell installers.
 - `docs/migration/legacy-inputs/Skills/` contains immutable Claude and Codex
   baseline evidence for semantic parity. It is not a runtime Skill tree.
 - Repository-level `Skills/claude/` and `Skills/codex/` are retired. No
