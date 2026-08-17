@@ -4,12 +4,11 @@ What changed in the Next Move Theory Canon + Skills Plugin. Newest bundle entry
 is at the top.
 
 The primary distribution is the user-global `next-move-theory` suite. Install
-and update it through the `skills` CLI flow in
-[`docs/installation.md`](docs/installation.md) and
-[`docs/updates.md`](docs/updates.md). The repository no longer ships the old
-shell/PowerShell installers. `nmt-upgrade` is not the supported global
-installation or update path; it retains unchanged Legacy-only behavior for
-existing project-local setups.
+and update it through the `skills` CLI flow in the
+[`README.md` installation section](README.md#global-plugin-installation). The
+repository no longer ships the old shell/PowerShell installers. `nmt-upgrade`
+is not the supported global installation or update path; it retains unchanged
+Legacy-only behavior for existing project-local setups.
 
 ## Versioning
 
