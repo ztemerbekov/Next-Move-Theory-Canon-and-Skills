@@ -123,8 +123,12 @@ def check() -> None:
 
     shared_root = ROOT / "skills/nmt-chat/references"
     expected_shared = {
+        "canon-routing.md",
+        "client-adapters.md",
+        "methodology-guardrails.md",
         "producer-contract.md",
         "readability-contract.md",
+        "skill-routing.md",
     }
     actual_shared = {path.name for path in shared_root.iterdir() if path.is_file()}
     if actual_shared != expected_shared:
