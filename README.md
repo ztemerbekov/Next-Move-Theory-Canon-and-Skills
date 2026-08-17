@@ -11,7 +11,7 @@ This repository is a self-contained `next-move-theory` Plugin for Codex and Clau
 
 ## How to start
 
-1. **Install it globally** — follow [Global Plugin installation](docs/installation.md). The Plugin is installed at user scope by the Client and does not copy files into the Consumer project.
+1. **Install it globally** — follow [Global Plugin installation](#global-plugin-installation). The Plugin is installed at user scope by the Client and does not copy files into the Consumer project.
 
 2. **Start with `nmt-chat`**. It is the model-invoked router and the conversational front door to the methodology: **paste whatever you have** — a half-formed idea, messy notes, a chat thread, a doc — and it pulls out the context, separates what you *know* from what you're *assuming*, and gives you the next concrete move. No project `AGENTS.md` or `CLAUDE.md` injection is required.
 
@@ -135,8 +135,7 @@ ask).
 
 ### Global Plugin installation
 
-The supported installation is user-global through the `skills` CLI. Follow the
-full contract in [`docs/installation.md`](docs/installation.md).
+The supported installation is user-global through the `skills` CLI.
 
 ```bash
 npx skills@latest add ztemerbekov/Next-Move-Theory-Canon-and-Skills --skill '*' -a codex -a claude-code -g -y
@@ -163,9 +162,8 @@ Start with `nmt-chat` after installation. The Client may display a
 client-specific namespace for direct Skill invocation; the router can reach the
 producer Skills without changing the Consumer project.
 
-**Updating later:** repeat the same command; the full update boundary is in
-[`docs/updates.md`](docs/updates.md). Do not edit a Client cache or install a
-partial suite.
+**Updating later:** repeat the same command. Do not edit a Client cache or
+install a partial suite.
 
 **Legacy boundary:** this release does not ship `install.sh` or `install.ps1`.
 `nmt-upgrade` remains unchanged Legacy-only behavior for existing project-local
@@ -179,8 +177,7 @@ The repository root contains the Plugin manifests and marketplace metadata. It
 contains one `skills/` source tree with eight Skills; the `nmt-chat` payload
 contains the physical Canon and shared references under its `references/`
 directory. The user-global install does not inject instructions into the
-Consumer project. See [`docs/installation.md`](docs/installation.md) for the
-installed payload boundary.
+Consumer project.
 
 </details>
 
@@ -298,8 +295,7 @@ Next-Move-Theory-Canon-and-Skills/
 │   ├── nmt-craft-go-to-market/
 │   ├── nmt-analyze-interviews/
 │   └── nmt-upgrade/                    #   Legacy transition updater
-├── NOTICE.md                           # attribution and fork packaging notice
-└── docs/                               # installation, updates, and migration boundary
+└── NOTICE.md                           # attribution and fork packaging notice
 ```
 
 ---

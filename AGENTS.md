@@ -4,11 +4,12 @@
 
 This file is a repository contributor source. It is not copied into a Consumer
 project by the supported user-global `next-move-theory` suite. Install the
-complete suite with the `skills` CLI command in
-[`docs/installation.md`](docs/installation.md); the Client keeps the Plugin,
-Canon, and Skills in user state. This active tree does not ship `install.sh` or
-`install.ps1`. The unchanged `nmt-upgrade` workflow is Legacy-only behavior for
-existing project-local setups and is not the supported global updater.
+complete suite with the `skills` CLI command in the
+[`README.md` installation section](README.md#global-plugin-installation); the
+Client keeps the Plugin, Canon, and Skills in user state. This active tree does
+not ship `install.sh` or `install.ps1`. The unchanged `nmt-upgrade` workflow
+is Legacy-only behavior for existing project-local setups and is not the
+supported global updater.
 
 When a methodology task is running inside the Plugin, load the relevant
 progressive-disclosure pointer in `skills/nmt-chat/references/` and then the
