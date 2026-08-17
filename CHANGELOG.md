@@ -5,11 +5,8 @@ is at the top.
 
 The primary distribution is the user-global `next-move-theory` suite. Install
 and update it through the `skills` CLI flow in
-[`docs/installation.md`](docs/installation.md) and
-[`docs/updates.md`](docs/updates.md). The repository no longer ships the old
-shell/PowerShell installers. `nmt-upgrade` is not the supported global
-installation or update path; it retains unchanged Legacy-only behavior for
-existing project-local setups.
+[`docs/installation.md`](docs/installation.md). The repository no longer ships
+the old shell/PowerShell installers or their project-local updater.
 
 ## Versioning
 
@@ -20,33 +17,32 @@ Theory** as SemVer `MAJOR.MINOR.PATCH`:
 - **MINOR** — a significant methodology update (new or reworked theses).
 - **PATCH** — small skill updates and methodology patches.
 
-The current bundle version is the top entry below. Existing Legacy project-local
-setups may record it in `.nmt-version`; the `skills` CLI manages the installed
-suite snapshot in Client user state. (The README also shows the methodology maturity badges — Advanced JTBD
+The current bundle version is the top entry below. The `skills` CLI manages the
+installed suite snapshot in Client user state. (The README also shows the methodology maturity badges — Advanced JTBD
 `v3.4 · stable` and Next Move Theory `v0.6 · in active development`.)
 
 ---
 
-## 1.0.0 — Self-contained global Plugin bundle
-**Summary:** One `next-move-theory` Plugin bundles the Canon and all eight Skills
-for user-global Codex and Claude Code installation without Consumer-project
-instruction injection.
+## 1.0.0 — Self-contained global Skills bundle
+**Summary:** One source tree bundles the Canon and all seven Skills for
+user-global Codex and Claude Code installation without Consumer-project
+instruction injection. Native Plugin manifests remain a separate repository
+surface; the supported `skills` CLI path installs the Skills directly.
 **Status:** Repository package contract; public marketplace release is separate.
 
 - Added repository-root Codex and Claude manifests and marketplace catalogs.
 - Consolidated the package around one hand-maintained `skills/` source tree;
   the `nmt-chat` payload carries the one physical bundled Canon and shared
   references.
-- Made `nmt-chat` the model-invoked router and kept Client differences in
-  adapter/reference boundaries.
+- Made `nmt-chat` the model-invoked router and gave every Skill direct relative
+  references to the shared Canon and contracts.
 - Documented the exact user-global `npx skills@latest add ...` installation and
-  update command, the explicit no-migration boundary, and the unsupported
-  partial-install case.
+  update command, Consumer-project cleanliness, and the unsupported partial-
+  install case.
 - Added `NOTICE.md` with Ivan Zamesin attribution, the original repository,
   CC BY-NC-SA 4.0 licensing, fork packaging/path changes, and no endorsement.
-- Removed `install.sh` and `install.ps1` from the active release surface; the
-  unchanged `nmt-upgrade` Skill remains only for existing Legacy project-local
-  setups.
+- Removed the project-local installers, updater Skill, and runtime version
+  checks from the active release surface.
 
 ---
 

@@ -2,21 +2,15 @@
 name: nmt-diagnose
 description: >-
   Diagnose a product against Ivan Zamesin's Next Move Theory / Advanced Jobs To Be Done
-  methodology (distinct from generic Christensen JTBD) and route to the next move. A
-  conversational, chat-first skill — through up to ~15 adaptive questions it challenges the
-  goal you walked in with (climbing your business-Job graph to find a higher-leverage growth
-  point), then surfaces EVERYTHING the methodology can find: all the risks (every weak node on
-  the chain to profit, each traced to its upstream cause), all the growth points (kill a Job,
-  Previous/Next Job, climb a level, adjacent-segment Small Jobs, underserved success
-  criteria), and the risky assumptions hiding inside your current initiatives (RAT). It is
-  comprehensive on findings and focused on action — it lists them all, then says which one to
-  tackle first and which existing skill executes it (nmt-market-research, nmt-craft-value-
-  proposition, nmt-product-requirements, nmt-craft-go-to-market, nmt-chat). The front door for
-  LIVE products the way nmt-market-research is the front door for new ideas. Use when the user
-  says "diagnose my product", "what should I do next", "a metric dropped", "where are my risks
-  / growth points", "where is this breaking", or is unsure what to work on. Chat-first: writes
-  nothing unless asked; recommends the next skill but the user launches it. Plain language;
-  defaults to English.
+  methodology, distinct from generic Christensen JTBD, and route to the next move. This
+  chat-first diagnostic for live products uses adaptive questions to challenge the stated
+  goal, trace weak nodes in the chain to profit to their upstream causes, find growth points,
+  and expose risky assumptions. It lists the findings, prioritizes the first action, and
+  recommends the Skill that executes it: nmt-market-research, nmt-craft-value-proposition,
+  nmt-product-requirements, nmt-craft-go-to-market, or nmt-chat. Use when the user says
+  "diagnose my product", "what should I do next", "a metric dropped", "where are my risks or
+  growth points", "where is this breaking", or is unsure what to work on. Writes nothing
+  unless asked. Plain language; defaults to English.
 ---
 
 # Diagnose — the Next Move Theory product diagnostic
@@ -255,6 +249,3 @@ Per `../nmt-chat/references/producer-contract.md`, this chat-first skill applies
 - It writes no file unless asked.
 
 ---
-
-> **Update check — do this at the very end (best-effort, ≤2s, never blocks).** After you've finished this skill's work and delivered the result — for a multi-turn chat (e.g. nmt-chat / nmt-diagnose), after your first substantive answer — read the installed version from `.nmt-version` (project root) and run
-> `v="$(cat .nmt-version 2>/dev/null)"; curl -fsSL --max-time 2 "https://nextmovetheory.com/version?skill=nmt-diagnose${v:+&v=$v}"` — on any error or timeout, skip silently. Compare that installed version with the feed's `latest`; if behind, add one line — the `<installed> → <latest>` gap, a one-line summary per newer entry, and "run /nmt-upgrade to update". If versions match or `.nmt-version` is absent, add nothing.

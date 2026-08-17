@@ -5,13 +5,13 @@
 > **Advanced JTBD — v3.4 · stable.** The proven foundation.
 > **Next Move Theory — v0.6 · in active development** — integrating AJTBD with Riskiest Assumption Test, ABCDX Segmentation, Theory of Constraints, and Unit Economics into one operational system. The repository package is the `next-move-theory` Plugin, version `1.0.0`; see the [changelog](CHANGELOG.md).
 
-This repository is a self-contained `next-move-theory` Plugin for Codex and Claude Code. It bundles the open Canon, one hand-maintained `skills/` source tree, and the package metadata needed for user-global installation without changing a Consumer project. It is written for the people who decide *what to build*: founders, indie hackers, product managers, and product marketers. The methodology and the skills are by Ivan Zamesin ([X](https://x.com/zamesin) · [LinkedIn](https://www.linkedin.com/in/ivan-zamesin/)).
+This repository bundles the open Canon, one hand-maintained seven-Skill source tree for Codex and Claude Code, and native Plugin manifests. The supported `skills` CLI installs the Skills into each Client's user state without changing a Consumer project. It is written for the people who decide *what to build*: founders, indie hackers, product managers, and product marketers. The methodology and the skills are by Ivan Zamesin ([X](https://x.com/zamesin) · [LinkedIn](https://www.linkedin.com/in/ivan-zamesin/)).
 
 ---
 
 ## How to start
 
-1. **Install it globally** — follow [Global Plugin installation](docs/installation.md). The Plugin is installed at user scope by the Client and does not copy files into the Consumer project.
+1. **Install it globally** — follow [Global installation](docs/installation.md). The seven Skills are installed at user scope for each Client and do not copy files into the Consumer project.
 
 2. **Start with `nmt-chat`**. It is the model-invoked router and the conversational front door to the methodology: **paste whatever you have** — a half-formed idea, messy notes, a chat thread, a doc — and it pulls out the context, separates what you *know* from what you're *assuming*, and gives you the next concrete move. No project `AGENTS.md` or `CLAUDE.md` injection is required.
 
@@ -87,13 +87,14 @@ If you build, market, or decide the direction of a product, this is for you. You
 
 ---
 
-## The Plugin
+## The Skills suite
 
-The repository root carries the Plugin manifests and marketplace metadata. The
-package contains one `skills/` source tree; the `nmt-chat` payload carries the
+The repository root carries native Plugin manifests and marketplace metadata,
+while the supported `skills` CLI installs the `skills/` source tree directly.
+The `nmt-chat` payload carries the
 one physical Canon and shared references under `skills/nmt-chat/references/`.
-Every Skill reads that bundled payload through the Client adapter boundary; no
-generated Claude or Codex Skill copies are shipped.
+Every Skill reads that payload through direct relative references; no generated
+Claude or Codex Skill copies are shipped.
 
 | Skill | What it does |
 |---|---|
@@ -104,7 +105,6 @@ generated Claude or Codex Skill copies are shipped.
 | **[`nmt-product-requirements`](skills/nmt-product-requirements/)** | Turns the chosen segment + value into a build-ready PRD, including edge cases and a challenge-the-build gate. |
 | **[`nmt-craft-go-to-market`](skills/nmt-craft-go-to-market/)** | Turns a value proposition into landing-page copy, ads, and a growth-communication plan. |
 | **[`nmt-analyze-interviews`](skills/nmt-analyze-interviews/)** | Extracts AJTBD structure and value hypotheses from interviews, notes, sales/support calls, or survey open-ends. |
-| **[`nmt-upgrade`](skills/nmt-upgrade/)** | Unchanged Legacy-only updater for existing project-local setups; it is not the global suite update path. |
 
 **Two front doors.** **`nmt-chat`** is the conversational router for advice,
 explanation, or pressure-testing an idea. **`nmt-diagnose`** is the front door
@@ -123,9 +123,9 @@ producer Skill when you need a full artifact. For a brand-new idea, start at
 
 You can also jump in mid-pipeline if you already know your segment and Jobs. Each skill takes what you hand it, or routes you back to the step it needs first.
 
-The eight Skills share the `nmt-` prefix. `nmt-chat` is the only model-invoked
-router; the other Skills remain directly reachable through the Client's Plugin
-Skill surface and are routed by their descriptions or selected explicitly. The
+The seven Skills share the `nmt-` prefix. `nmt-chat` is the only model-invoked
+router; the other Skills remain directly reachable through the Client's Skill
+surface and are routed by their descriptions or selected explicitly. The
 four producers each have a fast **Quick** mode (no internet) and a deeper
 **Deep** mode (web research; parallel sub-agents on Claude Code, sequential on
 Codex). `nmt-chat` and `nmt-diagnose` are conversational (no file unless you
@@ -133,7 +133,7 @@ ask).
 
 > The skills produce **hypotheses, not conclusions.** Every number is an LLM-generated estimate with a verification path attached. Validate before any decision with expensive consequences. That's the RAT discipline the methodology is built on.
 
-### Global Plugin installation
+### Global installation
 
 The supported installation is user-global through the `skills` CLI. Follow the
 full contract in [`docs/installation.md`](docs/installation.md).
@@ -142,18 +142,19 @@ full contract in [`docs/installation.md`](docs/installation.md).
 npx skills@latest add ztemerbekov/Next-Move-Theory-Canon-and-Skills --skill '*' -a codex -a claude-code -g -y
 ```
 
-The command is cross-platform and intentionally installs all eight Skills.
-Partial selection is unsupported because the shared Canon and routing
-references are carried by the `nmt-chat` payload.
+The command is cross-platform and intentionally installs all seven Skills.
+Partial selection is unsupported because the shared Canon and contracts are
+carried by the `nmt-chat` payload.
 
-The `skills` CLI materializes the suite in Client user state. It does not add
+The `skills` CLI materializes the suite in each Client's user-global Skill
+state. It does not add
 `AGENTS.md`, `CLAUDE.md`, `.agents/`, `.claude/`, a Canon directory, or a Skill
 directory to the Consumer project. After installation, the user-global suite
 contains:
 
 ```
-user Plugin state/
-└── next-move-theory/              # one Plugin containing the Canon and eight Skills
+Codex user Skill root/             # seven Skills; nmt-chat carries the Canon
+Claude Code user Skill root/       # the same seven-Skill suite for this Client
 
 Consumer project/
 └── (unchanged by installation)
@@ -163,24 +164,20 @@ Start with `nmt-chat` after installation. The Client may display a
 client-specific namespace for direct Skill invocation; the router can reach the
 producer Skills without changing the Consumer project.
 
-**Updating later:** repeat the same command; the full update boundary is in
-[`docs/updates.md`](docs/updates.md). Do not edit a Client cache or install a
-partial suite.
-
-**Legacy boundary:** this release does not ship `install.sh` or `install.ps1`.
-`nmt-upgrade` remains unchanged Legacy-only behavior for existing project-local
-setups and is not the global suite update path. There is no supported migration
-or cleanup flow.
+**Updating later:** repeat the same command and start a new Client session. See
+[`docs/installation.md`](docs/installation.md). Do not edit a Client cache or
+install a partial suite.
 
 <details>
-<summary><b>What is inside the user-global Plugin?</b></summary>
+<summary><b>What is inside the user-global suite?</b></summary>
 
-The repository root contains the Plugin manifests and marketplace metadata. It
-contains one `skills/` source tree with eight Skills; the `nmt-chat` payload
-contains the physical Canon and shared references under its `references/`
-directory. The user-global install does not inject instructions into the
-Consumer project. See [`docs/installation.md`](docs/installation.md) for the
-installed payload boundary.
+The repository contains one `skills/` source tree with seven Skills. The
+`nmt-chat` payload contains the Canon and shared contracts under its
+`references/` directory, so each Client installation can resolve them from its
+own Skill root. The user-global install does not install the repository's
+Plugin manifests or inject instructions into the Consumer project. See
+[`docs/installation.md`](docs/installation.md) for the installed payload
+boundary.
 
 </details>
 
@@ -189,14 +186,10 @@ installed payload boundary.
 ## Repository agent files
 
 This repository also ships **[`CLAUDE.md`](CLAUDE.md)** and **[`AGENTS.md`](AGENTS.md)**.
-They remain contributor and historical Legacy-behavior sources; a user-global
-suite installation does not copy or inject either file into a Consumer project.
-
-The Plugin's progressively disclosed, client-neutral pointers live in
-[`skills/nmt-chat/references/methodology-guardrails.md`](skills/nmt-chat/references/methodology-guardrails.md),
-[`skills/nmt-chat/references/canon-routing.md`](skills/nmt-chat/references/canon-routing.md), and
-[`skills/nmt-chat/references/skill-routing.md`](skills/nmt-chat/references/skill-routing.md).
-The existing Skill workflows remain unchanged.
+They are contributor instructions; a user-global suite installation does not
+copy or inject either file into a Consumer project. The Skills read the bundled
+Canon directly from
+[`skills/nmt-chat/references/Next-Move-Theory-Canon/`](skills/nmt-chat/references/Next-Move-Theory-Canon/).
 
 ---
 
@@ -285,21 +278,16 @@ Next-Move-Theory-Canon-and-Skills/
 │   ├── nmt-chat/                       #   router + bundled Canon/references payload
 │   │   └── references/
 │   │       ├── Next-Move-Theory-Canon/ #     the bundled methodology
-│   │       ├── canon-routing.md
-│   │       ├── methodology-guardrails.md
-│   │       ├── skill-routing.md
 │   │       ├── producer-contract.md
-│   │       ├── readability-contract.md
-│   │       └── client-adapters.md
+│   │       └── readability-contract.md
 │   ├── nmt-diagnose/
 │   ├── nmt-market-research/
 │   ├── nmt-craft-value-proposition/
 │   ├── nmt-product-requirements/
 │   ├── nmt-craft-go-to-market/
-│   ├── nmt-analyze-interviews/
-│   └── nmt-upgrade/                    #   Legacy transition updater
+│   └── nmt-analyze-interviews/
 ├── NOTICE.md                           # attribution and fork packaging notice
-└── docs/                               # installation, updates, and migration boundary
+└── docs/                               # installation and update instructions
 ```
 
 ---

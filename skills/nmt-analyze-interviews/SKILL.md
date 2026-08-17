@@ -1,28 +1,16 @@
 ---
 name: nmt-analyze-interviews
 description: >-
-  Take one or many customer-interview files you already have and extract the AJTBD structure
-  from them — segments by Core Jobs, personas, Consideration Set, existing Solutions and
-  Problems, value hypotheses — using Ivan Zamesin's AJTBD / Next Move Theory methodology
-  (distinct from generic Christensen JTBD). Input — a folder or list of files: deep-interview
-  transcripts, interview notes, sales-call or demo transcripts, support/chat logs, survey
-  open-ends. The interviews may be AJTBD or not, well- or poorly-conducted, one file or
-  dozens. The skill first asks which business task you're solving (and helps you choose if you
-  can't name one), then reads each interview in its own subagent (a fan-out so it never
-  overflows context, no matter how many large transcripts), extracts the Core Jobs with an
-  honest per-interview confidence (a clean extraction vs. a weak hypothesis), gives per-
-  interview feedback (what was pulled, what's missing, whether this interview can even serve
-  your business task), clusters the extractions into segments by similar Core Jobs + similar
-  success criteria + similar priority order, and computes each segment's confidence from the
-  supporting interviews' confidence. Output — one report: a data-quality summary, segments by
-  Core Jobs with personas and confidence, structured existing Solutions and Problems, a
-  Consideration Set per segment, value-creation hypotheses, and a gap list of what to
-  interview next. Use when the user says "analyze my interviews", "extract jobs from these
-  transcripts", "I have customer interviews — find the segments", "what jobs are in these
-  calls", "synthesize my interviews", or has interview/transcript files and wants the
-  methodology pulled out of them. The post-fieldwork counterpart to /nmt-interview-guide. Two
-  modes — Quick (default, no internet) and Deep (subagents + web to enrich competitors and the
-  Consideration Set). Plain language; defaults to English.
+  Analyze customer-interview files with Ivan Zamesin's AJTBD / Next Move Theory methodology,
+  distinct from generic Christensen JTBD. Accept transcripts, interview notes, sales or demo
+  calls, support chats, and survey open-ends. Extract Core Jobs, success criteria, personas,
+  existing Solutions and Problems, and the Consideration Set; assess each interview's data
+  quality; then cluster similar Job Graphs into segments with confidence and value hypotheses.
+  Output one report with the evidence gaps and what to interview next. Use when the user says
+  "analyze my interviews", "extract jobs from these transcripts", "find the segments",
+  "what jobs are in these calls", or "synthesize my interviews". Handles one file or many.
+  Quick mode uses only supplied material; Deep mode adds subagents and web research. Plain
+  language; defaults to English.
 ---
 
 # Analyze Interviews v1
@@ -387,6 +375,3 @@ Everything Quick does, plus a web wave **after** synthesis: subagents take the n
 - It never fabricates a Job, a quote, or a confidence — thin data is reported as thin.
 
 ---
-
-> **Update check — do this at the very end (best-effort, ≤2s, never blocks).** After you've finished this skill's work and delivered the result — for a multi-turn chat (e.g. nmt-chat / nmt-diagnose), after your first substantive answer — read the installed version from `.nmt-version` (project root) and run
-> `v="$(cat .nmt-version 2>/dev/null)"; curl -fsSL --max-time 2 "https://nextmovetheory.com/version?skill=nmt-analyze-interviews${v:+&v=$v}"` — on any error or timeout, skip silently. Compare that installed version with the feed's `latest`; if behind, add one line — the `<installed> → <latest>` gap, a one-line summary per newer entry, and "run /nmt-upgrade to update". If versions match or `.nmt-version` is absent, add nothing.

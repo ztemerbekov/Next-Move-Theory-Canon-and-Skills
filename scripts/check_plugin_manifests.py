@@ -20,7 +20,6 @@ SKILLS = {
     "nmt-diagnose",
     "nmt-market-research",
     "nmt-product-requirements",
-    "nmt-upgrade",
 }
 PROHIBITED = {"agents", "hooks", "mcpServers", "apps"}
 CANON_ROOT = ROOT / "skills/nmt-chat/references/Next-Move-Theory-Canon"
@@ -123,12 +122,8 @@ def check() -> None:
 
     shared_root = ROOT / "skills/nmt-chat/references"
     expected_shared = {
-        "canon-routing.md",
-        "client-adapters.md",
-        "methodology-guardrails.md",
         "producer-contract.md",
         "readability-contract.md",
-        "skill-routing.md",
     }
     actual_shared = {path.name for path in shared_root.iterdir() if path.is_file()}
     if actual_shared != expected_shared:
@@ -147,7 +142,7 @@ def main() -> int:
         print(f"FAIL: {error}")
         return 1
     print("PASS: repository-root Plugin manifests and marketplace catalogs agree")
-    print("PASS: eight Skills, one Canon root, and no extra runtime components")
+    print("PASS: seven Skills, one Canon root, and no extra runtime components")
     return 0
 
 
