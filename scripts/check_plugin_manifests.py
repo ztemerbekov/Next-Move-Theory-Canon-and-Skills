@@ -20,6 +20,7 @@ SKILLS = {
     "nmt-diagnose",
     "nmt-market-research",
     "nmt-product-requirements",
+    "nmt-upgrade",
 }
 PROHIBITED = {"agents", "hooks", "mcpServers", "apps"}
 CANON_ROOT = ROOT / "skills/nmt-chat/references/Next-Move-Theory-Canon"
@@ -142,7 +143,7 @@ def main() -> int:
         print(f"FAIL: {error}")
         return 1
     print("PASS: repository-root Plugin manifests and marketplace catalogs agree")
-    print("PASS: seven Skills, one Canon root, and no extra runtime components")
+    print("PASS: eight Skills, one Canon root, and no extra runtime components")
     return 0
 
 

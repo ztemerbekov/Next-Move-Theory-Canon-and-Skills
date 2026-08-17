@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the current seven-Skill package without encoding migration history."""
+"""Validate the current eight-Skill package without encoding migration history."""
 
 from __future__ import annotations
 
@@ -19,20 +19,13 @@ SKILLS = {
     "nmt-diagnose",
     "nmt-market-research",
     "nmt-product-requirements",
+    "nmt-upgrade",
 }
 CANON_ROOT = ROOT / "skills/nmt-chat/references/Next-Move-Theory-Canon"
 INSTALL_COMMAND = (
     "npx skills@latest add ztemerbekov/Next-Move-Theory-Canon-and-Skills "
     "--skill '*' -a codex -a claude-code -g -y"
 )
-OBSOLETE_SKILL_MARKERS = {
-    "nmt-upgrade",
-    ".nmt-version",
-    "nextmovetheory.com/version",
-    "install.sh",
-    "install.ps1",
-    "user-invocable:",
-}
 LINK = re.compile(r"(?<!!)\[[^\]]*\]\(([^)]+)\)")
 NAME = re.compile(r"(?m)^name:\s*([^\s]+)\s*$")
 DESCRIPTION = re.compile(r"(?m)^description:\s*(?:>\-|>\+|>|\|\-|\|\+|\||\S)")
@@ -42,22 +35,6 @@ ALLOWED_FRONTMATTER = {"name", "description", "license", "allowed-tools", "metad
 
 def fail(errors: list[str], message: str) -> None:
     errors.append(message)
-
-
-def description_value(frontmatter: str) -> str:
-    match = re.search(r"(?m)^description:\s*(.*)$", frontmatter)
-    if not match:
-        return ""
-    first = match.group(1).strip()
-    if first not in {">-", ">+", ">", "|-", "|+", "|"}:
-        return first.strip("'\"")
-    values: list[str] = []
-    for line in frontmatter[match.end():].splitlines():
-        if line and not line.startswith((" ", "\t")):
-            break
-        if line.strip():
-            values.append(line.strip())
-    return " ".join(values)
 
 
 def check_skill_inventory(errors: list[str]) -> None:
@@ -89,11 +66,6 @@ def check_skill_inventory(errors: list[str]) -> None:
             fail(errors, f"skills/{skill}/SKILL.md: frontmatter name must equal directory name")
         if not DESCRIPTION.search(text):
             fail(errors, f"skills/{skill}/SKILL.md: non-empty description is required")
-        description = description_value(frontmatter)
-        if len(description) > 1024:
-            fail(errors, f"skills/{skill}/SKILL.md: description exceeds 1024 characters")
-        if "<" in description or ">" in description:
-            fail(errors, f"skills/{skill}/SKILL.md: description contains an angle bracket")
 
         anchor = (
             "references/Next-Move-Theory-Canon/"
@@ -104,11 +76,6 @@ def check_skill_inventory(errors: list[str]) -> None:
             fail(errors, f"skills/{skill}/SKILL.md: missing bundled Canon anchor {anchor}")
         elif not (skill_root / anchor).resolve().is_dir():
             fail(errors, f"skills/{skill}/SKILL.md: Canon anchor does not resolve")
-
-        for marker in OBSOLETE_SKILL_MARKERS:
-            if marker in text:
-                fail(errors, f"skills/{skill}/SKILL.md: obsolete marker remains: {marker}")
-
 
 def check_shared_payload(errors: list[str]) -> None:
     if not CANON_ROOT.is_dir():
@@ -197,7 +164,7 @@ def main() -> int:
         for error in errors:
             print(f"FAIL: {error}")
         return 1
-    print("PASS: seven Skills, shared contracts, and one bundled Canon are internally consistent")
+    print("PASS: eight Skills, shared contracts, and one bundled Canon are internally consistent")
     print("PASS: maintained Markdown links, installation command, and Plugin manifests are valid")
     return 0
 

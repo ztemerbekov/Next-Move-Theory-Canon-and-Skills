@@ -6,7 +6,8 @@ is at the top.
 The primary distribution is the user-global `next-move-theory` suite. Install
 and update it through the `skills` CLI flow in
 [`docs/installation.md`](docs/installation.md). The repository no longer ships
-the old shell/PowerShell installers or their project-local updater.
+the old shell/PowerShell installers. `nmt-upgrade` retains its original behavior
+for existing project-local installations and is not the global update path.
 
 ## Versioning
 
@@ -24,7 +25,7 @@ installed suite snapshot in Client user state. (The README also shows the method
 ---
 
 ## 1.0.0 — Self-contained global Skills bundle
-**Summary:** One source tree bundles the Canon and all seven Skills for
+**Summary:** One source tree bundles the Canon and all eight Skills for
 user-global Codex and Claude Code installation without Consumer-project
 instruction injection. Native Plugin manifests remain a separate repository
 surface; the supported `skills` CLI path installs the Skills directly.
@@ -41,8 +42,8 @@ surface; the supported `skills` CLI path installs the Skills directly.
   install case.
 - Added `NOTICE.md` with Ivan Zamesin attribution, the original repository,
   CC BY-NC-SA 4.0 licensing, fork packaging/path changes, and no endorsement.
-- Removed the project-local installers, updater Skill, and runtime version
-  checks from the active release surface.
+- Removed the project-local installer files from the active release surface;
+  the `nmt-upgrade` Skill and runtime version checks remain unchanged.
 
 ---
 

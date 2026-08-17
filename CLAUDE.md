@@ -5,10 +5,12 @@
 This file is a repository contributor source. It is not copied into a Consumer
 project by the supported user-global `next-move-theory` suite. Install the
 complete suite with the `skills` CLI command in
-[`docs/installation.md`](docs/installation.md); each Client keeps the seven
+[`docs/installation.md`](docs/installation.md); each Client keeps the eight
 Skills in user state, with the Canon bundled under `nmt-chat`. Repeating the
 same `skills` CLI command updates the installed suite. This installation path
-does not consume the repository's native Plugin manifests.
+does not consume the repository's native Plugin manifests. The tree does not
+ship `install.sh` or `install.ps1`; `nmt-upgrade` retains its original updater
+behavior only for existing project-local installations.
 
 When a methodology task is running inside `nmt-chat`, load the named file from
 `skills/nmt-chat/references/Next-Move-Theory-Canon/`. A sibling installed Skill

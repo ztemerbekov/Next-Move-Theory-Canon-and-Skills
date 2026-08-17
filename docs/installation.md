@@ -2,7 +2,7 @@
 
 The supported distribution is a user-global `next-move-theory` Skill suite
 installed with the `skills` CLI into Codex and Claude Code. It contains all
-seven Skills and the bundled Canon/shared contracts carried by the `nmt-chat`
+eight Skills and the bundled Canon/shared contracts carried by the `nmt-chat`
 payload. This command installs the Skills directly; it does not consume the
 repository's native Plugin manifests.
 
@@ -39,12 +39,22 @@ Repeat the same command to refresh both supported Client targets:
 npx skills@latest add ztemerbekov/Next-Move-Theory-Canon-and-Skills --skill '*' -a codex -a claude-code -g -y
 ```
 
-Do not edit a Client cache by hand or install a partial selection.
+Do not edit a Client cache by hand, install a partial selection, or use
+`nmt-upgrade` as the updater for this user-global suite. The Skill retains its
+original updater behavior for existing project-local installations.
 
 After the command completes, start a new Codex task or Claude Code session so
 the Client loads the refreshed snapshot. Verify that `nmt-chat` can reach the
 bundled Canon and route to the other Skills.
 
-Installation and update never scan, rewrite, or delete files in the Consumer
-project. Any project changes made later by an explicitly invoked Skill are
-separate runtime work, not installation residue.
+The supported CLI installation and update never scan, rewrite, or delete files
+in the Consumer project. Any project changes made later by an explicitly
+invoked Skill are separate runtime work, not installation residue.
+
+## Project-local updater
+
+`nmt-upgrade` remains available for existing project-local installations. When
+explicitly invoked, it runs the official shell or PowerShell installer and
+refreshes that project's Canon, Skills, marked instruction blocks, README, and
+`.nmt-version`. This is intentionally separate from the user-global CLI update
+path above.

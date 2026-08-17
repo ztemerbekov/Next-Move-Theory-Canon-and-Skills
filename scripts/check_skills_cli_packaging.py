@@ -20,6 +20,7 @@ SKILLS = {
     "nmt-diagnose",
     "nmt-market-research",
     "nmt-product-requirements",
+    "nmt-upgrade",
 }
 CANON_PROBE = "Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md"
 SHARED_CONTRACTS = {"producer-contract.md", "readability-contract.md"}
@@ -189,7 +190,7 @@ def main() -> int:
         for error in errors:
             print(f"FAIL: {error}")
         return 1
-    print("PASS: skills CLI installed all seven Skills for Codex and Claude Code")
+    print("PASS: skills CLI installed all eight Skills for Codex and Claude Code")
     print("PASS: bundled Canon and contracts resolve after install and repeated update")
     print("PASS: Consumer project and source checkout remained unchanged")
     return 0
