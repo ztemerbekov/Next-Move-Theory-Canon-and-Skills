@@ -189,10 +189,8 @@ This repository also ships **[`CLAUDE.md`](CLAUDE.md)** and **[`AGENTS.md`](AGEN
 They remain contributor and historical Legacy-behavior sources; a user-global
 suite installation does not copy or inject either file into a Consumer project.
 
-The Plugin's progressively disclosed, client-neutral pointers live in
-[`skills/nmt-chat/references/methodology-guardrails.md`](skills/nmt-chat/references/methodology-guardrails.md),
-[`skills/nmt-chat/references/canon-routing.md`](skills/nmt-chat/references/canon-routing.md), and
-[`skills/nmt-chat/references/skill-routing.md`](skills/nmt-chat/references/skill-routing.md).
+The bundled Canon anchors are documented in
+[`skills/nmt-chat/references/canon-routing.md`](skills/nmt-chat/references/canon-routing.md).
 The existing Skill workflows remain unchanged.
 
 ---
@@ -283,8 +281,6 @@ Next-Move-Theory-Canon-and-Skills/
 │   │   └── references/
 │   │       ├── Next-Move-Theory-Canon/ #     the bundled methodology
 │   │       ├── canon-routing.md
-│   │       ├── methodology-guardrails.md
-│   │       ├── skill-routing.md
 │   │       ├── producer-contract.md
 │   │       └── readability-contract.md
 │   ├── nmt-diagnose/
