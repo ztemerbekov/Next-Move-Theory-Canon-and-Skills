@@ -1,24 +1,24 @@
 ---
 name: nmt-craft-value-proposition
-description: Generate the strongest possible Value Proposition for a chosen segment using Ivan Zamesin's AJTBD / Next Move Theory methodology (distinct from generic Christensen JTBD). Input — a /nmt-market-research result OR a manual segment+Jobs description. The skill extracts the segment's dominant success criteria, builds the Job Graph + Critical Chain of Jobs substrate, generates value hypotheses by walking the value-creation mechanics catalog over that graph, filters them on feasibility, cost-to-build, unit economics, and competitiveness, ranks by RICE, and surfaces a primary + supplementary value proposition with top-3 RAT cards and a PRD-ready implementation spec that feeds /nmt-product-requirements. Use when the user wants a value proposition, differentiation, or asks "how do we win this segment". Two modes — Quick (default, no internet) and Deep (subagents + web competitor mining). Plain language; defaults to English.
+description: Generate the strongest possible Value Proposition for a chosen segment using Ivan Zamesin's AJTBD / Next Move Theory methodology (distinct from generic Christensen JTBD). Input — a nmt-market-research result OR a manual segment+Jobs description. The skill extracts the segment's dominant success criteria, builds the Job Graph + Critical Chain of Jobs substrate, generates value hypotheses by walking the value-creation mechanics catalog over that graph, filters them on feasibility, cost-to-build, unit economics, and competitiveness, ranks by RICE, and surfaces a primary + supplementary value proposition with top-3 RAT cards and a PRD-ready implementation spec that feeds nmt-product-requirements. Use when the user wants a value proposition, differentiation, or asks "how do we win this segment". Two modes — Quick (default, no internet) and Deep (subagents + web competitor mining). Plain language; defaults to English.
 ---
 
 # Craft Value Proposition v2
 
-> **New here, or not sure this is the right skill?** Start right here — or run `/nmt-chat`, describe your situation, and it points you to the right one. Quick map: **new idea →** `nmt-market-research` · **live product or a metric moved →** `nmt-diagnose` · **have customer interviews →** `nmt-analyze-interviews` · **ready to build →** `nmt-product-requirements` · **positioning / launch copy →** `nmt-craft-value-proposition` → `nmt-craft-go-to-market`.
+> **New here, or not sure this is the right skill?** Start right here — or run `nmt-chat`, describe your situation, and it points you to the right one. Quick map: **new idea →** `nmt-market-research` · **live product or a metric moved →** `nmt-diagnose` · **have customer interviews →** `nmt-analyze-interviews` · **ready to build →** `nmt-product-requirements` · **positioning / launch copy →** `nmt-craft-value-proposition` → `nmt-craft-go-to-market`.
 
-This skill takes a customer group you want to win — described by you in plain words, or handed over from a `/nmt-market-research` run — and works out the **strongest, testable reason they'd switch to you** (the value proposition), plus a build-ready spec the next skill can turn into a PRD.
+This skill takes a customer group you want to win — described by you in plain words, or handed over from a `nmt-market-research` run — and works out the **strongest, testable reason they'd switch to you** (the value proposition), plus a build-ready spec the next skill can turn into a PRD.
 
 It sits in the middle of the chain:
 
 ```
-/nmt-market-research → /nmt-craft-value-proposition → /nmt-product-requirements → /nmt-craft-go-to-market
+nmt-market-research → nmt-craft-value-proposition → nmt-product-requirements → nmt-craft-go-to-market
 (segment + tasks +   (the value hypothesis +     (the build: PRD —        (landing + ad +
  why-we-win +         implementation spec for     functionality +          GTM/growth comms)
  competitors)         the PRD hand-off)            edge cases)
 ```
 
-`/nmt-market-research` hands over a customer group with the tasks they're trying to get done, what "good enough" means to them (success criteria), the bigger result they're after, their competitors, and a one-line take on why you'd win. This skill goes **much deeper**: it pins down the few things this customer weighs above everything else (their dominant success criteria), maps the run of tasks the customer walks (the Job Graph the value moves operate over), **generates** ways to create value by walking a catalog of named value moves (value mechanics) over that map, then **filters and ranks** them on feasibility, cost-to-build, the money math (unit economics), and whether they actually beat competitors. The output's implementation spec is what `/nmt-product-requirements` builds the PRD from.
+`nmt-market-research` hands over a customer group with the tasks they're trying to get done, what "good enough" means to them (success criteria), the bigger result they're after, their competitors, and a one-line take on why you'd win. This skill goes **much deeper**: it pins down the few things this customer weighs above everything else (their dominant success criteria), maps the run of tasks the customer walks (the Job Graph the value moves operate over), **generates** ways to create value by walking a catalog of named value moves (value mechanics) over that map, then **filters and ranks** them on feasibility, cost-to-build, the money math (unit economics), and whether they actually beat competitors. The output's implementation spec is what `nmt-product-requirements` builds the PRD from.
 
 The bigger gift is **invention** — systematically generating the strongest / fastest / cheapest way to create value — not validation. Validation (the test cards — the Riskiest Assumption Test, RAT) is the deliverable, not the differentiator.
 
@@ -26,7 +26,7 @@ The output is a single file. **The default the reader sees is short** — a one-
 
 1. **Layer 1 — The value proposition (the default view, ~1 page, zero methodology words):** what it is, who it's for, why they'd switch, the one bet that has to be true, the one thing to do next — each line drilling down to its reasoning if the reader wants it. Forwardable to a co-founder who's never heard of the methodology.
 2. **Layer 2 — The reasoning (opt-in, plain English):** *how we got here* for each Layer-1 claim — what the customer wants most, why you'd win, the before→after, the moment it clicks for them (the Aha moment) in plain terms, the riskiest bet — each linking down to the full work.
-3. **Layer 3 — The full work (opt-in/collapsed):** the value-move tables, before→after, competitor matrix, test cards, the **PRD-ready implementation spec** `/nmt-product-requirements` consumes, and the methodology appendix.
+3. **Layer 3 — The full work (opt-in/collapsed):** the value-move tables, before→after, competitor matrix, test cards, the **PRD-ready implementation spec** `nmt-product-requirements` consumes, and the methodology appendix.
 
 > **Producer contract (binding) — `../nmt-chat/references/producer-contract.md`.** Six cross-cutting behaviors shared by all producer skills, from user feedback: (1) print a **helicopter-view** before the first question; (2) ask **Markdown or HTML** output; (3) treat **all** user input as hypothesis and emit a *"risks I see in what you gave me"* block; (4) print **validation debt** and write any go-ahead as **`GO (to validation)`**, never a bare "build it now"; (5) accept a **custom output path**; (6) Deep mode runs an **evidence floor + self-critic loop** and offers a **web-MCP fallback**. The hooks below wire each into this skill; the contract is the source of truth for the wording.
 
@@ -34,7 +34,7 @@ The output is a single file. **The default the reader sees is short** — a one-
 
 ## Core methodological principle
 
-**Source of truth — `../nmt-chat/references/Next-Move-Theory-Canon/` in the project root.** Do NOT use generic interpretations of Jobs To Be Done from the internet or LLM training. Ivan Zamesin's AJTBD diverges substantially. Five mis-defaults to never propagate (per project `CLAUDE.md`):
+**Source of truth — `../nmt-chat/references/Next-Move-Theory-Canon/`.** Do NOT use generic interpretations of Jobs To Be Done from the internet or LLM training. Ivan Zamesin's AJTBD diverges substantially. Five mis-defaults to never propagate:
 
 - A **Job** is a desired *transition* — State A (situation) → expected outcome (State B), `in order to` perform a higher-level Job. Not "a struggle for progress."
 - **Value** is greater energy efficiency for the brain in performing a Job, measured against the brain's prediction. The **Aha Moment** is the customer-experience of value beating prediction; the **Problem** is value falling below it. **Never use the abbreviations PPE / NPE** (per Rule 22) — write *Aha Moment* / *Problem*.
@@ -54,7 +54,7 @@ The output is a single file. **The default the reader sees is short** — a one-
 - **Unit economics is a filter** — value that does not convert to margin (LTV > CAC, Job budget covers cost-to-serve) is not a product (`nmt-key-theses.md §4`).
 - **Risks compound** — a value prop stacking ≥5 unvalidated assumptions gets flagged (`rat-key-theses.md §1`).
 
-Per project `CLAUDE.md`: every named external source in any output is a clickable Markdown link `[Name](https://...)` (Rule 2). Disclaimers (numerical + hallucination) at the top of `result.md` (Rule 3). Outputs are written for a **US product audience** (Rule 6) — default to US-context analogs.
+Shared output guardrails: every named external source in any output is a clickable Markdown link `[Name](https://...)`. Put the numerical + hallucination disclaimers at the top of `result.md`. Outputs are written for a **US product audience** — default to US-context analogs.
 
 ---
 
@@ -84,9 +84,9 @@ The value-proposition document is **three reading depths in one file**, linked t
 - **Layer 1 = minimal jargon, plain words lead.** Lead every sentence in plain product English a junior PM gets at a glance. A methodology term may appear **in parentheses** as a short plain gloss when it genuinely helps — but never *open* a sentence with a raw term, and keep jargon to a minimum. Short sentences — "explain it to a smart friend." Watch the sneaky business-jargon leaks: *wedge, bet, beachhead, ACV* read as jargon too — translate them (wedge → "the one thing only we do"; the bet → "the one thing that must be proven first") or gloss in parentheses.
 - **Layer 2 = plain language first, term glossed.** On first use, gloss a methodology term in 3–5 words in parentheses — e.g., *"the Big Job (the outcome the customer is really after)"*. Nested or repeated parenthetical glosses are fine — clarity beats purity. Link `references/glossary.md` once at the top of Layer 2.
 - **No internal methodology citations in Layers 1–2.** Never write "per behaviour-change.md §1", "per Rule 7", or any canon file path in the readable layers.
-- **Layer 3 may carry methodology citations — but fenced, not inline.** This is the biggest readability fix for this skill: the old output embedded inline citations everywhere (`[Value Creation §10](…)`, `(per [Behaviour Change §1])`, `[CLAUDE.md Rule 7]`). **No canon path or `Rule N` appears inline in Layer-3 prose.** Put each canon reference in a collapsed **methodology trace** at the end of a subsection, styled out of the reading flow, e.g.:
+- **Layer 3 may carry methodology citations — but fenced, not inline.** This is the biggest readability fix for this skill: the old output embedded inline citations everywhere (`[Value Creation §10](…)`, `(per [Behaviour Change §1])`, internal rule numbers). **No canon path or `Rule N` appears inline in Layer-3 prose.** Put each canon reference in a collapsed **methodology trace** at the end of a subsection, styled out of the reading flow, e.g.:
   > <sub>**▸ methodology trace.** Value = Probability × Outcome − Cost (`value-creation.md §3`); mechanics operate over the Job Graph (`value-creation.md §11`); segmentation root = similar Core Jobs + similar success criteria in a priority order (`segmentation.md §2`).</sub>
-  Never break a sentence of report prose with `(value-creation.md §11)`. The **§12 methodology appendix MAY keep a single consolidated canon-references list** — it is an explicit appendix — but the body prose stays clean. Project-internal rule numbers (`CLAUDE.md Rule 7`) never appear in **any** layer, including §12 — they are for your reasoning, not the reader.
+  Never break a sentence of report prose with `(value-creation.md §11)`. The **§12 methodology appendix MAY keep a single consolidated canon-references list** — it is an explicit appendix — but the body prose stays clean. Project-internal rule numbers never appear in **any** layer, including §12 — they are for your reasoning, not the reader.
 - **Disclaimers once.** The two-part disclaimer appears **once** (top of file), plus a one-line pointer in Layer 1. Do not repeat the full disclaimer block inside Layer 3. (Search the file before shipping — the disclaimer wording should hit at most twice.)
 - **Keep source links** for external facts (Rule 2).
 
@@ -99,7 +99,7 @@ The value-proposition document is **three reading depths in one file**, linked t
 
 ## Methodology — source of truth (progressive loading)
 
-The **only** source of methodology is the Next Move Theory canon, read at runtime (relative paths; the skill ships in the same repo as the canon). **Don't load all of it up front** — read the eager core first, then pull the staged files only when the run reaches the stage that needs them (the same progressive-disclosure pattern Claude skills use with `references/`). This keeps a Quick run light and lets each Deep-mode agent read only its slice.
+The **only** source of methodology is the Next Move Theory canon, read at runtime (relative paths; the skill ships in the same repo as the canon). **Don't load all of it up front** — read the eager core first, then pull the staged files only when the run reaches the stage that needs them (the same progressive-disclosure pattern Skills use with `references/`). This keeps a Quick run light and lets each Deep-mode agent read only its slice.
 
 **This is a public skill — it grounds only in the public canon.** Every file in the sets below is a published canon file (the set whitelisted in `8-Tools/sync/PUBLIC_MANIFEST.yml`); the skill ships to the public mirror, where private files do not exist. **Never read or quote any canon file outside the sets below** — the value-creation algorithm, the unit-economics theory, and the full mechanics catalog are folded into the public files below; their deeper private and paywalled forms are out of bounds. This holds in **both** repos — even when running inside the Internal repo where those files exist on disk.
 
@@ -125,7 +125,7 @@ The **only** source of methodology is the Next Move Theory canon, read at runtim
 | `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/job-graph.md` | only when the graph substrate needs care (S2 — levels, many-to-many, directional moves) | the graph substrate | ~5k |
 | `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/consideration-activators.md` | only when Big-Job communication / fear reduction needs depth (S3, S6) | Consideration Activators, fear reduction | ~4k |
 
-Quick mode (one Claude): read the eager core, then read each staged file the first time the run reaches its stage — not before. Deep mode: **each agent reads only the files its wave needs** (the [S1] dominant-criteria agent → eager core + `segmentation.md` + `job-structure.md`; [S2] job-graph → `critical-chain.md` (+ `job-graph.md` if needed); [G*] mechanic generators → eager core + `behaviour-change.md`; [F] feasibility → `nmt-key-theses.md`; [RAT] → `rat-key-theses.md`; [SYN] → `communication.md`). Never have an agent load a file outside its slice.
+Quick mode (one primary agent): read the eager core, then read each staged file the first time the run reaches its stage — not before. Deep mode: **each agent reads only the files its wave needs** (the [S1] dominant-criteria agent → eager core + `segmentation.md` + `job-structure.md`; [S2] job-graph → `critical-chain.md` (+ `job-graph.md` if needed); [G*] mechanic generators → eager core + `behaviour-change.md`; [F] feasibility → `nmt-key-theses.md`; [RAT] → `rat-key-theses.md`; [SYN] → `communication.md`). Never have an agent load a file outside its slice.
 
 **Path note:** if a file is not found, retry with a `1-` prefix on the canon folder (`1-Next-Move-Theory-Canon/...`) — the source repo orders folders with a numeric prefix the public repo strips.
 
@@ -173,9 +173,9 @@ Binary verdicts only — no 1–5 scores.
 
 ---
 
-## Output file (per `CLAUDE.md` Rule 4 — one file per run)
+## Output file (one file per run)
 
-The skill writes **exactly one** file. Default location (used unless the user gave a custom output path in intake — `PRODUCER-CONTRACT.md §5`), grouped under the product's folder in the project root (never `TMP/` or `.claude/`):
+The skill writes **exactly one** file. Default location (used unless the user gave a custom output path in intake — `PRODUCER-CONTRACT.md §5`), grouped under the product's folder in the project root (never `TMP/` or a Client configuration directory):
 
 ```
 Skills-Results/{product-slug}/craft-value-proposition/{YYYY-MM-DD_HH-MM}_{product-slug}-craft-value-proposition-result.{md|html}
@@ -191,7 +191,7 @@ Skills-Results/{product-slug}/craft-value-proposition/{YYYY-MM-DD_HH-MM}_{produc
 
 # Quick mode (default, ~10–15 min, no internet)
 
-One Claude, no internet, no subagents. Runs the full S0→S6 chain inline; each GATE is a self-critique pass with the adversarial prompt above, grounded in the canon. Feasibility and competitiveness are reasoning-grade (Deep mode grounds them on the web).
+One primary agent, no internet, no subagents. Runs the full S0→S6 chain inline; each GATE is a self-critique pass with the adversarial prompt above, grounded in the canon. Feasibility and competitiveness are reasoning-grade (Deep mode grounds them on the web).
 
 **Canon loading (Quick).** Read the **eager core** (`value-creation.md` + `value-creation-mechanics.md`) at run start; pull each **staged** file the first time the run reaches the stage that uses it — not before (see "Methodology — source of truth"). Build the Layer-3 work first (S0→S6), then **compute Layer 2, then Layer 1, LAST** from the finished Layer-3 work, wiring the `▸` drill-down links to the Layer-3 anchors. Write the single file in the order: top disclaimers once → Layer 1 → Layer 2 → Layer 3.
 
@@ -200,7 +200,7 @@ One Claude, no internet, no subagents. Runs the full S0→S6 chain inline; each 
 ### Orientation (helicopter view) — print before any question
 **First, the orientation block** (`PRODUCER-CONTRACT.md §1`) — print it before any question, in plain words:
 
-> **What you'll get:** one document — your value proposition (what it is, who it's for, why they'd switch), the top-3 things to test before building, and a PRD-ready spec the next skill (`/nmt-product-requirements`) can build from.
+> **What you'll get:** one document — your value proposition (what it is, who it's for, why they'd switch), the top-3 things to test before building, and a PRD-ready spec the next skill (`nmt-product-requirements`) can build from.
 > **The steps:** (1) a few questions about your segment + input → (2) I pull out what this customer wants most → (3) I generate many ways to create value and filter them on feasibility, cost, unit economics, and how well they beat competitors → (4) I rank them and surface a primary + a back-up value prop with test cards → (5) you get one document in three reading depths.
 > **Where I work vs. where you decide:** I do the analysis, the invention, and the hypotheses. *You* pick the primary value prop and run the field validation — interviews, fake-door tests, first sales. I can't validate for you; I can only tell you what to check first and how.
 > **Two modes:** *Quick* (default — no internet, ~10–15 min, reasoning only; good for a first cut and "did I miss a stronger angle") · *Deep* (opt-in — subagents + web research, longer; real competitor and review data; best on a top model with a web-research MCP).
@@ -209,7 +209,7 @@ One Claude, no internet, no subagents. Runs the full S0→S6 chain inline; each 
 Then proceed to intake.
 
 ### Intake depth — ask this first
-The very first thing in the intake, before anything else. This is about the **number of questions** I ask you — it's independent of the Quick / Deep research mode (that's about internet + subagents, asked later). Ask via `AskUserQuestion`:
+The very first thing in the intake, before anything else. This is about the **number of questions** I ask you — it's independent of the Quick / Deep research mode (that's about internet + subagents, asked later). Ask via a structured-input request:
 
 > **First — how deep should I go? Pick one:**
 > - **Just the essentials** — I ask the 3–4 questions that matter most, then deliver. Best for a fast first pass or when you're still exploring.
@@ -218,16 +218,16 @@ The very first thing in the intake, before anything else. This is about the **nu
 Hold the choice in context. **Just the essentials** → ask only the load-bearing questions (input path · segment + the 1–3 main things they're getting done + business goal); infer or defer the rest (materials, claims ledger, hand-off debt), and note in `result.md` what was skipped. **The full interview** → run the complete intake below (materials, claims ledger, hand-off debt, direction confirmation). Either way the engine still builds the full eight-element Job structure internally.
 
 ### Language
-Default **English**. If the user writes in another language, offer to work in it via `AskUserQuestion` (English / their language / Other). Hold the choice in context. The report uses the chosen language; canon files and source URLs stay as-is.
+Default **English**. If the user writes in another language, offer to work in it via a structured-input request (English / their language / Other). Hold the choice in context. The report uses the chosen language; canon files and source URLs stay as-is.
 
 ### Determine input path
-Lead with the standalone path — it is a first-class door, not a fallback. Open with: *"Tell me your customer group and what they're trying to get done — or point me at a `/nmt-market-research` result if you have one. Both work."* Then ask via `AskUserQuestion`:
+Lead with the standalone path — it is a first-class door, not a fallback. Open with: *"Tell me your customer group and what they're trying to get done — or point me at a `nmt-market-research` result if you have one. Both work."* Then ask via a structured-input request:
 
 ```
 Q1: "How do you want to start?"
 - "I'll describe my segment myself"         → path C: standalone manual intake (first-class)
-- "I have a /nmt-market-research result file"   → path A: load and parse
-- "I want to run /nmt-market-research first"    → path B: hand off, then come back
+- "I have a nmt-market-research result file"   → path A: load and parse
+- "I want to run nmt-market-research first"    → path B: hand off, then come back
 ```
 
 **Path A — nmt-market-research result loaded.** Ask for the result file path, `Read` it, parse the segment list. Then:
@@ -245,7 +245,7 @@ Q3: "What's the active business goal?"
 
 **Hand-off debt — what's been validated since (`PRODUCER-CONTRACT.md §4c`).** The nmt-market-research result carried a validation debt (its risky assumptions, the RAT in its Section 5). Ask once: *"That research left a list of unvalidated assumptions. Which of them have you since checked in the field — interviews, sales, a test — and what did you learn?"* Carry the answers in context: anything confirmed becomes evidence (cite how it was checked); anything still unchecked stays tagged unvalidated and flows into S5's RAT cards. Debt travels down the chain — it is not silently dropped.
 
-**Path B — wants nmt-market-research first.** Reply: *"Good call if your market's still fuzzy — a `/nmt-market-research` run sharpens the value prop. Run `/nmt-market-research` (Quick or Deep), then come back here with the result file. Want me to open the `/nmt-market-research` input prompt now?"* Hand off. (Don't push this on anyone who'd rather just describe their segment — path C is a fully supported door.)
+**Path B — wants nmt-market-research first.** Reply: *"Good call if your market's still fuzzy — a `nmt-market-research` run sharpens the value prop. Run `nmt-market-research` (Quick or Deep), then come back here with the result file. Want me to open the `nmt-market-research` input prompt now?"* Hand off. (Don't push this on anyone who'd rather just describe their segment — path C is a fully supported door.)
 
 **Path C — describe your segment yourself (a first-class door, not a fallback).** Collect the input in plain words — **never ask the user to write a Job in any formal structure.** You collect plain answers and build the eight-element Job structure *internally* in the engine; the user only ever speaks normal English. Ask via plain-text prompts:
 
@@ -267,7 +267,7 @@ From these plain answers, build the eight-element Job structure internally (cont
 
 ### Run options & output (all paths)
 
-Ask in one batched `AskUserQuestion` (defaults keep the common case friction-free):
+Ask in one batched structured-input request (defaults keep the common case friction-free):
 
 - **Mode** — Quick (default; fast; no internet) / Deep (subagents + web competitor mining).
 - **Output format** (`PRODUCER-CONTRACT.md §2`) — Markdown (default; faster) / HTML (a bit slower; easier to read — collapsible sections + working in-page navigation; all source and drill-down links stay clickable).
@@ -279,7 +279,7 @@ Ask in one batched `AskUserQuestion` (defaults keep the common case friction-fre
 - **Input-as-hypothesis gate (`PRODUCER-CONTRACT.md §3`).** Treat *all* input — the nmt-market-research result, the user's free-text claims, every uploaded deck / landing / codebase / past research — as **hypothesis, never established fact**. A landing page is the team's belief about value, not proof customers want it; the Job stated in a deck may be the team's projection, not the customer's real Job (the most expensive error). Don't just record the input — **actively hunt the risks inside it**: for each load-bearing input ask — is this customer-validated or the team's belief? Does the stated Job / segment look like the real one? Any internal contradictions, or guesses dressed as data? What must be true for it to hold, and is that checked? Hold the findings in context — they become the **"What you told me — and the risks I see in it"** block in Layer 2, with the single worst one surfaced in Layer 1. Never silently bake an unvalidated input into the wedge or the value prop.
 - **User-claims ledger.** Collect the strong factual claims the user made (segment beliefs, competitor facts, "customers always…"), tag each as **data / observation / hunch** (ask in one batched question if unclear; hunch is the default for anything from a deck / landing / idea stream). User claims enter the pipeline as *hypotheses, never facts*: GATE-4's competitiveness check treats an unverified user claim as unsupported evidence, and a primary value prop resting mainly on a user hunch gets flagged in `result.md` with a RAT card pointed at that claim.
 - **Hard gate.** No value prop or wedge may rest *primarily* on an unvalidated user input without the document saying so explicitly and pointing a RAT card at it. If the wedge is built on a Job taken from the user's materials and not confirmed by customer evidence, name that as the single most expensive risk.
-- **Direction confirmation.** Before S1 starts, play the understanding back in one short block — *"Here's what I understood: {segment, Core Jobs, business goal, what's out of scope}"* — and confirm via one `AskUserQuestion` (Confirm / Correct). Cheapest moment to fix a wrong direction.
+- **Direction confirmation.** Before S1 starts, play the understanding back in one short block — *"Here's what I understood: {segment, Core Jobs, business goal, what's out of scope}"* — and confirm via one structured-input request (Confirm / Correct). Cheapest moment to fix a wrong direction.
 
 **Output (held in context):** target segment + causal criteria · Core Jobs (canonical form, "in order to" not "so that") · Big Jobs (+ personal Big Job for B2B) · known alternatives/competitors (direct · indirect · turnkey) · the nmt-market-research why-we-win line & first mechanic guess (path A) · user materials + claims ledger · mode · language · business goal.
 
@@ -417,7 +417,7 @@ Keep the full inventory + ranking math in-context; the three surfaced cards beco
 - ▢ Ranked cheapest-and-deadliest first; the Segment+Jobs / Value assumption is near the top.
 
 ### Human gate — pick primary vs supplementary
-Present the top 2 via `AskUserQuestion`:
+Present the top 2 via a structured-input request:
 
 ```
 Q: "Which is your PRIMARY value proposition? (the other becomes supplementary, not discarded)"
@@ -601,8 +601,8 @@ The current §0–§12 substance, kept whole, sitting below the plain layers. Ad
 > <sub>**▸ methodology trace.** Risks walked across the chain (Market / Segment+Jobs / Value / Unit-economics / Channels) + product-specific custom risks; ranked by (P(wrong) × cost-if-wrong) ÷ cost-to-validate (`rat-key-theses.md`); risks compound (`rat-key-theses.md §1`).</sub>
 
 <a id="l3-spec"></a>
-## 11. Implementation spec  → /nmt-product-requirements
-*This section is the canonical input for `/nmt-product-requirements`.*
+## 11. Implementation spec  → nmt-product-requirements
+*This section is the canonical input for `nmt-product-requirements`.*
 - **Product shape:** {what the product IS — name + components + delivery format (app / service / offline / hybrid)}.
 - **Feature table** (delivery vehicles for value):
   | Core Job / criterion | Mechanic | What we ship | Aha-Moment link |
@@ -630,7 +630,7 @@ The current §0–§12 substance, kept whole, sitting below the plain layers. Ad
 - [ ] **Drill-down links resolve and are unique** — every Layer-1 claim links to a real Layer-2 anchor; every Layer-2 claim links to a real Layer-3 anchor; every `#l...`/`#disclaimers` target exists **exactly once** and **no two links share a target** (the bet and the next-action are different links).
 - [ ] **Opaque Layer-3 table headers carry an inline plain gloss.**
 - [ ] **Disclaimers once** — full two-part disclaimer at top only; Layer 1 has the one-line pointer; this block does not repeat it.
-- [ ] **Citations fenced** — no canon path or `Rule N` inline in Layers 1–2 or in Layer-3 prose; any canon reference sits in a `▸ methodology trace` line; the §12 consolidated list is the only place a flat reference list is allowed; no `CLAUDE.md Rule N` anywhere.
+- [ ] **Citations fenced** — no canon path or `Rule N` inline in Layers 1–2 or in Layer-3 prose; any canon reference sits in a `▸ methodology trace` line; the §12 consolidated list is the only place a flat reference list is allowed; no internal rule number anywhere.
 - [ ] One-liner = [what it is] + [Core Jobs] + [value by criteria]
 - [ ] Dominant success criteria identified and the value prop beats competitors on them
 - [ ] Primary names a product + a mechanic combination + a Core Job + a displaced alternative (not a slogan)
@@ -646,8 +646,8 @@ The current §0–§12 substance, kept whole, sitting below the plain layers. Ad
 - [ ] **Producer contract satisfied** (`../nmt-chat/references/producer-contract.md`): helicopter-view printed before intake; output-format + output-path asked; if HTML, one self-contained `.html` with resolving anchors + `<details>`; the **"What you told me — and the risks I see in it"** block present (unless no input given); **validation-debt line** in Layer 1; the next step framed as **validate first, not build** (no bare "build it now"); on hand-off from nmt-market-research, asked what debt has been retired; Deep mode hit its evidence floor + self-critic loop (or flagged thin coverage + offered the web MCP).
 
 ## What this enables next
-1. `/nmt-product-requirements` — feed it the implementation spec (the PRD hand-off section) directly; it becomes the PRD's segment + value + risk input.
-2. `/nmt-craft-go-to-market` — once the PRD exists, feed this value prop + the PRD to write the landing, ad, and GTM/growth copy.
+1. `nmt-product-requirements` — feed it the implementation spec (the PRD hand-off section) directly; it becomes the PRD's segment + value + risk input.
+2. `nmt-craft-go-to-market` — once the PRD exists, feed this value prop + the PRD to write the landing, ad, and GTM/growth copy.
 3. Run RAT card #1 — don't build until #1 is validated or killed.
 
 ## Get more
@@ -659,9 +659,9 @@ The current §0–§12 substance, kept whole, sitting below the plain layers. Ad
 - ▢ **Three layers present and correctly leveled** — Layer 1 (minimal jargon, plain words lead, terms only in parentheses), Layer 2 (plain reasoning, one gloss per term, no big tables), Layer 3 (the full §0–§12 work). No conclusion repeated at the same depth across layers.
 - ▢ **Drill-down links resolve** — every Layer-1 claim links to a real Layer-2 anchor; every Layer-2 claim links to a real Layer-3 anchor; every `#l...`/`#disclaimers` target exists.
 - ▢ **Disclaimers once** — full two-part disclaimer at top only; Layer 1 carries the one-line pointer; not repeated lower down.
-- ▢ **Citations fenced** — no canon path or `Rule N` inline in Layers 1–2 or in Layer-3 prose; any canon reference sits in a `▸ methodology trace` line; the §12 consolidated list is the only flat reference list; no `CLAUDE.md Rule N` in any layer.
+- ▢ **Citations fenced** — no canon path or `Rule N` inline in Layers 1–2 or in Layer-3 prose; any canon reference sits in a `▸ methodology trace` line; the §12 consolidated list is the only flat reference list; no internal rule number in any layer.
 - ▢ US-native phrasing; passes the "so what?" test (every claimed attribute → benefit → why-they-care) and the 5-second test on Layer 1.
-- ▢ §11 implementation spec is genuinely PRD-ready (maps to `/nmt-product-requirements` inputs).
+- ▢ §11 implementation spec is genuinely PRD-ready (maps to `nmt-product-requirements` inputs).
 - ▢ Every external source is a clickable link (Rule 2); US-context analogs (Rule 6).
 - **Human gate:** the user approves & ships.
 
@@ -669,7 +669,7 @@ The current §0–§12 substance, kept whole, sitting below the plain layers. Ad
 
 # Deep mode (~30–45 min, with internet)
 
-Same S0→S6 chain, but substantive stages are parallelized and web-grounded. Agents are spawned with the `Agent` tool, `subagent_type: "general-purpose"`, `run_in_background: true`. **Each agent returns its full result in its final message — no per-agent files.** The orchestrator holds those returns in context and writes the single output file at the end. Every external source is a clickable link.
+Same S0→S6 chain, but substantive stages are delegated to waves of workers and web-grounded; independent workers may run in parallel. **Each worker returns its full result in its final message — no per-worker files.** The primary agent holds those returns in context and writes the single output file at the end. Every external source is a clickable link.
 
 **Shared preamble for every agent:**
 > You work with Ivan Zamesin's AJTBD / Next Move Theory methodology. Use ONLY the canon files this prompt names for your wave as the methodology source — do NOT use generic JTBD from the internet or prior training, and do NOT read files outside your slice (the eager core is `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation.md` + `…/value-creation-mechanics.md`; other files are named per-agent below). (If a path is not found, retry with a `1-` prefix on the canon folder.) Write *Aha Moment* / *Problem*, never PPE / NPE. **Keep methodology citations and canon paths out of report prose** — hold them in context; the orchestrator fences any that belong in Layer 3 into a `▸ methodology trace` line. Every named external source is a clickable Markdown link. **Return your full result in your final message — do not write any files.**
@@ -728,9 +728,9 @@ Produce a `⚠️ Methodology violation` warning (not silent output) for any of:
 
 ## What this skill does NOT do
 
-- Does NOT pick the target segment on path A — that happens in `/nmt-market-research`.
-- Does NOT size the market → `/nmt-market-research`.
-- Does NOT write the PRD → `/nmt-product-requirements` (it hands over the §11 implementation spec); does NOT write landing / ad / GTM copy → `/nmt-craft-go-to-market`.
+- Does NOT pick the target segment on path A — that happens in `nmt-market-research`.
+- Does NOT size the market → `nmt-market-research`.
+- Does NOT write the PRD → `nmt-product-requirements` (it hands over the §11 implementation spec); does NOT write landing / ad / GTM copy → `nmt-craft-go-to-market`.
 - Does NOT run customer interviews or execute the RATs — it generates the cards; the user runs RAT #1 next.
 - Does NOT generate the full multi-level Job Graph *above* Core Jobs — it builds one level *below* Core Jobs as the mechanics substrate.
 
@@ -748,7 +748,7 @@ Produce a `⚠️ Methodology violation` warning (not silent output) for any of:
 - [ ] **Three layers present and correctly leveled** — Layer 1 (minimal jargon, plain words lead, terms only in parentheses), Layer 2 (plain reasoning, one gloss per term, no big tables), Layer 3 (the full §0–§12 work); no conclusion repeated at the same depth; **Layer 2 then Layer 1 computed LAST** from the finished Layer-3 work.
 - [ ] **Drill-down links resolve** — every Layer-1 claim links to a real Layer-2 anchor; every Layer-2 claim links to a real Layer-3 anchor; every `#l...`/`#disclaimers` target exists.
 - [ ] **Disclaimers once** — full two-part disclaimer at the top of `result.md` only; Layer 1 has the one-line pointer; not repeated lower down. Every external source a clickable link (Rule 2); US-context analogs (Rule 6).
-- [ ] **Citations fenced** — no canon path or `Rule N` inline in Layers 1–2 or in Layer-3 prose; canon references sit in `▸ methodology trace` lines; the §12 consolidated list is the only flat reference list; no `CLAUDE.md Rule N` in any layer.
+- [ ] **Citations fenced** — no canon path or `Rule N` inline in Layers 1–2 or in Layer-3 prose; canon references sit in `▸ methodology trace` lines; the §12 consolidated list is the only flat reference list; no internal rule number in any layer.
 - [ ] §11 implementation spec is PRD-ready.
 - [ ] No methodology invariant violated; anti-segment named; Aha is a real event; habit reused/sidestepped.
 - [ ] Plain-language-led — Layers 1–2 (and Layer-3 prose) lead in the reader's own words; methodology terms only in parentheses (never jargon-first); §12 appendix may stay in full terms.

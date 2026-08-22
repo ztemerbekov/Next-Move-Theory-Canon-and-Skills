@@ -92,8 +92,8 @@ If you build, market, or decide the direction of a product, this is for you. You
 The repository root carries the Plugin manifests and marketplace metadata. The
 package contains one `skills/` source tree; the `nmt-chat` payload carries the
 one physical Canon and shared references under `skills/nmt-chat/references/`.
-Every Skill reads that bundled payload through the Client adapter boundary; no
-generated Claude or Codex Skill copies are shipped.
+The shared Skill instructions are capability-neutral and reach that payload
+through relative paths; no generated Claude or Codex Skill copies are shipped.
 
 | Skill | What it does |
 |---|---|
@@ -286,8 +286,7 @@ Next-Move-Theory-Canon-and-Skills/
 │   │       ├── methodology-guardrails.md
 │   │       ├── skill-routing.md
 │   │       ├── producer-contract.md
-│   │       ├── readability-contract.md
-│   │       └── client-adapters.md
+│   │       └── readability-contract.md
 │   ├── nmt-diagnose/
 │   ├── nmt-market-research/
 │   ├── nmt-craft-value-proposition/
