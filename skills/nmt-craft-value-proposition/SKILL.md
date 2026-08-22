@@ -230,7 +230,7 @@ Q1: "How do you want to start?"
 - "I want to run nmt-market-research first"    → path B: hand off, then come back
 ```
 
-**Path A — nmt-market-research result loaded.** Ask for the result file path, `Read` it, parse the segment list. Then:
+**Path A — nmt-market-research result loaded.** Ask for the result file path, read it with the active Client's file-reading capability, and parse the segment list. Then:
 
 ```
 Q2: "Which target segment(s)?" (list the ✅/⚠️ segments parsed from the result)
