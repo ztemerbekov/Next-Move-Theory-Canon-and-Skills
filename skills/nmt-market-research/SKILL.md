@@ -9,7 +9,7 @@ description: Run market research for a product or feature idea using Ivan Zamesi
 
 > **Producer contract (binding) — `../nmt-chat/references/producer-contract.md`.** Six cross-cutting behaviors shared by all producer skills, from user feedback: (1) print a **helicopter-view** before the first question; (2) ask **Markdown or HTML** output; (3) treat **all** user input as hypothesis and emit a *"risks I see in what you gave me"* block; (4) print **validation debt** and write **`GO (to validation)`**, never bare `GO`; (5) accept a **custom output path**; (6) Deep mode runs an **evidence floor + self-critic loop** and offers a **web-MCP fallback**. The hooks below wire each into this skill; the contract is the source of truth for the wording.
 
-> **New here, or not sure this is the right skill?** Start right here — or run `/nmt-chat`, describe your situation, and it points you to the right one. Quick map: **new idea →** `nmt-market-research` · **live product or a metric moved →** `nmt-diagnose` · **have customer interviews →** `nmt-analyze-interviews` · **ready to build →** `nmt-product-requirements` · **positioning / launch copy →** `nmt-craft-value-proposition` → `nmt-craft-go-to-market`.
+> **New here, or not sure this is the right skill?** Start right here — or run `nmt-chat`, describe your situation, and it points you to the right one. Quick map: **new idea →** `nmt-market-research` · **live product or a metric moved →** `nmt-diagnose` · **have customer interviews →** `nmt-analyze-interviews` · **ready to build →** `nmt-product-requirements` · **positioning / launch copy →** `nmt-craft-value-proposition` → `nmt-craft-go-to-market`.
 
 ## What this skill produces
 
@@ -22,14 +22,14 @@ description: Run market research for a product or feature idea using Ivan Zamesi
 Plus **a brief outcome in the chat** + Layer 1 printed inline + concrete suggestions to rerun the skill on alternative markets. The short answer leads; nobody is made to read 15 pages to get the verdict.
 
 **Two modes:**
-- **Quick (default, ~3–5 min):** no internet, no subagents. One Claude fills the templates directly from reasoning.
+- **Quick (default, ~3–5 min):** no internet, no subagents. One primary agent fills the templates directly from reasoning.
 - **Deep (opt-in, longer):** a team of subagents with web access fills the same templates with real competitor, review, and sourcing data. See "Deep mode pipeline" at the end.
 
 ---
 
 ## Methodology — source of truth (progressive loading)
 
-The **only** source of methodology is the Next Move Theory canon, read at runtime. **Don't load all of it up front** — read the eager core first, then pull the staged files only when the run reaches the stage that needs them (the same progressive-disclosure pattern Claude skills use with `references/`). This keeps a Quick run light and lets each Deep-mode agent read only its slice.
+The **only** source of methodology is the Next Move Theory canon, read at runtime. **Don't load all of it up front** — read the eager core first, then pull the staged files only when the run reaches the stage that needs them (the same progressive-disclosure pattern Skills use with `references/`). This keeps a Quick run light and lets each Deep-mode agent read only its slice.
 
 **Eager core (read before any analysis — every run):**
 
@@ -46,11 +46,11 @@ The **only** source of methodology is the Next Move Theory canon, read at runtim
 | `../nmt-chat/references/Next-Move-Theory-Canon/Next-Move-Theory/nmt-key-theses.md` | reaching the pivot + strategic-options stage (Section 4) | the chain to profit, local-vs-global optimum, segment-selection logic | ~5.4k |
 | `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation-mechanics.md` | reaching the differentiation / mechanic stage (Section 3) | the richer published mechanic menu | ~4.9k |
 
-Quick mode (one Claude): read the eager core, then read each staged file the first time the run reaches its stage — not before. Deep mode: each agent reads **only** the files its wave needs (sizing & competitor agents → eager core only; Strategy agent → core + rat + nmt + mechanics; Pivot agents → core + nmt). Never have an agent load a file outside its slice.
+Quick mode (one primary agent): read the eager core, then read each staged file the first time the run reaches its stage — not before. Deep mode: each agent reads **only** the files its wave needs (sizing & competitor agents → eager core only; Strategy agent → core + rat + nmt + mechanics; Pivot agents → core + nmt). Never have an agent load a file outside its slice.
 
 > **Path note.** Use the paths above. If a file is not found there, retry with a `1-` prefix on the canon folder (`1-Next-Move-Theory-Canon/...`) — the source repo orders folders with a numeric prefix that the public repo strips.
 
-**Do NOT use generic JTBD from the internet or prior training.** Ivan Zamesin's AJTBD diverges substantially. Five mis-defaults to never propagate (per the project `CLAUDE.md`):
+**Do NOT use generic JTBD from the internet or prior training.** Ivan Zamesin's AJTBD diverges substantially. Five mis-defaults to never propagate:
 - A **Job** is a desired *transition* — State A (situation) → expected outcome (State B), in order to perform a higher-level Job. Not "a struggle for progress."
 - **Value** is greater energy efficiency for the brain in performing a Job, measured against the brain's prediction. The **Aha Moment** is the customer-experience of value beating prediction; the **Problem** is value falling below it. Never use the abbreviations PPE/NPE.
 - `I want to + verb` is the **primary element** of an eight-element Job, not the whole Job.
@@ -81,9 +81,9 @@ Quick mode (one Claude): read the eager core, then read each staged file the fir
 
 ---
 
-## Output file (one file per run — `CLAUDE.md` Rule 4)
+## Output file (one file per run)
 
-The skill writes **exactly one** file. Default location (used unless the user gave a custom output path in intake — `PRODUCER-CONTRACT.md §5`), grouped under the product's folder in the project root (never `TMP/` or `.claude/`):
+The skill writes **exactly one** file. Default location (used unless the user gave a custom output path in intake — `PRODUCER-CONTRACT.md §5`), grouped under the product's folder in the project root (never `TMP/` or a Client configuration directory):
 
 ```
 Skills-Results/{product-slug}/market-research/{YYYY-MM-DD_HH-MM}_{product-slug}-market-research-result.{md|html}
@@ -109,7 +109,7 @@ Skills-Results/{product-slug}/market-research/{YYYY-MM-DD_HH-MM}_{product-slug}-
 > **Two modes:** *Quick* (default — no internet, ~3–5 min, reasoning only; good for a first cut and "did I miss something") · *Deep* (opt-in — subagents + web research, longer; real competitor/market/review data; best on a top model with a web-research MCP).
 > **Honest caveat:** this speeds up the *thinking*, not the *proving*. Every number and segment is a hypothesis until you check it in the field.
 
-Then **document language.** Default to **English**. If the user is writing in another language, offer to work in that language, then ask via `AskUserQuestion` (English / their language / Other). Hold the choice in context. All communication and the report use the chosen language; canon files and source URLs stay as-is.
+Then **document language.** Default to **English**. If the user is writing in another language, offer to work in that language, then ask via a structured-input request (English / their language / Other). Hold the choice in context. All communication and the report use the chosen language; canon files and source URLs stay as-is.
 
 ---
 
@@ -130,7 +130,7 @@ Either way, the research itself is unchanged — same analysis, same output. The
 
 ### Step 1 — Idea as a stream (free text) — *both paths*
 
-Collect in a short stream + (full interview) two batched `AskUserQuestion` calls (max 4 questions each).
+Collect in a short stream + (full interview) two batched structured-input requests (max 4 questions each).
 
 > Describe your idea as a stream — what it is, who it's for, what it does for them, and anything you already have going for it (technology, team, partners, traction).
 
@@ -155,7 +155,7 @@ Collect in a short stream + (full interview) two batched `AskUserQuestion` calls
 If the user skips, extract the assets from the idea stream and project context as best you can, and note in-context that assets were inferred.
 
 ### Step 5 — Adaptive clarifying questions (only the gaps that change the research) — *full interview (in essentials, ask at most the one gap that would flip the verdict)*
-After Steps 1–4, scan the collected input for **gaps that would materially change the research** and ask about *those only* — up to ~5–7 targeted questions, batched via `AskUserQuestion`, each with an explicit **"I don't have this info"** option. Skip this step entirely when the input already covers it. *(In "Just the essentials", ask at most the single gap that could flip the verdict, and otherwise infer.)* Candidate gaps:
+After Steps 1–4, scan the collected input for **gaps that would materially change the research** and ask about *those only* — up to ~5–7 targeted questions, batched via a structured-input request, each with an explicit **"I don't have this info"** option. Skip this step entirely when the input already covers it. *(In "Just the essentials", ask at most the single gap that could flip the verdict, and otherwise infer.)* Candidate gaps:
 
 - **Local vs global** — is the market local (one country/city, local channels, local competitors) or global? Deep mode: which *local* sources, marketplaces, or competitor names does the user already know? (The built-in web search often misses local-market players — user-named local sources are the workaround.)
 - **Segment specifics** — anything the user already knows about who buys and why (from sales, support, interviews), even fragmentary.
@@ -175,7 +175,7 @@ Downstream rules (enforced in synthesis and self-critic):
 - **No verdict, target-segment pick, wedge, or pivot recommendation may rest primarily on a single unverified user input.** If it does, the report says so explicitly — *"this recommendation stands on your unverified input X; validate it first"* — names it as the single most expensive risk, and points the corresponding RAT row at that claim.
 
 ### Step 7 — Direction confirmation (before any research runs) — *both paths*
-Before generating anything (Quick) or spawning any agent (Deep), play the understanding back in one short block: *"Here's what I understood: {product, market + local/global, who it's hypothetically for, what you already have, what's out of scope}. The research direction: {one sentence}."* Then one `AskUserQuestion`: **Confirm / Correct (free text)**. On "Correct", update the held input and re-confirm once. This is the cheapest moment to fix a wrong direction — web research is the most expensive stage, and everything downstream builds on it.
+Before generating anything (Quick) or spawning any agent (Deep), play the understanding back in one short block: *"Here's what I understood: {product, market + local/global, who it's hypothetically for, what you already have, what's out of scope}. The research direction: {one sentence}."* Then one structured-input request: **Confirm / Correct (free text)**. On "Correct", update the held input and re-confirm once. This is the cheapest moment to fix a wrong direction — web research is the most expensive stage, and everything downstream builds on it.
 
 **Hold** everything in context.
 
@@ -228,7 +228,7 @@ The target segment is the one whose answers compose most in our favour **and** b
 >
 > ⚠️ **Hallucination disclaimer.** Everything in this document is generated by an LLM and may contain hallucinations in unknown places. For decisions with expensive consequences, run a full quantitative and qualitative research pass; do not act on this document alone.
 
-Source-link rule (project `CLAUDE.md` Rule 2): every named source in the report and appendix is a clickable Markdown link `[Name](https://...)`. In Quick mode (no internet) use the best-known canonical URL or `[Name (URL TBD)](#)` and list it in the verification checklist.
+Source-link rule: every named source in the report and appendix is a clickable Markdown link `[Name](https://...)`. In Quick mode (no internet) use the best-known canonical URL or `[Name (URL TBD)](#)` and list it in the verification checklist.
 
 ---
 
@@ -243,7 +243,7 @@ The report is **three reading depths in one file**, linked top-to-bottom like ca
 - **No internal methodology citations in Layers 1–2.** Never write "per b2b.md §6", "per Rule 14", or any canon file path in the readable layers.
 - **Layer 3 may carry methodology citations — but fenced, not inline.** Put canon references in a collapsed **methodology trace** at the end of a subsection, styled out of the reading flow, e.g.:
   > <sub>**▸ methodology trace.** Segmentation root = similar Core Jobs + similar success criteria (`segmentation.md`, Rule 18); levels named product-relative (Rules 8, 20).</sub>
-  Never break a sentence of report prose with `(b2b.md §7)`. Project-internal rule numbers (`CLAUDE.md Rule 7`) never appear in any layer — they are for your reasoning, not the reader.
+  Never break a sentence of report prose with `(b2b.md §7)`. Project-internal rule numbers never appear in any layer — they are for your reasoning, not the reader.
 - **Disclaimers once.** The two-part disclaimer appears **once** (top of file), plus a one-line pointer in Layer 1. Do not repeat the full disclaimer block inside Layer 3. (Search the file before shipping — the disclaimer wording should hit at most twice.)
 - **Keep source links** for external facts (Rule 2).
 
@@ -484,7 +484,7 @@ Close Section 2 with a short **cross-segment themes** block (4–7 patterns span
 ### Value-creation direction (one line, not a feature list)
 **Mechanic direction:** {one of the published mechanics — `ajtbd-key-theses.md §22–§23` / `value-creation-mechanics.md`; the most powerful when applicable is *climb a level / kill a Job as a class*} — {how exactly the customer's life gets more energy-efficient, 1 sentence}.
 
-> **What to build to deliver this — features, delivery format, cost, the Aha Moment — is `/nmt-craft-value-proposition`'s job.** It generates and filters the concrete ways to deliver this value across the whole mechanics catalog; don't anchor on a feature list invented here. This report stops at the underserved criteria (where you can win) + the mechanic direction.
+> **What to build to deliver this — features, delivery format, cost, the Aha Moment — is `nmt-craft-value-proposition`'s job.** It generates and filters the concrete ways to deliver this value across the whole mechanics catalog; don't anchor on a feature list invented here. This report stops at the underserved criteria (where you can win) + the mechanic direction.
 
 ### Threat from Big-Job-level players
 {If turnkey Big-Job players with scaling potential exist — how serious, and partner-or-displace?}
@@ -618,7 +618,7 @@ Methodology only — format is guaranteed by the templates above, so it is not r
 6. **Core vs Big distinguished** — Core = highest Jobs the product performs fully; Big = motivation above, not the segmentation root.
 7. **Aha Moment placed** — where delivered value beats the customer's expected criteria; positioning promises only what the chain delivers.
 8. **Competitors defined by Jobs, not categories** — direct on the Core Job; indirect on the Big Job, incl. do-nothing and non-obvious substitutes.
-9. **Wedge = an underserved success-criterion intersection** + a one-line published-mechanic direction — **no feature list** (features are `/nmt-craft-value-proposition`'s job).
+9. **Wedge = an underserved success-criterion intersection** + a one-line published-mechanic direction — **no feature list** (features are `nmt-craft-value-proposition`'s job).
 10. **RAT walks the cause-and-effect chain**, each risk positive + falsifiable + paired with a validation action; riskiest-and-cheapest-to-falsify ordered first.
 11. **Pivot markets evaluated on the same selection screen** against the extracted assets; existential-risk gate applied; each is a concrete Segment + Big-Job pair.
 12. **User claims stayed hypotheses** — every load-bearing user claim is tagged (data / observation / hunch); no verdict, target-segment pick, or strategy rests primarily on a single unverified user hunch without saying so; "I don't have this info" answers surface as explicit assumptions, not invented specifics.
@@ -638,7 +638,7 @@ Methodology only — format is guaranteed by the templates above, so it is not r
 
 ## Quick mode (default)
 
-One Claude, no internet, no subagents. Steps:
+One primary agent, no internet, no subagents. Steps:
 1. Hold the user's input in context (no `00-input.md` file) — including the materials read from the user's paths, the clarifying answers, the claims ledger, and the confirmed direction (STAGE 1 Steps 5–7).
 2. Read the **eager core** (`ajtbd-key-theses.md` + `segmentation.md`). Pull each **staged** file (`rat-key-theses.md`, `nmt-key-theses.md`, `value-creation-mechanics.md`) the first time the run reaches the stage that uses it — not before (see "Methodology — source of truth").
 3. Build the **Layer-3** work first, directly from reasoning: market snapshot → Map of Segments (all segments, selection screen) → differentiation → **pivot** (extract assets from the input, generate 3–5 alternative Big-Job markets with segment+Jobs hypotheses, score them on the selection screen) → **strategic options (top 3–5, ranked)** → action-first RAT → appendix. Add the section anchors.
@@ -658,7 +658,7 @@ Triggered when the user picks Deep. A team of subagents with web access fills th
 
 **Principles:**
 - Writes one file `Skills-Results/{product-slug}/market-research/{YYYY-MM-DD_HH-MM}_{product-slug}-market-research-result.md`; new file per run.
-- Agents are spawned with the `Agent` tool, `subagent_type: "general-purpose"`, `run_in_background: true`. Within a wave, independent agents run in parallel; the orchestrator waits for a wave to finish before the next.
+- Work is delegated in waves. Within a wave, independent workers may run in parallel; the primary agent waits for every return before starting the next wave.
 - Each agent reads **only the canon slice its wave needs** (per "Methodology — source of truth": sizing & competitor agents → eager core only; Strategy → core + rat + nmt + mechanics; Pivot → core + nmt) and **returns its result in its final message — no per-agent files.** The orchestrator holds those returns in context. No live-tail / `Monitor` machinery.
 - Web caps (hold the longest legs): reviews-mining ≤ 12 `WebFetch` / ~10 min; synthesis ≤ 6; strategy ≤ 4. Pivot agents are reasoning-bound (≤ 2 fetches if any).
 - **Evidence floor, not just a ceiling** (`PRODUCER-CONTRACT.md §6`). Each web leg also has a *minimum*: it may not return "done" until it has hit a real floor of distinct sources for its task (sizing → ≥3 independent inputs; competitors/reviews → ≥4 competitors with real review sources) **or** explicitly reported why fewer were possible (blocked / none exist). "Did two queries and stopped" is a failure, not a completion.

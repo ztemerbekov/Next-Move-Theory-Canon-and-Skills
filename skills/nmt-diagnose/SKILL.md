@@ -23,7 +23,7 @@ description: >-
 
 A chat-first diagnostic for a live product. It finds your real risks and best growth moves, says which one to tackle first, and points you to the skill that does it.
 
-> **New here, or not sure this is the right skill?** Start right here — or run `/nmt-chat`, describe your situation, and it points you to the right one. Quick map: **new idea →** `nmt-market-research` · **live product or a metric moved →** `nmt-diagnose` · **have customer interviews →** `nmt-analyze-interviews` · **ready to build →** `nmt-product-requirements` · **positioning / launch copy →** `nmt-craft-value-proposition` → `nmt-craft-go-to-market`.
+> **New here, or not sure this is the right skill?** Start right here — or run `nmt-chat`, describe your situation, and it points you to the right one. Quick map: **new idea →** `nmt-market-research` · **live product or a metric moved →** `nmt-diagnose` · **have customer interviews →** `nmt-analyze-interviews` · **ready to build →** `nmt-product-requirements` · **positioning / launch copy →** `nmt-craft-value-proposition` → `nmt-craft-go-to-market`.
 
 ---
 
@@ -40,7 +40,7 @@ A chat-first diagnostic for a live product. It finds your real risks and best gr
 
 **The only source of truth is the Next Move Theory canon, read at runtime.** Do not diagnose from generic Jobs-To-Be-Done in LLM training — Ivan's methodology diverges substantially from Christensen / Moesta / Ulwick. The biggest failure mode is a confident, plausible, *wrong* diagnosis built on training-data JTBD.
 
-**The five terminology mis-defaults to never propagate** (project `CLAUDE.md` Rule 1):
+**The five terminology mis-defaults to never propagate** (from the shared methodology guardrails):
 - **A Job ≠ "progress."** A Job specifies a desired transition — situation (State A) → expected outcome (State B), in order to perform a higher-level Job. A unit of motivation.
 - **Value = greater energy efficiency for the brain in performing a Job, vs. the brain's prediction.** The **Aha Moment** is the customer-experience of value beating prediction; the **Problem** is value below it. Never use the abbreviations PPE/NPE (Rule 22).
 - **`I want to + verb` is the primary element, not the whole Job** (eight elements). Each infinitive verb is a separate Job (Rule 7).
@@ -108,7 +108,7 @@ Market with money
 | Revenue flat despite usage | Monetization / unit economics; value captured by the wrong tier | Unit economics |
 | "Busy but not growing" | No focus (effort on non-binding nodes); or local optimum when a global move is needed | Focus / local-vs-global |
 | "Don't know our best customers" | Segment not defined by Jobs (ABCDX never run) | Segment+Job |
-| "Idea, no customers yet" | Not a constraint problem — discovery | → route to `/nmt-market-research` |
+| "Idea, no customers yet" | Not a constraint problem — discovery | → route to `nmt-market-research` |
 
 **The growth-points lens** (`the-algorithm §6`): the real value usually sits **outside** the current Core Jobs — in the Previous and Next Jobs, the Big Jobs (climb a level), an adjacent segment's Small Jobs, emotional/Orientation Jobs, kill-a-Job moves, and Critical Chain of Jobs repairs. Sweep for these, not only for what's broken.
 
@@ -137,7 +137,7 @@ Then **document language** — default English; if the user writes in another la
 Artifact: the original task confirmed as worth pursuing, **or** a reframed higher-level goal (with the climb that justifies it) + the alternatives cut. Everything downstream is diagnosed against the *right* goal.
 
 ### 2 — Context + current initiatives
-- **Stage / PMF:** idea (PMF 0) · early, few payers · paying base, weak PMF · strong PMF, scaling. The master branch — PMF 0 routes mostly to `/nmt-market-research`; a live product opens the ABCDX path.
+- **Stage / PMF:** idea (PMF 0) · early, few payers · paying base, weak PMF · strong PMF, scaling. The master branch — PMF 0 routes mostly to `nmt-market-research`; a live product opens the ABCDX path.
 - Product in one line + the Core Job hypothesis (what people hire it for).
 - B2C / B2B.
 - **Current initiatives / roadmap:** *"What are you doing or planning right now about this — features, bets, experiments?"* Capture everything; each becomes a target for the RAT pass (every initiative is a stack of assumptions — extract and flag the riskiest). Skip if none.
@@ -193,14 +193,14 @@ The diagnosis ends by pointing the first-move item at exactly one next skill (so
 
 | First-move finding | Route | Handoff line |
 |---|---|---|
-| No paying customers yet / don't know the segment (PMF 0) | `/nmt-market-research` → then `/nmt-craft-value-proposition` | *"The constraint is discovery, not your funnel. Run `/nmt-market-research` to find and score the paying segments first."* |
-| Segment unknown on a live base (ABCDX never run) | ABCDX (lightweight inline triage → run it properly), then back here or `/nmt-craft-value-proposition` | *"Run ABCDX on your paying base to find your A-segment — the rest depends on knowing who's profitable."* |
-| Value weak / not noticeable / no differentiation | `/nmt-craft-value-proposition` | *"The constraint is value, not acquisition. Run `/nmt-craft-value-proposition` on your A-segment."* |
-| Job/segment hypotheses unproven in the field | run AJTBD customer interviews (canon interview guide) · `/nmt-chat` to design the study | *"You're reasoning on unvalidated Jobs. Go run AJTBD interviews with past-payers — `/nmt-chat` can help you design the study."* |
-| Know the value, need to build it | `/nmt-product-requirements` | *"The value is clear; the constraint is execution. Run `/nmt-product-requirements`."* |
-| Acquisition / message / channel | `/nmt-craft-go-to-market` | *"Value is fine; the constraint is reaching them with the right message. Run `/nmt-craft-go-to-market`."* |
-| Methodology question / wants to think it through | `/nmt-chat` | *"Let's think it through — `/nmt-chat`."* |
-| Unit economics / monetization | (no dedicated skill yet) — diagnosis + `/nmt-chat` | *"The constraint is per-unit math; here's the shape of the fix — pressure-test it in `/nmt-chat`."* |
+| No paying customers yet / don't know the segment (PMF 0) | `nmt-market-research` → then `nmt-craft-value-proposition` | *"The constraint is discovery, not your funnel. Run `nmt-market-research` to find and score the paying segments first."* |
+| Segment unknown on a live base (ABCDX never run) | ABCDX (lightweight inline triage → run it properly), then back here or `nmt-craft-value-proposition` | *"Run ABCDX on your paying base to find your A-segment — the rest depends on knowing who's profitable."* |
+| Value weak / not noticeable / no differentiation | `nmt-craft-value-proposition` | *"The constraint is value, not acquisition. Run `nmt-craft-value-proposition` on your A-segment."* |
+| Job/segment hypotheses unproven in the field | run AJTBD customer interviews (canon interview guide) · `nmt-chat` to design the study | *"You're reasoning on unvalidated Jobs. Go run AJTBD interviews with past-payers — `nmt-chat` can help you design the study."* |
+| Know the value, need to build it | `nmt-product-requirements` | *"The value is clear; the constraint is execution. Run `nmt-product-requirements`."* |
+| Acquisition / message / channel | `nmt-craft-go-to-market` | *"Value is fine; the constraint is reaching them with the right message. Run `nmt-craft-go-to-market`."* |
+| Methodology question / wants to think it through | `nmt-chat` | *"Let's think it through — `nmt-chat`."* |
+| Unit economics / monetization | (no dedicated skill yet) — diagnosis + `nmt-chat` | *"The constraint is per-unit math; here's the shape of the fix — pressure-test it in `nmt-chat`."* |
 
 ---
 
@@ -223,7 +223,7 @@ Per `../nmt-chat/references/producer-contract.md`, this chat-first skill applies
   - **Jargon terms: plain explanation first, term in parentheses after, once:** Core Job, Big Job, Small / Micro Job, Critical Chain of Jobs, kill a Job, move up a level, Consideration Activators, RAT, ABCDX, null Solution, Previous / Next Job, value mechanic, Tax / Fake Job, Red Queen, Solution. (*"the bigger result they actually want (their **Big Job**)"*; *"the must-do task right before the one you do (the **Previous Job**)"*.) Never open a sentence, bullet, or heading with a jargon label; never stack two terms in one sentence; spell out **RAT** (Riskiest Assumption Test) and **ABCDX** on first use.
   - **Never say to a user:** *Positive / Negative Prediction Error* → say *Aha moment / Problem*; *"switchable demand"* → *"demand you can win"*; *"the wedge"* → *"the underserved need that wins it for you"*; *"anti-segment"* → *"the group we deliberately don't serve."*
   - Get the *Core Job* gloss right: the biggest task your product does completely on its own and can't go higher than right now (not "the main thing your product does").
-- **Audience & examples** (`CLAUDE.md` Rule 6, 19). US-based founder / PM vocabulary; Tier A/B recognizable brands (TurboTax, Stripe, Notion, Uber) — never a brand the reader must google.
+- **Audience & examples.** US-based founder / PM vocabulary; Tier A/B recognizable brands (TurboTax, Stripe, Notion, Uber) — never a brand the reader must google.
 - **Job grammar, every time** (Rules 7, 8, 14). Jobs as `I want to + infinitive`, in quotes; name the level (Core / Big / Small / Micro); terms capitalized; in questions *to* customers use *task*, never *Job*.
 - **Diagnose before prescribing.** Don't answer a vague situation with a generic essay; establish the upstream anchors first, then route through the chain.
 - **Accept correction immediately** (Rule 17); don't defend a weak finding.
