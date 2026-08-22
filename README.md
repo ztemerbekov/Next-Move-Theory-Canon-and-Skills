@@ -89,9 +89,9 @@ If you build, market, or decide the direction of a product, this is for you. You
 
 ## The Plugin
 
-The package contains one `skills/` source tree; the `nmt-chat` payload carries
-the one physical Canon and shared references under
-`skills/nmt-chat/references/`.
+The repository root carries the Plugin manifests and marketplace metadata. The
+package contains one `skills/` source tree; the `nmt-chat` payload carries the
+one physical Canon and shared references under `skills/nmt-chat/references/`.
 The shared Skill instructions are capability-neutral and reach that payload
 through relative paths; no generated Claude or Codex Skill copies are shipped.
 
@@ -173,10 +173,11 @@ or cleanup flow.
 <details>
 <summary><b>What is inside the user-global Plugin?</b></summary>
 
-The user-global package contains one `skills/` source tree with eight Skills;
-the `nmt-chat` payload contains the physical Canon and shared references under
-its `references/` directory. The user-global install does not inject
-instructions into the Consumer project.
+The repository root contains the Plugin manifests and marketplace metadata. It
+contains one `skills/` source tree with eight Skills; the `nmt-chat` payload
+contains the physical Canon and shared references under its `references/`
+directory. The user-global install does not inject instructions into the
+Consumer project.
 
 </details>
 
@@ -274,6 +275,9 @@ Then read the rest in whichever cluster matches your problem.
 
 ```
 Next-Move-Theory-Canon-and-Skills/
+├── .agents/plugins/marketplace.json    # Codex repository marketplace
+├── .claude-plugin/                     # Claude manifest + marketplace
+├── .codex-plugin/plugin.json           # Codex Plugin manifest
 ├── skills/                             # one hand-maintained Skill source tree
 │   ├── nmt-chat/                       #   router + bundled Canon/references payload
 │   │   └── references/
@@ -287,7 +291,7 @@ Next-Move-Theory-Canon-and-Skills/
 │   ├── nmt-craft-go-to-market/
 │   ├── nmt-analyze-interviews/
 │   └── nmt-upgrade/                    #   Legacy transition updater
-└── CLAUDE.md / AGENTS.md               # contributor entrypoints
+└── NOTICE.md                           # attribution and packaging notice
 ```
 
 ---
@@ -335,7 +339,7 @@ Found an error in a thesis or a broken link? Open an issue or a pull request.
 
 ## License
 
-The canon and the skills are licensed under [**CC BY-NC-SA 4.0**](https://creativecommons.org/licenses/by-nc-sa/4.0/) (Creative Commons Attribution–NonCommercial–ShareAlike 4.0 International) — see [`LICENSE`](LICENSE). You are free to **share** and **adapt** the material, as long as you:
+The canon and the skills are licensed under [**CC BY-NC-SA 4.0**](https://creativecommons.org/licenses/by-nc-sa/4.0/) (Creative Commons Attribution–NonCommercial–ShareAlike 4.0 International) — see [`LICENSE`](LICENSE) and [`NOTICE.md`](NOTICE.md). This release changes packaging, paths, documentation, and compatibility only; it does not change the methodology or imply endorsement by Ivan Zamesin or the original project. You are free to **share** and **adapt** the material, as long as you:
 
 - **Attribution** — credit Ivan Zamesin and link back to this repository and the license;
 - **NonCommercial** — don't use the material for commercial purposes;
