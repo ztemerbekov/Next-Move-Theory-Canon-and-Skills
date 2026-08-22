@@ -11,10 +11,11 @@ not ship `install.sh` or `install.ps1`. The unchanged `nmt-upgrade` workflow
 is Legacy-only behavior for existing project-local setups and is not the
 supported global updater.
 
-When a methodology task is running inside the Plugin, load the relevant
-progressive-disclosure pointer in `skills/nmt-chat/references/` and then the
-named file in `skills/nmt-chat/references/Next-Move-Theory-Canon/`. The installed
-Canon anchors are defined in `skills/nmt-chat/references/canon-routing.md`.
+When a methodology task is running inside this repository, load the named file
+under `skills/nmt-chat/references/Next-Move-Theory-Canon/`. Installed Skills use
+relocation-safe sibling anchors: `nmt-chat` reads
+`references/Next-Move-Theory-Canon/`; every other `nmt-*` Skill reads
+`../nmt-chat/references/Next-Move-Theory-Canon/`.
 
 When this file is present as a contributor or Legacy source, it teaches an
 agent to do product work with **Advanced Jobs To Be Done (AJTBD)** and **Next
@@ -24,15 +25,13 @@ user-global Plugin does not require this file in the Consumer project.
 
 **Pair it with the canon.** This file carries the working theses; the full depth
 lives in the bundled Canon. In a user-global suite installation, Skills reach it
-through the anchor in `skills/nmt-chat/references/canon-routing.md`. The
-supported installation does not clone files into a Consumer project.
+through the sibling-relative anchors above. The supported installation does not
+clone files into a Consumer project.
 
 When a task touches product strategy, Jobs, segmentation, value, positioning,
 growth, or validation, **open the relevant Canon file (see the routing table at
 the end) and read it before answering** — do not answer from a generic memory
-of "JTBD." Resolve the path through
-`skills/nmt-chat/references/canon-routing.md` when this file is used with the
-Plugin.
+of "JTBD."
 
 ---
 
@@ -110,7 +109,7 @@ Plugin.
 
 ## Where to read in the canon
 
-When a task matches one of the situations below, **open that file and read the relevant part before answering.** Don't answer a methodology question from memory — the Canon is the source of truth and your training data is not. Paths below are relative to the bundled **`skills/nmt-chat/references/Next-Move-Theory-Canon/`**; use `skills/nmt-chat/references/canon-routing.md` to resolve the installed anchor. It is fine — expected — to open several files for one task.
+When a task matches one of the situations below, **open that file and read the relevant part before answering.** Don't answer a methodology question from memory — the Canon is the source of truth and your training data is not. Paths below are relative to the bundled **`skills/nmt-chat/references/Next-Move-Theory-Canon/`**. It is fine — expected — to open several files for one task.
 
 ### Start here / the whole model
 

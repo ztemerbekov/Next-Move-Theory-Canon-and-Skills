@@ -175,13 +175,13 @@ Binary verdicts only — no 1–5 scores.
 
 ## Output file (one file per run)
 
-The skill writes **exactly one** file. Default location (used unless the user gave a custom output path in intake — `PRODUCER-CONTRACT.md §5`), grouped under the product's folder in the project root (never `TMP/` or a Client configuration directory):
+The skill writes **exactly one** file. Default location (used unless the user gave a custom output path in intake — `producer-contract.md §5`), grouped under the product's folder in the project root (never `TMP/` or a Client configuration directory):
 
 ```
 Skills-Results/{product-slug}/craft-value-proposition/{YYYY-MM-DD_HH-MM}_{product-slug}-craft-value-proposition-result.{md|html}
 ```
 
-- **Extension follows the chosen output format** (`PRODUCER-CONTRACT.md §2`): `.md` (default) or a single self-contained `.html` (inline CSS, working in-page anchors for the How-to-read jumps + every `▸` drill-down link, source links opening in a new tab). **Either format leads with the one-page value proposition (Layer 1) and keeps Layer 2 + Layer 3 collapsed in `<details>` blocks** — collapsed `<details>` renders on the GitHub Markdown mirror too, so the default view is short in both. HTML also uses `<details>` for methodology traces. HTML carries the identical content — same attribution, disclaimers, three layers, tables, links — just in a more readable shell. Never write both; one file per run.
+- **Extension follows the chosen output format** (`producer-contract.md §2`): `.md` (default) or a single self-contained `.html` (inline CSS, working in-page anchors for the How-to-read jumps + every `▸` drill-down link, source links opening in a new tab). **Either format leads with the one-page value proposition (Layer 1) and keeps Layer 2 + Layer 3 collapsed in `<details>` blocks** — collapsed `<details>` renders on the GitHub Markdown mirror too, so the default view is short in both. HTML also uses `<details>` for methodology traces. HTML carries the identical content — same attribution, disclaimers, three layers, tables, links — just in a more readable shell. Never write both; one file per run.
 - If the user gave a custom path, write the one file there with the same filename pattern.
 - Everything else — the normalized input, the ranked criteria, the Job Graph, the raw hypotheses, the scored shortlist, the RAT inventory, dropped hypotheses, and every GATE verdict — **stays in-context across the stages**; none of it is written to a separate file. The timestamp makes each run's file unique, so reruns never overwrite. Disclaimers (Rule 3) go at the top of this one file.
 
@@ -198,7 +198,7 @@ One primary agent, no internet, no subagents. Runs the full S0→S6 chain inline
 ## S0 — Intake & Route
 
 ### Orientation (helicopter view) — print before any question
-**First, the orientation block** (`PRODUCER-CONTRACT.md §1`) — print it before any question, in plain words:
+**First, the orientation block** (`producer-contract.md §1`) — print it before any question, in plain words:
 
 > **What you'll get:** one document — your value proposition (what it is, who it's for, why they'd switch), the top-3 things to test before building, and a PRD-ready spec the next skill (`nmt-product-requirements`) can build from.
 > **The steps:** (1) a few questions about your segment + input → (2) I pull out what this customer wants most → (3) I generate many ways to create value and filter them on feasibility, cost, unit economics, and how well they beat competitors → (4) I rank them and surface a primary + a back-up value prop with test cards → (5) you get one document in three reading depths.
@@ -230,7 +230,7 @@ Q1: "How do you want to start?"
 - "I want to run nmt-market-research first"    → path B: hand off, then come back
 ```
 
-**Path A — nmt-market-research result loaded.** Ask for the result file path, `Read` it, parse the segment list. Then:
+**Path A — nmt-market-research result loaded.** Ask for the result file path, read it with the active Client's file-reading capability, and parse the segment list. Then:
 
 ```
 Q2: "Which target segment(s)?" (list the ✅/⚠️ segments parsed from the result)
@@ -243,7 +243,7 @@ Q3: "What's the active business goal?"
 - "Other — I'll describe"
 ```
 
-**Hand-off debt — what's been validated since (`PRODUCER-CONTRACT.md §4c`).** The nmt-market-research result carried a validation debt (its risky assumptions, the RAT in its Section 5). Ask once: *"That research left a list of unvalidated assumptions. Which of them have you since checked in the field — interviews, sales, a test — and what did you learn?"* Carry the answers in context: anything confirmed becomes evidence (cite how it was checked); anything still unchecked stays tagged unvalidated and flows into S5's RAT cards. Debt travels down the chain — it is not silently dropped.
+**Hand-off debt — what's been validated since (`producer-contract.md §4c`).** The nmt-market-research result carried a validation debt (its risky assumptions, the RAT in its Section 5). Ask once: *"That research left a list of unvalidated assumptions. Which of them have you since checked in the field — interviews, sales, a test — and what did you learn?"* Carry the answers in context: anything confirmed becomes evidence (cite how it was checked); anything still unchecked stays tagged unvalidated and flows into S5's RAT cards. Debt travels down the chain — it is not silently dropped.
 
 **Path B — wants nmt-market-research first.** Reply: *"Good call if your market's still fuzzy — a `nmt-market-research` run sharpens the value prop. Run `nmt-market-research` (Quick or Deep), then come back here with the result file. Want me to open the `nmt-market-research` input prompt now?"* Hand off. (Don't push this on anyone who'd rather just describe their segment — path C is a fully supported door.)
 
@@ -270,13 +270,13 @@ From these plain answers, build the eight-element Job structure internally (cont
 Ask in one batched structured-input request (defaults keep the common case friction-free):
 
 - **Mode** — Quick (default; fast; no internet) / Deep (subagents + web competitor mining).
-- **Output format** (`PRODUCER-CONTRACT.md §2`) — Markdown (default; faster) / HTML (a bit slower; easier to read — collapsible sections + working in-page navigation; all source and drill-down links stay clickable).
-- **Where to save the result** (`PRODUCER-CONTRACT.md §5`) — default `Skills-Results/{project}/craft-value-proposition/…` / or a folder path to match your repo (e.g., `docs/research/`). Skip = default. One file per run regardless of location (Rule 4).
+- **Output format** (`producer-contract.md §2`) — Markdown (default; faster) / HTML (a bit slower; easier to read — collapsible sections + working in-page navigation; all source and drill-down links stay clickable).
+- **Where to save the result** (`producer-contract.md §5`) — default `Skills-Results/{project}/craft-value-proposition/…` / or a folder path to match your repo (e.g., `docs/research/`). Skip = default. One file per run regardless of location (Rule 4).
 
 ### User materials, claims ledger, direction confirmation (all paths)
 
 - **Materials.** Ask once: *"Any files or folders with material I should use — a Notion export (markdown), past research, interview notes, a strategy doc, your current site, a deck, a codebase?"* Read what's given; tag everything taken from it **[user data]** in-context. "Nothing" is a fine answer.
-- **Input-as-hypothesis gate (`PRODUCER-CONTRACT.md §3`).** Treat *all* input — the nmt-market-research result, the user's free-text claims, every uploaded deck / landing / codebase / past research — as **hypothesis, never established fact**. A landing page is the team's belief about value, not proof customers want it; the Job stated in a deck may be the team's projection, not the customer's real Job (the most expensive error). Don't just record the input — **actively hunt the risks inside it**: for each load-bearing input ask — is this customer-validated or the team's belief? Does the stated Job / segment look like the real one? Any internal contradictions, or guesses dressed as data? What must be true for it to hold, and is that checked? Hold the findings in context — they become the **"What you told me — and the risks I see in it"** block in Layer 2, with the single worst one surfaced in Layer 1. Never silently bake an unvalidated input into the wedge or the value prop.
+- **Input-as-hypothesis gate (`producer-contract.md §3`).** Treat *all* input — the nmt-market-research result, the user's free-text claims, every uploaded deck / landing / codebase / past research — as **hypothesis, never established fact**. A landing page is the team's belief about value, not proof customers want it; the Job stated in a deck may be the team's projection, not the customer's real Job (the most expensive error). Don't just record the input — **actively hunt the risks inside it**: for each load-bearing input ask — is this customer-validated or the team's belief? Does the stated Job / segment look like the real one? Any internal contradictions, or guesses dressed as data? What must be true for it to hold, and is that checked? Hold the findings in context — they become the **"What you told me — and the risks I see in it"** block in Layer 2, with the single worst one surfaced in Layer 1. Never silently bake an unvalidated input into the wedge or the value prop.
 - **User-claims ledger.** Collect the strong factual claims the user made (segment beliefs, competitor facts, "customers always…"), tag each as **data / observation / hunch** (ask in one batched question if unclear; hunch is the default for anything from a deck / landing / idea stream). User claims enter the pipeline as *hypotheses, never facts*: GATE-4's competitiveness check treats an unverified user claim as unsupported evidence, and a primary value prop resting mainly on a user hunch gets flagged in `result.md` with a RAT card pointed at that claim.
 - **Hard gate.** No value prop or wedge may rest *primarily* on an unvalidated user input without the document saying so explicitly and pointing a RAT card at it. If the wedge is built on a Job taken from the user's materials and not confirmed by customer evidence, name that as the single most expensive risk.
 - **Direction confirmation.** Before S1 starts, play the understanding back in one short block — *"Here's what I understood: {segment, Core Jobs, business goal, what's out of scope}"* — and confirm via one structured-input request (Confirm / Correct). Cheapest moment to fix a wrong direction.
@@ -468,7 +468,7 @@ Three levels — go as deep as you need:
 > ⚠️ These are hypotheses, not facts — [full disclaimer ▸](#disclaimers)
 
 > **Validation debt:** this value prop stands on **{N}** unvalidated assumptions — **{M}** of them fatal (would sink it if wrong). The fatal ones are the first things to test, before you build. [see them ▸](#l3-bet)
-> <sub>N = risky assumptions across the RAT inventory; M = those that kill it if wrong. A Quick run on thin input has high debt — say so honestly (`PRODUCER-CONTRACT.md §4`).</sub>
+> <sub>N = risky assumptions across the RAT inventory; M = those that kill it if wrong. A Quick run on thin input has high debt — say so honestly (`producer-contract.md §4`).</sub>
 
 ## What it is
 **{The headline value statement in plain words — what the product is + what it does for them, ≤15 words, zero jargon.}** [the value, in plain terms ▸](#l2-value)
@@ -483,7 +483,7 @@ Three levels — go as deep as you need:
 {The single riskiest assumption, in plain words — if this is false, nothing else matters.} [how we know they'll switch ▸](#l2-bet)
 
 ## Do this next
-{One concrete next action — usually: run the cheapest test of the bet above. This skill emits no "build it now" verdict: the next step is always to **validate first**, not to build (`PRODUCER-CONTRACT.md §4` — the value prop is a hypothesis to test, not a green light).} [the test cards — every check ▸](#l3-bet)
+{One concrete next action — usually: run the cheapest test of the bet above. This skill emits no "build it now" verdict: the next step is always to **validate first**, not to build (`producer-contract.md §4` — the value prop is a hypothesis to test, not a green light).} [the test cards — every check ▸](#l3-bet)
 ```
 
 **Layer 1 rule: minimal jargon, plain words lead** — a methodology term may appear in parentheses as a plain gloss, but never opens a sentence; short, plain sentences ("explain it to a smart friend"). **Each Layer-1 line links to its own unique anchor — never point two lines at the same target** (the bet and the next-action are different links). Every line a skeptic could doubt ends with a `▸` drill-down link.
@@ -502,7 +502,7 @@ Plain English, one gloss per methodology term, `references/glossary.md` linked o
 
 <a id="l2-input-risks"></a>
 ## What you told me — and the risks I see in it
-*Everything you gave me — your idea, your deck, your landing, your numbers, the upstream research — I treated as a hypothesis, not as fact. These are the inputs the value prop leans on, and what I'd check before trusting each. (`PRODUCER-CONTRACT.md §3`.)* (Omit this block only if the user provided no claims or materials at all.)
+*Everything you gave me — your idea, your deck, your landing, your numbers, the upstream research — I treated as a hypothesis, not as fact. These are the inputs the value prop leans on, and what I'd check before trusting each. (`producer-contract.md §3`.)* (Omit this block only if the user provided no claims or materials at all.)
 
 | What you provided / claimed | How I treated it | The risk I see in it | How to check it fast |
 |---|---|---|---|
@@ -674,7 +674,7 @@ Same S0→S6 chain, but substantive stages are delegated to waves of workers and
 **Shared preamble for every agent:**
 > You work with Ivan Zamesin's AJTBD / Next Move Theory methodology. Use ONLY the canon files this prompt names for your wave as the methodology source — do NOT use generic JTBD from the internet or prior training, and do NOT read files outside your slice (the eager core is `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation.md` + `…/value-creation-mechanics.md`; other files are named per-agent below). (If a path is not found, retry with a `1-` prefix on the canon folder.) Write *Aha Moment* / *Problem*, never PPE / NPE. **Keep methodology citations and canon paths out of report prose** — hold them in context; the orchestrator fences any that belong in Layer 3 into a `▸ methodology trace` line. Every named external source is a clickable Markdown link. **Return your full result in your final message — do not write any files.**
 
-**Deep-mode QA — evidence floor, self-critic loop, web-MCP fallback (`PRODUCER-CONTRACT.md §6`):**
+**Deep-mode QA — evidence floor, self-critic loop, web-MCP fallback (`producer-contract.md §6`):**
 
 - **Evidence floor, not just a ceiling.** The web-touching legs ([R] reviews-mining, [F] feasibility/competitiveness, [RAT]) have fetch *caps*; treat the lower bound as a *floor* too. A leg may not return "done" until it has hit a real minimum of distinct sources for its task — reviews/competitors → ≥4 competitors with real review sources; feasibility → the competitor matrix grounded on cited reviews, not assertion — **or** explicitly reported why fewer were possible (blocked / none exist). "Did two queries and stopped" is a failure state, not a completion.
 - **Self-critic loop per leg.** After each research leg returns, run a short critic pass (this is what the [C] critic gates already do per GATE): *enough distinct sources? load-bearing claims actually verified against a source? any methodology error (segment by demographics, Big-Job-as-segment, features-before-criteria, unit-econ ignored)? gaps left?* If it fails, re-run the leg with the gap named — up to 2 extra rounds, then escalate to the user. Don't ship a leg that failed its own critic.
@@ -701,7 +701,7 @@ Wave 5 (sequential):            [SYN] synthesis → [GATE-6 panel] → (human: s
 - **[F] feasibility · cost · competitiveness.** Read `nmt-key-theses.md`. Given the merged hypotheses + the reviews signal, return the web-grounded criteria×competitor matrix, the feasibility + cost-to-build + unit-econ read per hypothesis, and the RICE ranking with bonuses + top 2. ≤6 fetches.
 - **[C] critic gates.** Given a stage's returned output + its acceptance criteria + the canon anchors for that stage, run the adversarial binary critic per GATE and return the verdict + `fix_instructions` for any failures (≤2 rounds, then escalate to the user).
 - **[RAT] RAT-card generator.** Read `rat-key-theses.md`. Given the chosen primary, return the top-3 RAT cards with web-validated cost-of-validation estimates. ≤3 fetches.
-- **[SYN] synthesis.** Read `communication.md`. Given all stage returns, assemble the single output file as the **three layers** (top disclaimers once → Layer 1 → Layer 2 → Layer 3 = the §0–§12 work). Include the Layer-2 **"What you told me — and the risks I see in it"** block from the input-as-hypothesis findings, and the **validation-debt line** in Layer 1 (`PRODUCER-CONTRACT.md §3, §4`). Add the Layer-3 anchors; **compute Layer 2 then Layer 1 LAST** from the assembled Layer-3 work, wiring the `▸` drill-down links; fence every methodology citation into a `▸ methodology trace` line (no canon path or `Rule N` inline in any layer). If HTML was chosen, render the one file as self-contained `.html` (`PRODUCER-CONTRACT.md §2`). Run GATE-6 as a panel.
+- **[SYN] synthesis.** Read `communication.md`. Given all stage returns, assemble the single output file as the **three layers** (top disclaimers once → Layer 1 → Layer 2 → Layer 3 = the §0–§12 work). Include the Layer-2 **"What you told me — and the risks I see in it"** block from the input-as-hypothesis findings, and the **validation-debt line** in Layer 1 (`producer-contract.md §3, §4`). Add the Layer-3 anchors; **compute Layer 2 then Layer 1 LAST** from the assembled Layer-3 work, wiring the `▸` drill-down links; fence every methodology citation into a `▸ methodology trace` line (no canon path or `Rule N` inline in any layer). If HTML was chosen, render the one file as self-contained `.html` (`producer-contract.md §2`). Run GATE-6 as a panel.
 
 **Progress** is reported inline in chat as waves complete — not to a log file.
 
