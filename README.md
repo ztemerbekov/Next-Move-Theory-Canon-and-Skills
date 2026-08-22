@@ -138,10 +138,10 @@ ask).
 The supported installation is user-global through the `skills` CLI.
 
 ```bash
-npx skills@latest add ztemerbekov/Next-Move-Theory-Canon-and-Skills --skill '*' -a codex -a claude-code -g -y
+npx skills@latest add ztemerbekov/Next-Move-Theory-Canon-and-Skills -g
 ```
 
-The command is cross-platform and intentionally installs all eight Skills.
+The command is cross-platform and installs the published suite globally.
 Partial selection is unsupported because the shared Canon and routing
 references are carried by the `nmt-chat` payload.
 
@@ -162,8 +162,8 @@ Start with `nmt-chat` after installation. The Client may display a
 client-specific namespace for direct Skill invocation; the router can reach the
 producer Skills without changing the Consumer project.
 
-**Updating later:** repeat the same command. Do not edit a Client cache or
-install a partial suite.
+**Updating later:** run exactly `npx skills update`. Do not repeat the install
+command, edit a Client cache, or install a partial suite.
 
 **Legacy boundary:** this release does not ship `install.sh` or `install.ps1`.
 `nmt-upgrade` remains unchanged Legacy-only behavior for existing project-local
