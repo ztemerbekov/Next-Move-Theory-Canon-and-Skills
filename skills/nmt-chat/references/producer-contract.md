@@ -4,7 +4,7 @@
 > `nmt-craft-go-to-market`) share six behaviors that came directly from user testing feedback.
 > Specifying them once here keeps the four skills in sync. Each skill points to this file and wires the
 > concrete hooks (intake questions, template blocks) into its own flow. The companion file
-> `READABILITY-CONTRACT.md` governs the 3-layer output; this file governs intake + framing + integrity.
+> `readability-contract.md` governs the 3-layer output; this file governs intake + framing + integrity.
 
 The six behaviors:
 
@@ -19,7 +19,7 @@ The six behaviors:
 
 ## 1. Helicopter-view first (before the first intake question)
 
-The very first thing the skill prints — before STAGE 0 / the first `AskUserQuestion` — is a short orientation block, in plain language, in the user's chosen document language. From user testing — *"I always ask Claude to first explain schematically what we'll do, then go deep. The skill jumps straight to 'describe your idea.'"*
+The very first thing the skill prints — before STAGE 0 / the first structured-input request — is a short orientation block, in plain language, in the user's chosen document language. User testing showed that people need a schematic explanation before the skill goes deep instead of jumping straight to *"describe your idea."*
 
 Keep it to ~8–12 lines:
 
@@ -91,7 +91,7 @@ N = count of risky assumptions in the RAT / risk table. M = those tagged "kills 
 
 **(b) Verdict wording** — wherever a skill emits a `GO` verdict, write **`GO (to validation)`**, never bare `GO`. Keep `NARROW` and `PIVOT` as-is (they already read as "not yet building"). In Layer 1 add a half-line gloss the first time: *"GO (to validation) — the idea is worth the next step, which is checking it in the field, not building it yet."*
 
-**(c) Hand-off carries the debt.** When a skill hands off to the next in the chain (`/nmt-market-research` → `/nmt-craft-value-proposition` → `/nmt-product-requirements` → `/nmt-craft-go-to-market`), the next skill **opens by asking what from the prior artifact's validation debt has since been checked**, and re-tags anything still unvalidated. Debt travels down the chain; it is not silently dropped.
+**(c) Hand-off carries the debt.** When a skill hands off to the next in the chain (`nmt-market-research` → `nmt-craft-value-proposition` → `nmt-product-requirements` → `nmt-craft-go-to-market`), the next skill **opens by asking what from the prior artifact's validation debt has since been checked**, and re-tags anything still unvalidated. Debt travels down the chain; it is not silently dropped.
 
 ## 5. Configurable output path
 
@@ -105,7 +105,7 @@ If the user gives a path, write the single result file there, keeping the same `
 
 ## 6. Deep-mode QA loop + web-MCP fallback
 
-From user testing: *"`/nmt-craft-value-proposition` promised deep research, made two queries, and quit."* And: *"G2 is blocked from Claude Code — use a firecrawl/exa MCP."* Also: Deep results sometimes had methodology errors and undersized SAM.
+User testing found Deep runs that promised research, made two queries, and quit; web legs blocked by the active Client; methodology errors; and undersized SAM estimates.
 
 **(a) Evidence floor (not just a ceiling).** Each Deep-mode research leg has web *caps* (max fetches). Treat the **lower bound as a floor**: a leg may not return "done" until it has either hit a real minimum of distinct sources for its task or explicitly reported *why* fewer were possible (blocked, none exist). "Did two queries and stopped" is a failure state, not a completion.
 

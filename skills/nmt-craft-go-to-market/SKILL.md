@@ -1,11 +1,11 @@
 ---
 name: nmt-craft-go-to-market
-description: Write the go-to-market communication for a chosen segment using Ivan Zamesin's AJTBD / Next Move Theory methodology. Input — a /nmt-craft-value-proposition result (best), a /nmt-product-requirements PRD, a /nmt-market-research result, or a manual segment+Jobs description. Output — ready-to-publish landing-page copy, ad/creative copy built on the seven Job-language formulas, and a GTM/growth plan — channel hypotheses, lead magnets, viral loops, cross-sell / upsell / retention messaging. Everything is communicated through the Big Job (motivation), in concrete success criteria not adjectives, with features as proof not message. Use when the user wants landing copy, ad copy, creatives, channel hypotheses, or a launch plan — "write the landing / the copy / the go-to-market". Two modes — Quick (default, no internet) and Deep (subagents + web for real review language). Plain language; defaults to English.
+description: Write the go-to-market communication for a chosen segment using Ivan Zamesin's AJTBD / Next Move Theory methodology. Input — a nmt-craft-value-proposition result (best), a nmt-product-requirements PRD, a nmt-market-research result, or a manual segment+Jobs description. Output — ready-to-publish landing-page copy, ad/creative copy built on the seven Job-language formulas, and a GTM/growth plan — channel hypotheses, lead magnets, viral loops, cross-sell / upsell / retention messaging. Everything is communicated through the Big Job (motivation), in concrete success criteria not adjectives, with features as proof not message. Use when the user wants landing copy, ad copy, creatives, channel hypotheses, or a launch plan — "write the landing / the copy / the go-to-market". Two modes — Quick (default, no internet) and Deep (subagents + web for real review language). Plain language; defaults to English.
 ---
 
 # Craft Go-To-Market (GTM communication) v1 — English / US edition
 
-> **New here, or not sure this is the right skill?** Start right here — or run `/nmt-chat`, describe your situation, and it points you to the right one. Quick map: **new idea →** `nmt-market-research` · **live product or a metric moved →** `nmt-diagnose` · **have customer interviews →** `nmt-analyze-interviews` · **ready to build →** `nmt-product-requirements` · **positioning / launch copy →** `nmt-craft-value-proposition` → `nmt-craft-go-to-market`.
+> **New here, or not sure this is the right skill?** Start right here — or run `nmt-chat`, describe your situation, and it points you to the right one. Quick map: **new idea →** `nmt-market-research` · **live product or a metric moved →** `nmt-diagnose` · **have customer interviews →** `nmt-analyze-interviews` · **ready to build →** `nmt-product-requirements` · **positioning / launch copy →** `nmt-craft-value-proposition` → `nmt-craft-go-to-market`.
 
 > **One breath.** This skill turns the value you've already built into the copy that brings in customers — landing copy, ad/creative copy, and a launch + growth plan. It's the last step of the chain and builds on the steps before it; it never invents the segment, the value, or the build. Everything is said through the bigger outcome the customer is really after (their **Big Job**, where motivation lives), in concrete, measurable terms (**success criteria**, not adjectives), with features used as proof, not as the message. Copy can carry value, not manufacture it: if the value isn't proven yet, the skill says so up front — it can still write you demand-test copy, just don't scale on it.
 
@@ -14,12 +14,12 @@ description: Write the go-to-market communication for a chosen segment using Iva
 ## Where this skill sits in the chain
 
 ```
-/nmt-market-research → /nmt-craft-value-proposition → /nmt-product-requirements → nmt-craft-go-to-market
+nmt-market-research → nmt-craft-value-proposition → nmt-product-requirements → nmt-craft-go-to-market
 (segment + Jobs)    (the value hypothesis)      (the build spec)         (THIS SKILL: the copy
                                                                           that sells the value)
 ```
 
-It runs from a plain-English description of your product, your customer, and what you sell — that's a first-class way in, not a fallback. If you've already run an upstream skill, even better: it'll use a `/nmt-craft-value-proposition` result (best — it carries the positioning headline, the dominant criteria, the moment it clicks for the customer (the **Aha moment**), the differentiation, the proof), a `/nmt-product-requirements` PRD (the real functionality, the step-by-step path the customer walks (the **Critical Chain of Jobs**), where the Aha lands), or a `/nmt-market-research` result (segment, Big/Core Jobs, competitors, the underserved angle you win on). Either way, it does **not** re-derive segments, re-invent value, or re-spec the build — it packages what you give it into customer-facing language. (One footer point only: copy can't prove value, so test the value before you scale spend — more below.)
+It runs from a plain-English description of your product, your customer, and what you sell — that's a first-class way in, not a fallback. If you've already run an upstream skill, even better: it'll use a `nmt-craft-value-proposition` result (best — it carries the positioning headline, the dominant criteria, the moment it clicks for the customer (the **Aha moment**), the differentiation, the proof), a `nmt-product-requirements` PRD (the real functionality, the step-by-step path the customer walks (the **Critical Chain of Jobs**), where the Aha lands), or a `nmt-market-research` result (segment, Big/Core Jobs, competitors, the underserved angle you win on). Either way, it does **not** re-derive segments, re-invent value, or re-spec the build — it packages what you give it into customer-facing language. (One footer point only: copy can't prove value, so test the value before you scale spend — more below.)
 
 ## What this skill produces
 
@@ -34,14 +34,14 @@ It runs from a plain-English description of your product, your customer, and wha
    - **Appendix — what each asset is doing:** which of the five switch-me-over pieces (the Consideration Activators) each asset carries, and which forces of behavior change it works.
 
 **Two modes:**
-- **Quick (default, ~10–15 min):** one Claude, no internet. Writes all copy from the loaded artifacts + reasoning.
+- **Quick (default, ~10–15 min):** one primary agent, no internet. Writes all copy from the loaded artifacts + reasoning.
 - **Deep (opt-in, longer):** subagents mine real customer-review language (so the copy uses the words already in the customer's head) and ground the competitor-firing (Consideration-Activators component 5) in real Problems. See "Deep mode" at the end.
 
 ---
 
 ## Methodology — source of truth (progressive loading)
 
-The **only** source of methodology is the Next Move Theory canon, read at runtime. **Don't load all of it up front** — read the eager core first, then pull the staged files only when the run reaches the stage that needs them (the same progressive-disclosure pattern Claude skills use with `references/`). This keeps a Quick run light and lets each Deep-mode agent read only its slice.
+The **only** source of methodology is the Next Move Theory canon, read at runtime. **Don't load all of it up front** — read the eager core first, then pull the staged files only when the run reaches the stage that needs them (the same progressive-disclosure pattern Skills use with `references/`). This keeps a Quick run light and lets each Deep-mode agent read only its slice.
 
 **This is a public skill — it grounds only in the public canon.** Every file below is a published canon file (the set whitelisted in `8-Tools/sync/PUBLIC_MANIFEST.yml`); the skill ships to the public mirror, where private files do not exist. **Never read or quote any canon file outside the sets below** — the per-task algorithms (positioning, conversion, acquisition, retention, average-check) live behind the paywall, and their communication content is folded into the public files below: positioning/landing/creatives in `communication.md`; conversion in `communication.md` + `customers-attention-management.md` + `barrier-removal.md`; acquisition/cross-sell/retention in `job-types-and-properties.md` + `critical-chain.md` + `consideration-activators.md`. This holds in **both** repos — even when running inside the Internal repo where those files exist on disk.
 
@@ -65,11 +65,11 @@ The **only** source of methodology is the Next Move Theory canon, read at runtim
 | `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation.md` | reaching the upsell / Aha-stream stage (Part 3b/3c) | the value formula behind every criteria claim (§3, §9); move-up-a-level for upsell (§14); the Red Queen value-gap behind the Aha-stream (§6); deferred-value communication (§19) | ~8k |
 | `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/job-structure.md` | if the headline needs the fidelity-levels treatment | the headline is the Level-3 minimal Job (§15) | ~5k |
 
-Quick mode (one Claude): read the eager core, then pull each staged file the first time the run reaches its stage — not before. Deep mode: each writer agent reads **only** the files its part needs (Landing → core + customers-attention-management + barrier-removal; Ads → core; GTM → core + behaviour-change + job-types-and-properties + critical-chain + b2b-if-B2B + value-creation). Never have an agent load a file outside its slice.
+Quick mode (one primary agent): read the eager core, then pull each staged file the first time the run reaches its stage — not before. Deep mode: each writer agent reads **only** the files its part needs (Landing → core + customers-attention-management + barrier-removal; Ads → core; GTM → core + behaviour-change + job-types-and-properties + critical-chain + b2b-if-B2B + value-creation). Never have an agent load a file outside its slice.
 
 > **Path note.** If a file is not found at the path above, retry with a `1-` prefix on the canon folder (`1-Next-Move-Theory-Canon/...`) — the source repo orders folders with a numeric prefix that the public repo strips.
 
-**Do NOT use generic JTBD from the internet or prior training.** Five mis-defaults to never propagate (per project `CLAUDE.md`): a **Job** is a desired transition (State A → expected outcome), not "a struggle for progress"; **value** is energy efficiency measured against the brain's prediction, the **Aha Moment** is value beating prediction (**never PPE/NPE** — Rule 22); `I want to + verb` is the primary element of an eight-element Job (each verb a separate Job — Rule 7); a **Problem** is a consequence of an underperforming Solution, not a root cause; a **Solution** is a real thing *and* a label for the Job Graph it installs.
+**Do NOT use generic JTBD from the internet or prior training.** Five mis-defaults to never propagate: a **Job** is a desired transition (State A → expected outcome), not "a struggle for progress"; **value** is energy efficiency measured against the brain's prediction, the **Aha Moment** is value beating prediction (**never PPE/NPE**); `I want to + verb` is the primary element of an eight-element Job (each verb a separate Job); a **Problem** is a consequence of an underperforming Solution, not a root cause; a **Solution** is a real thing *and* a label for the Job Graph it installs.
 
 **Methodological invariants — the copy is invalid if any is violated:**
 - **Communicate through the Big Job** — motivation lives one level above the Core Job (`behaviour-change.md §4`, `communication.md §3`). *Exception (Class 1, `behaviour-change.md §10`):* when our Core Job is already familiar to the segment, lead on the Core Job + criteria with the Big Job as reinforcement; when unfamiliar (Class 2), lead on the Big Job and back-fill the Core Job.
@@ -80,7 +80,7 @@ Quick mode (one Claude): read the eager core, then pull each staged file the fir
 - **Communication transmits validated value** — if value isn't proven (no sales / no Aha Moment yet), flag it; don't scale copy on a hypothesis (`communication.md §1`).
 - **Specific stories beat abstractions** (`consideration-activators.md §6`); **visuals show State B**, not the process (`communication.md §6`).
 
-Per `CLAUDE.md`: every named external source is a clickable Markdown link (Rule 2); two-part disclaimer at the top of the result (Rule 3); US-context analogs + the recognition test — only Tier A/B brands without a one-clause bridge (Rules 6, 19).
+Shared output guardrails: every named external source is a clickable Markdown link; include the two-part disclaimer at the top of the result; use US-context analogs + the recognition test — only Tier A/B brands without a one-clause bridge.
 
 ---
 
@@ -112,7 +112,7 @@ The pack is **three reading depths in one file**, linked top-to-bottom like cano
 - **The landing and ad copy in Layer 3 is already plain by definition — keep it clean and shippable.** Do not abstract it, do not gloss it, do not wrap it in methodology. The copy *is* the deliverable. **But every claim/number in shippable copy keeps its `[VERIFY — source]` guardrail** until it is proven — a reader copies the copy straight to production, and the top-of-file disclaimer won't stop them from shipping an unproven number.
 - **Citation fencing — the big fix for this skill.** Strip every inline canon citation — `(communication.md §8)`, `(b2b.md §1)`, `(consideration-activators.md §1)`, `(behaviour-change.md §…)`, etc. — out of the copy **and** out of all surrounding prose. The landing blocks and ad lines must read as clean, shippable copy with **no methodology citations inside them**. Where the canon reference still matters to the marketer reading the pack, move it into a fenced **methodology trace** line at the *end* of a part, styled out of the reading flow, e.g.:
   > <sub>**▸ methodology trace.** The landing block sequence is a short Critical Chain of Jobs whose State B is enough belief to take the first step (`communication.md §8`); the fear-reduction and competitor-firing blocks load Consideration-Activators components 4–5 (`consideration-activators.md §1`, `barrier-removal.md §3`).</sub>
-  Never break a line of copy or a sentence of pack prose with `(communication.md §8)`. Project-internal rule numbers (`CLAUDE.md Rule N`) never appear in any layer — they are for your reasoning, not the reader.
+  Never break a line of copy or a sentence of pack prose with `(communication.md §8)`. Project-internal rule numbers never appear in any layer — they are for your reasoning, not the reader.
 - **Disclaimers once, and the answer comes first.** The two-part disclaimer appears **once** at the top of the file. The **validation flag sits *below* the Layer-1 answer, capped at 2 lines** — a wall of "this isn't proven yet" before the answer makes a reader think the product is broken and bail; let them read the answer first, the caveat second. A one-line pointer in Layer 1 is enough; do not repeat the block inside Layer 3. (Search the file before shipping — disclaimer wording should hit at most twice.)
 - **Keep source links** for external facts and proof (Rule 2).
 
@@ -124,15 +124,15 @@ The pack is **three reading depths in one file**, linked top-to-bottom like cano
 
 ---
 
-## Output file (one file per run — `CLAUDE.md` Rule 4)
+## Output file (one file per run)
 
-The skill writes **exactly one** file. Default location (used unless the user gave a custom output path in intake — `PRODUCER-CONTRACT.md §5`), grouped under the product's folder in the project root (never `TMP/` or `.claude/`):
+The skill writes **exactly one** file. Default location (used unless the user gave a custom output path in intake — `producer-contract.md §5`), grouped under the product's folder in the project root (never `TMP/` or a Client configuration directory):
 
 ```
 Skills-Results/{product-slug}/craft-go-to-market/{YYYY-MM-DD_HH-MM}_{product-slug}-craft-go-to-market-result.{md|html}
 ```
 
-- **Extension follows the chosen output format** (`PRODUCER-CONTRACT.md §2`): `.md` (default) or a single self-contained `.html` (inline CSS, working in-page anchors for the How-to-read jumps + every `▸` drill-down link, `<details>` for Layer 3 and methodology traces, source links opening in a new tab). HTML carries the identical content — same attribution, disclaimers, three layers, all copy, tables, links — just in a more readable shell; the landing/ad copy stays plain and shippable, with its `[VERIFY — source]` tags intact. Never write both; one file per run.
+- **Extension follows the chosen output format** (`producer-contract.md §2`): `.md` (default) or a single self-contained `.html` (inline CSS, working in-page anchors for the How-to-read jumps + every `▸` drill-down link, `<details>` for Layer 3 and methodology traces, source links opening in a new tab). HTML carries the identical content — same attribution, disclaimers, three layers, all copy, tables, links — just in a more readable shell; the landing/ad copy stays plain and shippable, with its `[VERIFY — source]` tags intact. Never write both; one file per run.
 - If the user gave a custom path, write the one file there with the same filename pattern.
 - Everything internal — the normalized input (source artifacts, segment, Big/Core Jobs + criteria, Aha, competitors, proof, fears), dropped variants, review-mining notes, and the self-critic verdicts — **stays in-context**; none of it is written to a separate file. The timestamp makes each run's file unique, so reruns never overwrite. Disclaimers (Rule 3) go at the top of this one file.
 
@@ -142,7 +142,7 @@ Skills-Results/{product-slug}/craft-go-to-market/{YYYY-MM-DD_HH-MM}_{product-slu
 
 ## S0 — Intake & route
 
-### Orientation (helicopter view) — print before the first question (`PRODUCER-CONTRACT.md §1`)
+### Orientation (helicopter view) — print before the first question (`producer-contract.md §1`)
 Before any question, print this short orientation block in plain words, in the user's chosen language:
 
 > **What you'll get:** one pack — ready-to-publish landing-page copy, ad/creative copy, and a GTM/growth plan (channels, lead magnets, viral loops, cross-sell / upsell / retention messaging).
@@ -163,24 +163,24 @@ On **Just the essentials**: ask only the input-route question, which assets you 
 ### Language
 Default **English**. If the user writes in another language, offer to work in it. Hold the choice in context. The copy uses the chosen language; canon files and source URLs stay as-is.
 
-### One batched `AskUserQuestion`
+### One batched structured-input request
 
 ```
 Q1 "What's your input? (all four work — describing it yourself is a fine starting point)"
   - "I'll describe my product + customer in plain English"  → Path D (standalone — first-class)
-  - "A /nmt-craft-value-proposition result"   → Path A (richest input if you have it)
-  - "A /nmt-product-requirements PRD"          → Path B
-  - "A /nmt-market-research result"            → Path C
+  - "A nmt-craft-value-proposition result"   → Path A (richest input if you have it)
+  - "A nmt-product-requirements PRD"          → Path B
+  - "A nmt-market-research result"            → Path C
 Q2 "Mode?"
   - "Quick (default — fast, no internet)"
   - "Deep (subagents + web: real review language + competitor firing)"
 Q3 (Paths A/B/C) "Path to the result/PRD file?"  → free text; Read it.
 Q4 "Which GTM assets do you need?" (multi-select)
   - "Landing copy"  /  "Ad & creative copy"  /  "GTM / growth-communication plan"  /  "All"
-Q5 "Output format?" (PRODUCER-CONTRACT.md §2)
+Q5 "Output format?" (producer-contract.md §2)
   - "Markdown (default — faster; opens anywhere)"
   - "HTML (a bit slower; easier to read — collapsible sections + working in-page navigation; all source and drill-down links stay clickable)"
-Q6 "Where to save the result?" (PRODUCER-CONTRACT.md §5)
+Q6 "Where to save the result?" (producer-contract.md §5)
   - default `Skills-Results/{project}/craft-go-to-market/…`  /  or give a folder path to match your repo (e.g., `docs/research/`). One file per run regardless of location (Rule 4).
 ```
 
@@ -200,10 +200,10 @@ Path D takes your plain-English description and does the methodology shaping for
 ### User materials, claims ledger, hand-off debt, direction confirmation (all paths)
 
 - **Materials.** Ask once: *"Any files or folders with material I should use — a Notion export (markdown), past research, interview notes, existing copy, your current site?"* Read what's given; tag everything taken from it **[user data]** in-context. Existing copy is input to rewrite, not copy to preserve — confirm before reusing any of it verbatim.
-- **Input-as-hypothesis gate (`PRODUCER-CONTRACT.md §3`).** Treat **every** input — the upstream value-prop / PRD / research artifact, the deck, the landing, the user's free-text claims, "our customers say X" — as a **hypothesis, never as established fact**. A landing page is the team's belief about value, not proof customers want it. **Actively hunt the risks inside it** (don't just record): for each load-bearing input ask — is this customer-validated, or the team's belief about the customer? Does the stated Job / segment look like the customer's real Job, or the team's projection of it (the most expensive error)? Any internal contradictions, or guesses dressed as data? Hold the findings in context — they become the **"What you told me — and the risks I see in it"** block in Layer 2 (see the Layer-2 template), with the single worst one surfaced in Layer 1. **The GTM copy is the most public artifact in the chain: writing confident landing/ad copy on an unvalidated value claim manufactures a Problem at scale.** No copy claim may rest on an unvalidated input without being flagged — connect each such claim to the existing `[VERIFY — source]` / validation-flag mechanism.
+- **Input-as-hypothesis gate (`producer-contract.md §3`).** Treat **every** input — the upstream value-prop / PRD / research artifact, the deck, the landing, the user's free-text claims, "our customers say X" — as a **hypothesis, never as established fact**. A landing page is the team's belief about value, not proof customers want it. **Actively hunt the risks inside it** (don't just record): for each load-bearing input ask — is this customer-validated, or the team's belief about the customer? Does the stated Job / segment look like the customer's real Job, or the team's projection of it (the most expensive error)? Any internal contradictions, or guesses dressed as data? Hold the findings in context — they become the **"What you told me — and the risks I see in it"** block in Layer 2 (see the Layer-2 template), with the single worst one surfaced in Layer 1. **The GTM copy is the most public artifact in the chain: writing confident landing/ad copy on an unvalidated value claim manufactures a Problem at scale.** No copy claim may rest on an unvalidated input without being flagged — connect each such claim to the existing `[VERIFY — source]` / validation-flag mechanism.
 - **User-claims ledger.** Tag the strong factual claims in the user's input (competitor facts, "our customers say…", channel beliefs) as **data / observation / hunch**. Copy claims built on an unverified hunch are flagged: a concrete number or comparison in customer-facing copy must trace to data, or it ships as a to-verify placeholder — never as an invented fact.
-- **Hand-off debt — ask what's since been checked (`PRODUCER-CONTRACT.md §4c`).** When consuming an upstream artifact (Paths A/B/C), **ask the user what from the prior artifact's validation debt has since been validated in the field** — e.g., *"the value prop you're handing me lists assumptions still to test; which of those have you checked since (sales, interviews, a fake door)?"* Re-tag anything still unvalidated and carry it forward: **if the value proposition was never validated, the landing copy inherits that debt — say so in the validation flag.** Debt travels down the chain; it is not silently dropped.
-- **Direction confirmation.** Before S1, play the understanding back in one short block — *"Here's what I understood: {segment, the value we're communicating, validation status + what's still unvalidated from the hand-off, which assets you need}"* — and confirm via one `AskUserQuestion` (Confirm / Correct).
+- **Hand-off debt — ask what's since been checked (`producer-contract.md §4c`).** When consuming an upstream artifact (Paths A/B/C), **ask the user what from the prior artifact's validation debt has since been validated in the field** — e.g., *"the value prop you're handing me lists assumptions still to test; which of those have you checked since (sales, interviews, a fake door)?"* Re-tag anything still unvalidated and carry it forward: **if the value proposition was never validated, the landing copy inherits that debt — say so in the validation flag.** Debt travels down the chain; it is not silently dropped.
+- **Direction confirmation.** Before S1, play the understanding back in one short block — *"Here's what I understood: {segment, the value we're communicating, validation status + what's still unvalidated from the hand-off, which assets you need}"* — and confirm via one structured-input request (Confirm / Correct).
 
 ---
 
@@ -416,7 +416,7 @@ Run the self-critic over the draft (Quick: self-critique; Deep: a critic agent),
 5. **All five CA components present** across the pack; the competitor is fired on a *real* Problem, fears are *specific*.
 6. **The Aha Moment is a real event** (not signup/login) and is given a taste on the landing + used as the retention/WoM engine.
 7. **Validation status is honest** — hypothesis-stage value is flagged as demand-test creative, not scaled fact.
-8. **Specific stories used; visuals = State B; recognition test passed** (Tier A/B brands, or bridged); **US-context analogs**; **no PPE/NPE**; **disclaimers + clickable source links** (`CLAUDE.md` Rules 2, 3, 6, 19, 22).
+8. **Specific stories used; visuals = State B; recognition test passed** (Tier A/B brands, or bridged); **US-context analogs**; **no PPE/NPE**; **disclaimers + clickable source links**.
 9. **Step ledger ran** — S0 → Layer 3 (Part 1 → Part 2 → Part 3 → Appendix) → Layer 2 → Layer 1 checked off by name (skipping parts the user didn't order is fine — say so); no silent skips.
 10. **User claims stayed hypotheses** — every number or comparison in customer-facing copy traces to tagged data or ships as a to-verify placeholder; no copy fact invented from a user hunch.
 - [ ] Plain-language-led — the GTM plan and all annotations lead in the reader's own words; methodology terms only in parentheses (never jargon-first); any methodology appendix / debug may stay in full terms.
@@ -431,7 +431,7 @@ Run the self-critic over the draft (Quick: self-critique; Deep: a critic agent),
 
 ## Deep mode (subagents + web)
 
-Same S0 with the human; S1 parallelized and grounded on real customer language. Agents: `Agent`, `subagent_type: "general-purpose"`, `run_in_background: true`. Each reads **only its canon slice** (per "Methodology — source of truth": the eager core plus the staged files its part needs), **returns its result in its final message — no files**, links sources, and keeps canon citations out of the copy. The orchestrator holds all returns in context and writes the single output file.
+Same S0 with the human; S1 is a wave of workers grounded on real customer language; independent workers may run in parallel. Each reads **only its canon slice** (per "Methodology — source of truth": the eager core plus the staged files its part needs), **returns its result in its final message — no files**, links sources, and keeps canon citations out of the copy. The primary agent holds all returns in context and writes the single output file.
 
 ```
 Wave 0 (background from start):
@@ -451,7 +451,7 @@ Each writer agent reads only its canon slice (Landing → core + customers-atten
 
 Web caps: review mining ≤12 fetches / ~10 min. Source links mandatory (Rule 2); never invent sources, figures, or fake reviews.
 
-### Deep-mode QA — evidence floor + self-critic loop + web-MCP fallback (`PRODUCER-CONTRACT.md §6`)
+### Deep-mode QA — evidence floor + self-critic loop + web-MCP fallback (`producer-contract.md §6`)
 
 - **Evidence floor (not just a ceiling).** The cap is a ceiling; treat the lower bound as a **floor**. The review-mining leg may not return "done" until it has either pulled a real minimum of distinct sources (a spread across competitors/alternatives, with quotable lines + source URLs) **or** explicitly reported *why* fewer were possible (blocked, none exist). "Did two queries and stopped" is a failure state, not a completion — the customer's actual words are the whole point of Deep mode, and thin mining produces generic copy.
 - **Self-critic loop per leg.** After a research/writer leg returns, run a short critic pass asking: *enough distinct review sources? is each customer-language claim actually traceable to a fetched source (not invented)? any methodology error (Big-Job-as-segment, features-before-criteria, adjectives that fail "as in?", a Big Job promised the product only partially performs)? gaps left?* If it fails, re-run the leg with the gap named — **up to 2 extra rounds**. Don't ship a leg that failed its own critic.
@@ -465,9 +465,9 @@ Web caps: review mining ≤12 fetches / ~10 min. Source links mandatory (Rule 2)
 
 ## What this skill does NOT do
 
-- **Does not pick the segment or size the market** → `/nmt-market-research`.
-- **Does not invent the value proposition** → `/nmt-craft-value-proposition`.
-- **Does not write product requirements / the build spec** → `/nmt-product-requirements`.
+- **Does not pick the segment or size the market** → `nmt-market-research`.
+- **Does not invent the value proposition** → `nmt-craft-value-proposition`.
+- **Does not write product requirements / the build spec** → `nmt-product-requirements`.
 - **Does not validate value** — it transmits *already-validated* value; if value is unproven it produces *demand-test* creatives and says so.
 - **Does not run the ad accounts, build the funnel, or buy media** — it produces the copy and the channel hypotheses to test.
 - Quick mode: no internet, no subagents.
