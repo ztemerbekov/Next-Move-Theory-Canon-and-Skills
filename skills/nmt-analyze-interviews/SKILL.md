@@ -124,13 +124,13 @@ Write the report in the plain language the user speaks; when a methodology term 
 
 ## Output file (one file per run)
 
-The skill writes **exactly one** file. Default location (unless the user gave a custom output path in intake — `PRODUCER-CONTRACT.md §5`):
+The skill writes **exactly one** file. Default location (unless the user gave a custom output path in intake — `producer-contract.md §5`):
 
 ```
 Skills-Results/{product-slug}/analyze-interviews/{YYYY-MM-DD_HH-MM}_{product-slug}-analyze-interviews-result.{md|html}
 ```
 
-- **Extension follows the chosen output format** (`PRODUCER-CONTRACT.md §2`): `.md` (default) or one self-contained `.html` (inline CSS, working in-page anchors, `<details>` for the per-interview appendix and the long segment blocks, source links opening in a new tab). HTML carries identical content. Never write both; one file per run.
+- **Extension follows the chosen output format** (`producer-contract.md §2`): `.md` (default) or one self-contained `.html` (inline CSS, working in-page anchors, `<details>` for the per-interview appendix and the long segment blocks, source links opening in a new tab). HTML carries identical content. Never write both; one file per run.
 - If the user gave a custom path, write the one file there with the same filename pattern.
 - `{YYYY-MM-DD_HH-MM}` (24h local time) makes each run unique; reruns never overwrite.
 - Everything internal (the distillation traces, discarded clusters, the climb from a Fake Job to its Big Job) stays in-context, not in a separate file.
@@ -146,7 +146,7 @@ Skills-Results/{product-slug}/analyze-interviews/{YYYY-MM-DD_HH-MM}_{product-slu
 
 ## STAGE 0 — Orientation (helicopter view) + language
 
-**First, the orientation block** (`PRODUCER-CONTRACT.md §1`) — before any question, in plain words:
+**First, the orientation block** (`producer-contract.md §1`) — before any question, in plain words:
 
 > **What you'll get:** one report — the customer segments hiding in your interviews (grouped by what they hire a product to do), each with a persona, the existing solutions they use and where those fall short, what they weigh before choosing, value ideas, and — honestly — how much your interviews can be trusted to answer your question.
 > **The steps:** (1) you tell me the business task you're solving (I'll help if you can't name one) → (2) you point me at your interview files → (3) I read each one separately and pull out the tasks people hire a product for, with an honest confidence → (4) I tell you, per interview, what I found and what's missing → (5) I cluster them into segments and tell you which ones the data really supports → (6) one report, plus what to interview next.
@@ -193,13 +193,13 @@ Collect in a short stream + one or two batched structured-input requests (max 4 
 > Point me at your interviews — a folder, or a list of files. They can be deep-interview transcripts, interview notes, sales-call or demo recordings turned to text, support or chat logs, or open-ended survey answers. One file or many; AJTBD-style or not; polished or rough — I'll sort the quality myself.
 
 - Accept a **folder path** (read every text-like file inside) or a **list of paths**. Supported: `.md`, `.txt`, `.docx` (read as text), `.vtt` / `.srt` (strip timestamps), `.csv` (survey open-ends — one row = one mini-interview).
-- Everything taken from the files is tagged **[user data]** in-context. **All of it is hypothesis** (`PRODUCER-CONTRACT.md §3`) — an interview is the respondent's account, not ground truth; a sales call is a pitch, not a Job study.
+- Everything taken from the files is tagged **[user data]** in-context. **All of it is hypothesis** (`producer-contract.md §3`) — an interview is the respondent's account, not ground truth; a sales call is a pitch, not a Job study.
 - **Light context (optional, free text):** the product these interviews are about, and the segment(s)/Jobs the user already believes exist — held as *prior hypotheses to test against the data*, never merged in as fact.
 
 ### Step 2 — Batch: mode, output format, output path
 - **Mode** — Quick (default; no internet) / Deep (subagents + web — enrich competitors + Consideration Set + review language).
-- **Output format** (`PRODUCER-CONTRACT.md §2`) — Markdown (default; faster) / HTML (collapsible appendix + working navigation; links stay clickable).
-- **Where to save the result** (`PRODUCER-CONTRACT.md §5`) — default `Skills-Results/{product}/analyze-interviews/…` / or a folder path to match your repo. One file per run regardless (Rule 4).
+- **Output format** (`producer-contract.md §2`) — Markdown (default; faster) / HTML (collapsible appendix + working navigation; links stay clickable).
+- **Where to save the result** (`producer-contract.md §5`) — default `Skills-Results/{product}/analyze-interviews/…` / or a folder path to match your repo. One file per run regardless (Rule 4).
 
 **Hold** everything in context.
 
@@ -268,7 +268,7 @@ From the distiller returns, build the **per-interview feedback** the user asked 
 - **What's missing** — the elements absent or thin.
 - **Serves the task?** — given the chosen business task, can this interview contribute? (e.g., *"for retention you need Next Jobs and reasons-to-leave; this interview has neither — usable only for Core-Job hypotheses."*)
 
-This is this skill's version of the producer contract's *"risks I see in what you gave me"* block (`PRODUCER-CONTRACT.md §3`): the inputs are interviews, so the risk read is the quality read.
+This is this skill's version of the producer contract's *"risks I see in what you gave me"* block (`producer-contract.md §3`): the inputs are interviews, so the risk read is the quality read.
 
 ---
 
@@ -342,7 +342,7 @@ Build the single file in this order (top attribution → disclaimers once → th
 {What the data can't answer for the chosen task; whom to re-recruit (past-payment screener); which segments need more interviews to move from Hypothesis → Emerging → Solid. Suggest nmt-interview-guide for the design.}
 ```
 
-**Hand-off (`PRODUCER-CONTRACT.md §4c`).** End with the next step: a **Solid** segment + its value hypothesis → `nmt-craft-value-proposition`; a live product to grow/fix → `nmt-diagnose`; only **Hypothesis** segments → `nmt-interview-guide` for more fieldwork.
+**Hand-off (`producer-contract.md §4c`).** End with the next step: a **Solid** segment + its value hypothesis → `nmt-craft-value-proposition`; a live product to grow/fix → `nmt-diagnose`; only **Hypothesis** segments → `nmt-interview-guide` for more fieldwork.
 
 ---
 
@@ -359,7 +359,7 @@ Build the single file in this order (top attribution → disclaimers once → th
 A skipped stage is never silent — say which and why.
 
 ## Deep mode (opt-in)
-Everything Quick does, plus a web wave **after** synthesis: subagents take the named Solutions / Consideration Set surfaced from the interviews and (a) confirm the real competitors and their positioning, (b) mine real review language around the Core Jobs to corroborate or challenge the extracted criteria, (c) flag Jobs the interviews missed that the market clearly shows. Web caps + the evidence floor + the self-critic loop + the web-MCP fallback all per `PRODUCER-CONTRACT.md §6`. Source links mandatory (Rule 2). Never let web data overwrite the interview evidence — it annotates, the interviews lead.
+Everything Quick does, plus a web wave **after** synthesis: subagents take the named Solutions / Consideration Set surfaced from the interviews and (a) confirm the real competitors and their positioning, (b) mine real review language around the Core Jobs to corroborate or challenge the extracted criteria, (c) flag Jobs the interviews missed that the market clearly shows. Web caps + the evidence floor + the self-critic loop + the web-MCP fallback all per `producer-contract.md §6`. Source links mandatory (Rule 2). Never let web data overwrite the interview evidence — it annotates, the interviews lead.
 
 ## Self-critic criteria (before the report ships)
 1. **Segments = similar Core Jobs + similar ranked success criteria** — not demographics, not Big Job, not industry; a split priority order was split, not averaged.

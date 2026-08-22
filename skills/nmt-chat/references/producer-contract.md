@@ -4,7 +4,7 @@
 > `nmt-craft-go-to-market`) share six behaviors that came directly from user testing feedback.
 > Specifying them once here keeps the four skills in sync. Each skill points to this file and wires the
 > concrete hooks (intake questions, template blocks) into its own flow. The companion file
-> `READABILITY-CONTRACT.md` governs the 3-layer output; this file governs intake + framing + integrity.
+> `readability-contract.md` governs the 3-layer output; this file governs intake + framing + integrity.
 
 The six behaviors:
 

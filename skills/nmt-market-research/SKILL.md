@@ -83,13 +83,13 @@ Quick mode (one primary agent): read the eager core, then read each staged file 
 
 ## Output file (one file per run)
 
-The skill writes **exactly one** file. Default location (used unless the user gave a custom output path in intake — `PRODUCER-CONTRACT.md §5`), grouped under the product's folder in the project root (never `TMP/` or a Client configuration directory):
+The skill writes **exactly one** file. Default location (used unless the user gave a custom output path in intake — `producer-contract.md §5`), grouped under the product's folder in the project root (never `TMP/` or a Client configuration directory):
 
 ```
 Skills-Results/{product-slug}/market-research/{YYYY-MM-DD_HH-MM}_{product-slug}-market-research-result.{md|html}
 ```
 
-- **Extension follows the chosen output format** (`PRODUCER-CONTRACT.md §2`): `.md` (default) or a single self-contained `.html` (inline CSS, working in-page anchors for the How-to-read jumps + every `▸` drill-down link, **`<details>` collapsing Layer 2 and Layer 3** — both opt-in below the one-page answer — plus methodology traces, source links opening in a new tab). HTML carries the identical content — same attribution, disclaimers, three layers, tables, links — just in a more readable shell where the short answer leads and the deeper layers are collapsed by default. Never write both; one file per run.
+- **Extension follows the chosen output format** (`producer-contract.md §2`): `.md` (default) or a single self-contained `.html` (inline CSS, working in-page anchors for the How-to-read jumps + every `▸` drill-down link, **`<details>` collapsing Layer 2 and Layer 3** — both opt-in below the one-page answer — plus methodology traces, source links opening in a new tab). HTML carries the identical content — same attribution, disclaimers, three layers, tables, links — just in a more readable shell where the short answer leads and the deeper layers are collapsed by default. Never write both; one file per run.
 - If the user gave a custom path, write the one file there with the same filename pattern.
 - `{YYYY-MM-DD_HH-MM}` (24h local time) makes each run's file unique; reruns never overwrite.
 - Everything internal — what the user provided, discarded hypotheses, antisegment checks, Big-Job validation, the full sizing tables, milestone notes, and **all methodology citations** (which never appear in the user-facing report — see "Readability") — **stays in-context**, never in a separate file.
@@ -101,7 +101,7 @@ Skills-Results/{product-slug}/market-research/{YYYY-MM-DD_HH-MM}_{product-slug}-
 
 ## STAGE 0 — Orientation (helicopter view) + language
 
-**First, the orientation block** (`PRODUCER-CONTRACT.md §1`) — print it before any question, in plain words:
+**First, the orientation block** (`producer-contract.md §1`) — print it before any question, in plain words:
 
 > **What you'll get:** one report — a GO (to validation) / NARROW / PIVOT decision, the segment to sell to first, why, the make-or-break risk, and how big the market is.
 > **The steps:** (1) a few questions about your idea → (2) I find and score the customer segments → (3) I size the market → (4) I pick where you can win and rank your strategic options → (5) you get one report in three reading depths.
@@ -136,7 +136,7 @@ Collect in a short stream + (full interview) two batched structured-input reques
 
 ### Step 2 — Batch 1: mode, output format, stage, country, business type — *both paths*
 - **Mode** — Quick (default; fast; no internet) / Deep (subagents + web research). *(This is the research mode — separate from the intake-depth fork in Step 0.)*
-- **Output format** (`PRODUCER-CONTRACT.md §2`) — Markdown (default; faster) / HTML (a bit slower; easier to read — collapsible sections + working in-page navigation; all source and drill-down links stay clickable).
+- **Output format** (`producer-contract.md §2`) — Markdown (default; faster) / HTML (a bit slower; easier to read — collapsible sections + working in-page navigation; all source and drill-down links stay clickable).
 - **Stage** — Idea / MVP / Launched / Scaling.
 - **Country / market** — United States / United Kingdom / Russia-CIS / Global-English / Other.
 - **Business type** — B2C / B2B / Both B2C and B2B / B2B2C (true channel-through-business only).
@@ -146,7 +146,7 @@ Collect in a short stream + (full interview) two batched structured-input reques
 - **Hypothesized segments** — "Yes, I'll describe" / "I don't know — find them" (default) / Skip.
 - **Known competitors** — "Yes, I'll list them" / "I don't know — find them" (default) / Skip.
 - **Ambition** — "I'll describe" (revenue / margin / timeframe) / Skip.
-- **Where to save the result** (`PRODUCER-CONTRACT.md §5`) — default `Skills-Results/{project}/market-research/…` / or a folder path to match your repo (e.g., `docs/research/`). Skip = default. One file per run regardless of location (Rule 4).
+- **Where to save the result** (`producer-contract.md §5`) — default `Skills-Results/{project}/market-research/…` / or a folder path to match your repo (e.g., `docs/research/`). Skip = default. One file per run regardless of location (Rule 4).
 
 ### Step 4 — Batch 2b: assets & constraints (powers the pivot recommendation) — *full interview only*
 *(In "Just the essentials", skip this question — infer the assets from the idea stream and project context, and note in-context that assets were inferred.)* Ask once (free text is fine), capturing the idea's **transferable assets and hard constraints** — used by the pivot sub-pipeline (STAGE 9):
@@ -164,7 +164,7 @@ After Steps 1–4, scan the collected input for **gaps that would materially cha
 
 **"I don't have this info" is a valid answer.** Record it in-context as an explicit assumption — the report then *marks the dependent numbers as assumptions* instead of silently inventing specifics.
 
-### Step 6 — User-claims ledger + input-as-hypothesis gate (`PRODUCER-CONTRACT.md §3`) — *full interview as a step; in essentials, fold into the post-draft pass*
+### Step 6 — User-claims ledger + input-as-hypothesis gate (`producer-contract.md §3`) — *full interview as a step; in essentials, fold into the post-draft pass*
 *(In "Just the essentials", don't run this as a separate up-front step — treat the inputs as hypotheses silently while analyzing, then surface the claims-and-risks pass after the first draft if it changes anything.)* Collect every **strong factual claim** the user made across Steps 1–5 (market insights, "everyone wants X", competitor facts, regulatory claims, segment beliefs) **and every load-bearing input from their uploaded materials** — a deck, a landing page, a codebase, past research — into an in-context ledger. **All of it is hypothesis, not fact** — a landing page is the team's belief about value, not proof customers want it. Tag each with its source — **data** (measured / documented), **observation** (seen in interviews, sales calls), or **hunch** (belief, intuition; this is the default for anything from a deck/landing/idea stream). If the source is unclear, ask in one batched question: *"Quick check on a few things you mentioned — for each, is it data you have, something you observed, or a hunch?"*
 
 **Actively hunt for the risks inside the input** (don't just record it). For each load-bearing input ask: is this customer-validated, or the team's belief about the customer? Does the stated Job / segment look like the customer's real Job, or the team's projection of it (the most expensive error)? Any internal contradictions, or guesses dressed as data? Hold the findings in context — they become the **"What you told me — and the risks I see in it"** block in Layer 2 (see the Layer-2 template), with the single worst one surfaced in Layer 1.
@@ -291,7 +291,7 @@ Emitted once, right after the disclaimers and before Layer 1, so the reader sees
 {2–4 short sentences. Plain words, no jargon. The single most important conclusion and the one binding constraint. The first time the verdict is "GO (to validation)", add the half-line gloss: "— worth the next step, which is checking it in the field, not building it yet."} [why this, not a clean yes ▸](#l2-verdict)
 
 > **Validation debt:** this stands on **{N}** unvalidated assumptions — **{M}** of them fatal (would sink it if wrong). The fatal ones are the first things to check. [see them ▸](#l2-risks)
-> <sub>N = risky assumptions in the RAT table; M = those that kill it if wrong. A Quick run on thin input has high debt — say so honestly (`PRODUCER-CONTRACT.md §4`).</sub>
+> <sub>N = risky assumptions in the RAT table; M = those that kill it if wrong. A Quick run on thin input has high debt — say so honestly (`producer-contract.md §4`).</sub>
 
 ## Who to sell to
 {The target segment in one plain sentence — who they are, not a methodology label.} [how we found this buyer ▸](#l2-buyer)
@@ -325,7 +325,7 @@ Plain English, one gloss per methodology term, `references/glossary.md` linked o
 
 <a id="l2-input-risks"></a>
 ## What you told me — and the risks I see in it
-*Everything you gave me — your idea, your deck, your landing, your numbers — I treated as a hypothesis, not as fact. These are the inputs the analysis leans on, and what I'd check before trusting each. (`PRODUCER-CONTRACT.md §3`.)* (Omit this block only if the user provided no claims or materials at all.)
+*Everything you gave me — your idea, your deck, your landing, your numbers — I treated as a hypothesis, not as fact. These are the inputs the analysis leans on, and what I'd check before trusting each. (`producer-contract.md §3`.)* (Omit this block only if the user provided no claims or materials at all.)
 
 | What you provided / claimed | How I treated it | The risk I see in it | How to check it fast |
 |---|---|---|---|
@@ -497,7 +497,7 @@ Close Section 2 with a short **cross-segment themes** block (4–7 patterns span
 ## 4. Strategic recommendation & pivot options
 
 ### Verdict on the proposed segment + Jobs: GO (to validation) / NARROW / PIVOT
-{Walk the RAT cause-and-effect chain — Market → Segment+Jobs → Value → Unit economics → Channels — and name the verdict + the binding constraint. **GO (to validation)** = the chain holds on the evidence so far → the next step is to validate it in the field, not to build; NARROW = it holds only for a sub-segment / sub-Job; PIVOT = an upstream link is broken and an alternative market scores better. Never write a bare "GO" — it reads as "build it now" (`PRODUCER-CONTRACT.md §4`).}
+{Walk the RAT cause-and-effect chain — Market → Segment+Jobs → Value → Unit economics → Channels — and name the verdict + the binding constraint. **GO (to validation)** = the chain holds on the evidence so far → the next step is to validate it in the field, not to build; NARROW = it holds only for a sub-segment / sub-Job; PIVOT = an upstream link is broken and an alternative market scores better. Never write a bare "GO" — it reads as "build it now" (`producer-contract.md §4`).}
 
 ### Adjacent jobs you could capture next (Job switches within the segment)
 {Using the target segment's Job Graph: which Previous Job or Next Job in the chain to capture; whether to climb to a higher Big Job (the most powerful mechanic); which sibling Small Jobs to add. "You're competing on Job X; the more valuable adjacent Job for this same segment is Y."}
@@ -661,7 +661,7 @@ Triggered when the user picks Deep. A team of subagents with web access fills th
 - Work is delegated in waves. Within a wave, independent workers may run in parallel; the primary agent waits for every return before starting the next wave.
 - Each agent reads **only the canon slice its wave needs** (per "Methodology — source of truth": sizing & competitor agents → eager core only; Strategy → core + rat + nmt + mechanics; Pivot → core + nmt) and **returns its result in its final message — no per-agent files.** The orchestrator holds those returns in context. No live-tail monitoring machinery.
 - Web caps (hold the longest legs): reviews-mining ≤ 12 web retrievals / ~10 min; synthesis ≤ 6; strategy ≤ 4. Pivot agents are reasoning-bound (≤ 2 retrievals if any).
-- **Evidence floor, not just a ceiling** (`PRODUCER-CONTRACT.md §6`). Each web leg also has a *minimum*: it may not return "done" until it has hit a real floor of distinct sources for its task (sizing → ≥3 independent inputs; competitors/reviews → ≥4 competitors with real review sources) **or** explicitly reported why fewer were possible (blocked / none exist). "Did two queries and stopped" is a failure, not a completion.
+- **Evidence floor, not just a ceiling** (`producer-contract.md §6`). Each web leg also has a *minimum*: it may not return "done" until it has hit a real floor of distinct sources for its task (sizing → ≥3 independent inputs; competitors/reviews → ≥4 competitors with real review sources) **or** explicitly reported why fewer were possible (blocked / none exist). "Did two queries and stopped" is a failure, not a completion.
 - **Self-critic loop per leg.** After a leg returns, a critic pass checks: enough distinct sources? load-bearing claims verified against a real source? any methodology error (segment by demographics, Big-Job-as-segment, features-before-criteria, undersized SAM)? gaps? If it fails, re-run the leg with the gap named — up to 2 extra rounds. Don't ship a leg that failed its own critic (this is the fix for "promised deep research, did two fetches, quit").
 - **Web-MCP fallback.** When the built-in fetch is blocked or thin on a needed source (G2, Capterra, local-market sites), tell the user once and use a web-research MCP if one is connected — [Firecrawl](https://www.firecrawl.dev/) or [Exa](https://exa.ai/) (both ship MCP servers; discover via tool search). Without it, proceed and flag thin coverage in the verification checklist.
 - Source links mandatory (Rule 2); never invent sources or figures.
