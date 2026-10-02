@@ -7,7 +7,7 @@ description: Run market research for a product or feature idea using Ivan Zamesi
 
 > **In one breath.** Before any research runs, a short intake closes the gaps that change the research: a few clarifying questions (with "I don't have this info" as a valid answer), any materials you already have read in, your inputs held as hypotheses rather than facts, and a quick direction confirmation. The deliverable is a **decision**: a one-page answer with a **GO (to validation) / NARROW / PIVOT** verdict, the customer segments scored on the four go/no-go questions (the selection screen), the make-or-break risk and how to test it, and **ranked strategic options** (including other markets the same idea could fit). Quick mode sizes honestly (one calculation, assumptions named); the 3-method averaging runs only in Deep mode, on real sources.
 
-> **Producer contract (binding) — `../nmt-chat/references/producer-contract.md`.** Six cross-cutting behaviors shared by all producer skills, from user feedback: (1) print a **helicopter-view** before the first question; (2) ask **Markdown or HTML** output; (3) treat **all** user input as hypothesis and emit a *"risks I see in what you gave me"* block; (4) print **validation debt** and write **`GO (to validation)`**, never bare `GO`; (5) accept a **custom output path**; (6) Deep mode runs an **evidence floor + self-critic loop** and offers a **web-MCP fallback**. The hooks below wire each into this skill; the contract is the source of truth for the wording.
+> **Producer contract (binding) — `../nmt-chat/references/producer-contract.md`.** Alongside the shared orientation, output, input-as-hypothesis, path, validation-debt, and Deep-mode rules, this skill must ask or reuse the customers' market and audience language, keep repo-context reads permissioned, tag consequential claims `backed` / `derived` / `hypothesis`, report independent `n/N` source counts, separate single signals, trace sources to segments, and scale confidence to the available evidence. Every market-specific number must carry its source and assumptions.
 
 > **New here, or not sure this is the right skill?** Start right here — or run `nmt-chat`, describe your situation, and it points you to the right one. Quick map: **new idea →** `nmt-market-research` · **live product or a metric moved →** `nmt-diagnose` · **have customer interviews →** `nmt-analyze-interviews` · **ready to build →** `nmt-product-requirements` · **positioning / launch copy →** `nmt-craft-value-proposition` → `nmt-craft-go-to-market`.
 
@@ -58,7 +58,8 @@ Quick mode (one primary agent): read the eager core, then read each staged file 
 - A **Solution** is a real thing in the world *and*, inside the Job Graph, a label for the sub-graph of Core + Micro Jobs it installs.
 
 **Methodological invariants — output is invalid if any is violated:**
-- Segments are formed by **similar Core Jobs sharing similar success criteria** — never by demographics, industry, or Big Job as the primary cut.
+- Segments are formed by **similar Core Jobs sharing similar success criteria in a similar priority order** — never by demographics, industry, or Big Job as the primary cut.
+- Before every target pick, record the Core Jobs, concrete success criteria, and priority order side by side, with independent source IDs and `n/N`; state why the grouping changes value, margin, or demand. Channel, demographics, and industry are refinements only when their causal effect is demonstrated.
 - A "real segmentation criterion" is a **cause** (a behaviour or characteristic), never a paraphrased value or a consequence.
 - Competitors are defined by **Jobs, not categories** (direct on the Core Job; indirect on the Big Job, including "do nothing" and non-obvious substitutes).
 - Features follow from success criteria and a chosen value mechanic — not the reverse.
@@ -93,9 +94,11 @@ Skills-Results/{product-slug}/market-research/{YYYY-MM-DD_HH-MM}_{product-slug}-
 - If the user gave a custom path, write the one file there with the same filename pattern.
 - `{YYYY-MM-DD_HH-MM}` (24h local time) makes each run's file unique; reruns never overwrite.
 - Everything internal — what the user provided, discarded hypotheses, antisegment checks, Big-Job validation, the full sizing tables, milestone notes, and **all methodology citations** (which never appear in the user-facing report — see "Readability") — **stays in-context**, never in a separate file.
-- Deep mode adds no intermediate files: subagents return their results in-message and the orchestrator writes the one file (see the Deep pipeline section).
+- Deep mode creates no per-agent or scratch files. A long run may create or update the one result file at safe wave boundaries, marked **INCOMPLETE DRAFT** until final assembly; final assembly removes the marker. Short, chat-only, or fileless runs write once and do not checkpoint. Subagents return their results in-message and the orchestrator owns the single result file.
 
 **Attribution (Rule 23).** The report opens with the attribution top-line (the very first content, above the disclaimers) and closes with the attribution block — `utm_source=nmt-market-research&utm_medium=skill-artifact`.
+
+**Evidence status.** Tag consequential claims as **backed** (source ID), **derived** (named inputs plus reasoning), or **hypothesis** (model suggestion or unverified user input). Aggregates use independent `n/N` respondents or observations and list source IDs; a single source is a single signal and belongs in the verification block. Thin input gets a visible warning, hypothesis labels, conditional estimates only where assumptions are explicit, and the three concrete inputs that would most change the result.
 
 ---
 
@@ -139,10 +142,11 @@ Collect in a short stream + (full interview) two batched structured-input reques
 - **Output format** (`producer-contract.md §2`) — Markdown (default; faster) / HTML (a bit slower; easier to read — collapsible sections + working in-page navigation; all source and drill-down links stay clickable).
 - **Stage** — Idea / MVP / Launched / Scaling.
 - **Country / market** — United States / United Kingdom / Russia-CIS / Global-English / Other.
+- **Audience language** — the language customers use. Reuse it from an authorized upstream artifact; ask only when it is missing. Keep it separate from the document language.
 - **Business type** — B2C / B2B / Both B2C and B2B / B2B2C (true channel-through-business only).
 
 ### Step 3 — Batch 2: project context, segments, competitors, ambition — *full interview (in essentials, infer or skip; only ask "where to save" if needed)*
-- **Project context & materials** — path / URL / Skip. Name what counts: *a folder or files with anything you already have — a Notion export (markdown), spreadsheets, past research, interview notes, a strategy doc, your current site.* (Quick: local paths through the active Client's file-reading capability; Deep: also its web-retrieval capability.) Everything taken from the user's materials is tagged **[user data]** in-context and cited as such in the report.
+- **Project context & materials** — path / URL / Skip. Name what counts: *a folder or files with anything you already have — a Notion export (markdown), spreadsheets, past research, interview notes, a strategy doc, your current site.* List automatically found local context and ask before reading it; read explicitly named or already-authorized files directly. (Quick: local paths through the active Client's file-reading capability; Deep: also its web-retrieval capability.) Everything taken from the user's materials is tagged **[user data]** in-context and cited as such in the report.
 - **Hypothesized segments** — "Yes, I'll describe" / "I don't know — find them" (default) / Skip.
 - **Known competitors** — "Yes, I'll list them" / "I don't know — find them" (default) / Skip.
 - **Ambition** — "I'll describe" (revenue / margin / timeframe) / Skip.
@@ -207,7 +211,7 @@ Per segment block, render:
 **Compose to focus?** {Yes / on the edge / No} — {the binding constraint, one line}
 ```
 
-The target segment is the one whose answers compose most in our favour **and** best fits the idea's assets.
+The target segment is the one whose answers compose most in our favour **and** best fits the idea's assets. Keep the focus pick's Core Jobs, ranked criteria and their priority order, independent IDs, and `n/N` together when explaining the choice; do not let the selection screen outrun the evidence.
 
 ---
 
@@ -396,11 +400,11 @@ Start with the comparison table, then expand each segment. **Depth follows the v
 <a id="l3-segments"></a>
 ## 2. Who's in this market — the segments (Map of Segments), covering ~80% of the total market
 
-| Segment | $ size / yr | Job budget (yearly spend) | Ready to switch | Reachability | Verdict |
-|---------|-------------|------------|-------------------|--------------|---------|
-| {S1} | ~${} | ~${} | {how many have hit a problem & would move} | {channel} | ✅ focus |
-| {S2} | … | … | … | … | ⚠️ hold |
-| {Sn} | … | … | … | … | ❌ not ours |
+| Segment | $ size / yr | Job budget (yearly spend) | Ranked criteria + priority order | Independent IDs / n/N | Ready to switch | Reachability | Verdict |
+|---------|-------------|------------|-------------------------------|-----------------------|-----------------|--------------|---------|
+| {S1} | ~${} | ~${} | {criterion 1 → criterion 2 → …} | {R01, R03; 2/7} | {how many have hit a problem & would move} | {channel} | ✅ focus |
+| {S2} | … | … | … | … | … | … | ⚠️ hold |
+| {Sn} | … | … | … | … | … | … | ❌ not ours |
 
 Segments are grouped by similar Core Jobs + similar success criteria (not by vertical or demographics); the same vertical can split across segments when the Core Jobs and criteria differ. Ordered ✅ → ⚠️ → ❌.
 ```
@@ -412,6 +416,7 @@ Then, for each segment (✅ first, ⚠️ second, ❌ last), at the depth its ve
 
 > **{I propose we focus on this segment because… / I'd hold off on this segment for now because… / This isn't our segment because…}** {1–2 sentences — how the selection screen's four answers compose, how many are ready to switch, the binding constraint}.
 > **Coverage:** ~{X}% of total market customers.
+> **Job evidence:** Core Jobs {…}; ranked success criteria and priority order {criterion 1 → criterion 2 → …}; independent IDs {…}; counting unit {independent respondent / observation}; n/N = {…}.
 
 #### Why this segment is attractive
 {1 short paragraph — motivation, urgency, willingness to pay, reachability. Never use the word "pain".}
@@ -610,7 +615,7 @@ For **Job budget** (what one customer spends a year on this problem today): name
 
 Methodology only — format is guaranteed by the templates above, so it is not re-checked.
 
-1. **Segments = similar Core Jobs + similar success criteria** — not demographics, not Big Jobs, not industry.
+1. **Segments = similar Core Jobs + similar success criteria in a similar priority order** — not demographics, not Big Jobs, not industry; each segment table and block carries the ranked criteria, independent IDs, and `n/N`.
 2. **Real criteria are causes** (a behaviour / characteristic explaining how we create value, earn margin, or acquire), not paraphrased value or consequences.
 3. **Selection screen applied** to every segment, and the focus pick justified on it.
 4. **Switchability assessed** — the segment has triggered, unsatisfied customers willing to switch (the Problem is the trigger), not only habitual locked-in users.
@@ -631,6 +636,7 @@ Methodology only — format is guaranteed by the templates above, so it is not r
 - [ ] **Opaque Layer-3 table headers carry an inline plain gloss** (Job budget, ready to switch, reachability, etc.) — and never use the non-canon term "switchable demand" in any rendered header or row.
 - [ ] **Disclaimers once** — full two-part disclaimer at top only; Layer 1 has the one-line pointer; Section 6 does not repeat the block.
 - [ ] **Citations fenced** — no canon path or `Rule N` inline in Layers 1–2 or in Layer-3 prose; any canon reference sits in a `▸ methodology trace` line.
+- [ ] **HTML Gate 9 applied** — first-use methodology terms and abbreviations get a plain `<abbr title>` gloss outside ready-to-use customer copy; customer-facing copy stays exact and uncluttered.
 - [ ] Step ledger ran — every pipeline stage checked off by name; any skip was declared, never silent.
 - [ ] **Producer contract satisfied** (`../nmt-chat/references/producer-contract.md`): helicopter-view printed before intake; output-format + output-path asked; if HTML, one self-contained `.html` with resolving anchors + `<details>`; the **"What you told me — and the risks I see in it"** block present (unless no input given); **validation-debt line** in Layer 1; every `GO` written as **`GO (to validation)`**; Deep mode hit its evidence floor + self-critic loop (or flagged thin coverage + offered the web MCP).
 
@@ -660,15 +666,16 @@ Triggered when the user picks Deep. A team of subagents with web access fills th
 - Writes one file `Skills-Results/{product-slug}/market-research/{YYYY-MM-DD_HH-MM}_{product-slug}-market-research-result.md`; new file per run.
 - Work is delegated in waves. Within a wave, independent workers may run in parallel; the primary agent waits for every return before starting the next wave.
 - Each agent reads **only the canon slice its wave needs** (per "Methodology — source of truth": sizing & competitor agents → eager core only; Strategy → core + rat + nmt + mechanics; Pivot → core + nmt) and **returns its result in its final message — no per-agent files.** The orchestrator holds those returns in context. No live-tail monitoring machinery.
+- For a long wave run, create or update the same single result file at safe wave boundaries and mark it **INCOMPLETE DRAFT** until final assembly. Final assembly removes the marker. Do not create scratch or per-agent files; short, chat-only, or fileless runs write once and do not checkpoint.
 - Web caps (hold the longest legs): reviews-mining ≤ 12 web retrievals / ~10 min; synthesis ≤ 6; strategy ≤ 4. Pivot agents are reasoning-bound (≤ 2 retrievals if any).
 - **Evidence floor, not just a ceiling** (`producer-contract.md §6`). Each web leg also has a *minimum*: it may not return "done" until it has hit a real floor of distinct sources for its task (sizing → ≥3 independent inputs; competitors/reviews → ≥4 competitors with real review sources) **or** explicitly reported why fewer were possible (blocked / none exist). "Did two queries and stopped" is a failure, not a completion.
 - **Self-critic loop per leg.** After a leg returns, a critic pass checks: enough distinct sources? load-bearing claims verified against a real source? any methodology error (segment by demographics, Big-Job-as-segment, features-before-criteria, undersized SAM)? gaps? If it fails, re-run the leg with the gap named — up to 2 extra rounds. Don't ship a leg that failed its own critic (this is the fix for "promised deep research, did two fetches, quit").
 - **Web-MCP fallback.** When the built-in fetch is blocked or thin on a needed source (G2, Capterra, local-market sites), tell the user once and use a web-research MCP if one is connected — [Firecrawl](https://www.firecrawl.dev/) or [Exa](https://exa.ai/) (both ship MCP servers; discover via tool search). Without it, proceed and flag thin coverage in the verification checklist.
 - Source links mandatory (Rule 2); never invent sources or figures.
 
-### No run-folder files (Deep)
+### One result file (Deep)
 
-Deep mode writes **no intermediate files**. Each agent below returns its result in its final message; the orchestrator holds all returns in context and writes the single `{YYYY-MM-DD_HH-MM}_{product-slug}-market-research-result.md` at the end.
+Deep mode writes no per-agent or scratch files. Each agent below returns its result in its final message; for a long run the orchestrator may create or update the single `{YYYY-MM-DD_HH-MM}_{product-slug}-market-research-result.md` at safe wave boundaries with an **INCOMPLETE DRAFT** marker, then removes the marker during final assembly. Short, chat-only, or fileless runs write once and do not checkpoint.
 
 ### Waves
 ```

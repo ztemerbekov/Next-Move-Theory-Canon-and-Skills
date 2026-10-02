@@ -97,6 +97,12 @@ The hypothesis-validation plan runs across all three depths:
   it lives in the fenced `▸ methodology trace`, not the readable requirement. A reader sees *what to build +
   acceptance criteria*; the mapping is the audit trail.
 
+## Gate 9 — First-use plain HTML explanations
+
+In HTML output, give the first use of each methodology term, abbreviation, or technical shorthand a short plain explanation with `<abbr title="…">…</abbr>` (or an equivalent inline tooltip). Keep the plain meaning in the sentence where it fits; the tooltip is a convenience, not the only explanation. Cover terms such as Core Job, Big Job, Aha Moment, Consideration Set, RAT, TAM, SAM, SOM, CAC, LTV, churn, and any technical shorthand that reaches the page.
+
+This gate applies to the first occurrence outside ready-to-use customer copy. Customer-facing copy stays exact and usable; do not wrap it in internal methodology glosses. Do not force every sentence into child-level language. The test is that a non-expert can understand the first-use explanation without opening another document, and opaque Layer-3 headers still carry their inline plain gloss.
+
 > **Not a gate:** absolute file length. The 3-layer doc may run longer than the old single report — that is
 > fine. The plain layers earn their length by giving the casual reader an exit after one page; we do **not**
 > trade substance to hit a line count.
@@ -113,3 +119,4 @@ The hypothesis-validation plan runs across all three depths:
 - [ ] **Gate 6** *(MR)* — target segment profiled + strategic rec in Layer 2; full Map of Segments in Layer 3.
 - [ ] **Gate 7** *(MR)* — validation plan touched in L1, listed in L2, detailed per-assumption in L3.
 - [ ] **Gate 8** — GTM copy keeps `[VERIFY]`; PRD mechanic-mapping is fenced, not on the readable requirement.
+- [ ] **Gate 9** — HTML gives first-use terms and abbreviations plain inline explanations outside ready-to-use copy; no every-line simplification rule was added.

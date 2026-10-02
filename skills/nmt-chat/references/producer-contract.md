@@ -1,12 +1,12 @@
-# Producer contract — six cross-cutting behaviors (binding for all producer skills)
+# Producer contract — cross-cutting behaviors (binding for all producer skills)
 
-> The four producer skills (`nmt-market-research`, `nmt-craft-value-proposition`, `nmt-product-requirements`,
-> `nmt-craft-go-to-market`) share six behaviors that came directly from user testing feedback.
-> Specifying them once here keeps the four skills in sync. Each skill points to this file and wires the
+> The five producer skills (`nmt-market-research`, `nmt-craft-value-proposition`, `nmt-product-requirements`,
+> `nmt-craft-go-to-market`, `nmt-analyze-interviews`) share these behaviors.
+> Specifying them once here keeps the five skills in sync. Each skill points to this file and wires the
 > concrete hooks (intake questions, template blocks) into its own flow. The companion file
 > `readability-contract.md` governs the 3-layer output; this file governs intake + framing + integrity.
 
-The six behaviors:
+The shared behaviors:
 
 1. **Helicopter-view first** — orient the user before the first question.
 2. **Output format choice** — Markdown (fast) or HTML (easier to read).
@@ -14,6 +14,11 @@ The six behaviors:
 4. **Visible validation debt** — print how many unvalidated assumptions the artifact stands on; `GO` → `GO (to validation)`.
 5. **Configurable output path** — default `Skills-Results/…`, but accept the host repo's convention.
 6. **Deep-mode QA loop + web-MCP fallback** — Deep mode must meet an evidence floor and self-check; recommend a web MCP when the built-in fetch is blocked.
+7. **Market and audience language when material** — country or region and customer language drive market-specific research, examples, channels, prices, units, regulations, and copy; ask only when the current task needs them.
+8. **Permissioned context reads** — list automatically found product-context files before reading them; ask before opening sensitive or private context, while canon files, user-named files, and already-authorized inputs remain directly usable.
+9. **Claim status and provenance** — consequential claims are tagged `backed`, `derived`, or `hypothesis`, with a source ID or an explicit derivation; user narratives are useful input, not independently validated market facts.
+10. **Independent evidence counts** — aggregated claims carry independent source or respondent counts (`n/N`) and source IDs; one source is a single signal, not corroboration.
+11. **Input-sensitive confidence** — thin input produces a visible warning, conditional estimates or ranges only when their assumptions support them, and the top three missing inputs that would change the result.
 
 ---
 
@@ -117,6 +122,40 @@ User testing found Deep runs that promised research, made two queries, and quit;
 
 If such an MCP is connected (discoverable via tool search), prefer it for blocked sources; otherwise proceed and flag thin coverage in the verification checklist.
 
+## 7. Market and audience language — conditional, but binding when used
+
+Ask for the country or region and the language customers use before market-specific work. Reuse a market and audience language already supplied in the current conversation or an authorized upstream artifact; do not ask the same question again. The answer controls local competitors, channels, price anchors, currency, units, regulation, and customer-facing copy. Keep audience language separate from document language.
+
+For a pure methodology explanation, ordinary diagnosis, or chat-first turn, do not force a market question. Ask only when an answer would materially change the current recommendation. If the market is missing in a market-specific artifact, state the assumption and mark market-specific numbers as unverified. A respondent's or user's market claim is still an input to check, not measured market evidence.
+
+## 8. Permissioned repo context
+
+When the skill can see files that look like product context (README, research, surveys, reviews, analytics, interview notes, or specs), list the paths and ask before reading them. Name the specific files you will open. Do not open secrets or private notes by default. Canon files, files explicitly named by the user, and files whose reading the user already authorized are not blocked by this rule.
+
+## 9. Claim status and provenance
+
+Tag consequential claims in the ledger and, where practical, in the report:
+
+- **Backed** — directly supported by a cited source, quote, or measured field.
+- **Derived** — an inference from named evidence; state the evidence and the reasoning.
+- **Hypothesis** — a model suggestion or unverified input; pair it with the cheapest test.
+
+A user narrative, landing page, deck, or interview is valuable evidence about what someone said or did. It does not become an independently validated market fact merely because it is supplied. Spoken numbers are attributed to the speaker and kept separate from measured market inputs unless independently sourced.
+
+## 10. Independent counts and single signals
+
+Every segment-level or market-level aggregate states `n/N` and the independent source IDs behind it. Count respondents or independent observations, not quotations, files, or repeated lines from one source. A claim supported by exactly one source is a **single signal**: keep it in a separate "Single signals — verify before acting" block and do not use it as a segment or market conclusion until corroborated.
+
+When clustering interviews, map each source to its segment and keep the mapping auditable. A source may support more than one Job episode, but it remains one source for frequency purposes.
+
+## 11. Confidence scales with actual input
+
+Confidence is a property of the evidence in the current run, not a fixed style setting. With no interviews, analytics, reviews, documents, or verifiable external sources, put a visible **Thin input** warning in the artifact, label segments and numbers as hypotheses, use ranges only where explicit assumptions justify them, and list the top three concrete inputs that would change the result. Never invent a range, percentage, precision, confidence score, or market share to make sparse input look measured.
+
+## Execution note — checkpoint only long fan-out work
+
+For a long fan-out or wave-based run, checkpoint completed waves into the same single result file at safe boundaries. Mark the file **INCOMPLETE DRAFT** while the run is incomplete; final assembly replaces the draft and removes the marker. Do not create per-agent files or add checkpointing to short, conversational, or no-file flows. The single-result-file rule still applies.
+
 ---
 
 ## How each skill wires this in (integration checklist)
@@ -130,3 +169,8 @@ A producer skill satisfies this contract when:
 - [ ] Its Layer-1 template carries the **validation-debt line**, and every `GO` is **`GO (to validation)`** (§4).
 - [ ] On hand-off, it asks what validation debt has been retired since the prior artifact (§4c).
 - [ ] Deep mode enforces the **evidence floor + self-critic loop** and offers the **web-MCP fallback** (§6).
+- [ ] Market and audience language is reused or asked only when it materially affects the current task (§7).
+- [ ] Automatically found private context is listed and permissioned before reading (§8).
+- [ ] Consequential claims carry status/provenance, independent `n/N` counts, source→segment traceability, and single-signal handling (§9–§10).
+- [ ] Confidence reflects the actual input; sparse input never receives invented precision (§11).
+- [ ] Long fan-out work checkpoints only in the single result file and removes its incomplete marker on final assembly.

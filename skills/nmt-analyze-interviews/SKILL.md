@@ -2,22 +2,22 @@
 name: nmt-analyze-interviews
 description: >-
   Take one or many customer-interview files you already have and extract the AJTBD structure
-  from them — segments by Core Jobs, personas, Consideration Set, existing Solutions and
+  from them — segments by Core Jobs and success criteria, personas, Consideration Set, existing Solutions and
   Problems, value hypotheses — using Ivan Zamesin's AJTBD / Next Move Theory methodology
   (distinct from generic Christensen JTBD). Input — a folder or list of files: deep-interview
   transcripts, interview notes, sales-call or demo transcripts, support/chat logs, survey
   open-ends. The interviews may be AJTBD or not, well- or poorly-conducted, one file or
   dozens. The skill first asks which business task you're solving (and helps you choose if you
-  can't name one), then reads each interview in its own subagent (a fan-out so it never
-  overflows context, no matter how many large transcripts), extracts the Core Jobs with an
-  honest per-interview confidence (a clean extraction vs. a weak hypothesis), gives per-
-  interview feedback (what was pulled, what's missing, whether this interview can even serve
-  your business task), clusters the extractions into segments by similar Core Jobs + similar
-  success criteria + similar priority order, and computes each segment's confidence from the
-  supporting interviews' confidence. Output — one report: a data-quality summary, segments by
+  can't name one), then assigns stable deduplicated respondent/observation IDs before reading
+  each source in its own subagent (a fan-out so it never overflows context, no matter how many
+  large transcripts), extracts the Core Jobs with an honest per-ID confidence (a clean
+  extraction vs. a weak hypothesis), gives per-source feedback (what was pulled, what's missing,
+  whether the canonical ID can serve your business task), clusters the extractions into segments
+  by similar Core Jobs + similar success criteria + similar priority order, and computes each
+  segment's confidence from deduplicated supporting IDs. Output — one report: a data-quality summary, segments by
   Core Jobs with personas and confidence, structured existing Solutions and Problems, a
   Consideration Set per segment, value-creation hypotheses, and a gap list of what to
-  interview next. Use when the user says "analyze my interviews", "extract jobs from these
+  interview next, with a source-to-segment map and a single-signal holdout. Use when the user says "analyze my interviews", "extract jobs from these
   transcripts", "I have customer interviews — find the segments", "what jobs are in these
   calls", "synthesize my interviews", or has interview/transcript files and wants the
   methodology pulled out of them. The post-fieldwork counterpart to nmt-interview-guide. Two
@@ -27,9 +27,9 @@ description: >-
 
 # Analyze Interviews v1
 
-> **v1 in one breath.** You already ran the interviews; this skill pulls the methodology out of them. It takes **one or many** interview files (transcripts, notes, sales calls, support logs, survey open-ends — AJTBD or not, good or bad), asks **which business task** you're solving (and helps you pick one if you can't), then reads **each interview in its own subagent** — a fan-out that keeps the run from ever overflowing context no matter how many large transcripts you load. Each interview is distilled to the AJTBD constructs with an **honest confidence** (a clean Core-Job extraction vs. a weak hypothesis) and **per-interview feedback** (what was found, what's missing, whether this interview can serve your task). The distillations are clustered into **segments by similar Core Jobs + similar success criteria + similar priority order**, and each segment's confidence is **computed from its supporting interviews' confidence**. Output — one report: data-quality summary, segments with personas, structured Solutions + Problems, a Consideration Set per segment, value hypotheses, and what to interview next.
+> **v1 in one breath.** You already ran the interviews; this skill pulls the methodology out of them. It takes **one or many** interview files (transcripts, notes, sales calls, support logs, survey open-ends — AJTBD or not, good or bad), asks **which business task** you're solving (and helps you pick one if you can't), assigns stable deduplicated respondent/observation IDs, then reads **each source in its own subagent** — a fan-out that keeps the run from ever overflowing context no matter how many large transcripts you load. Each canonical ID is distilled to the AJTBD constructs with an **honest confidence** (a clean Core-Job extraction vs. a weak hypothesis) and **per-source feedback** (what was found, what's missing, whether that ID can serve your task). The distillations are clustered into **segments by similar Core Jobs + similar success criteria + similar priority order**, and each segment's confidence is **computed from its deduplicated supporting IDs**. Output — one report: data-quality summary, segments with personas, structured Solutions + Problems, a Consideration Set per segment, value hypotheses, and what to interview next.
 
-> **Producer contract (binding) — `../nmt-chat/references/producer-contract.md`.** Six cross-cutting behaviors shared by all producer skills: (1) print a **helicopter-view** before the first question; (2) ask **Markdown or HTML** output; (3) treat **all** user input as hypothesis and emit a *"risks I see in what you gave me"* block — here the inputs are interviews, so this becomes the per-interview quality read; (4) print **validation framing** — extracted Jobs are hypotheses with a confidence, only as strong as the interviews behind them; (5) accept a **custom output path**; (6) Deep mode runs an **evidence floor + self-critic loop** and offers a **web-MCP fallback**. The hooks below wire each into this skill.
+> **Producer contract (binding) — `../nmt-chat/references/producer-contract.md`.** In addition to the shared orientation, output, input-as-hypothesis, path, and Deep-mode rules, this skill must (7) reuse or ask for market + audience language only when it changes the task; (8) keep repo-context reads permissioned; (9) tag claims `backed`, `derived`, or `hypothesis`; (10) report independent `n/N` counts and source IDs, hold single signals out of segment conclusions, and map every source to its segment; (11) scale confidence to the actual evidence. The hooks below wire each into this skill.
 
 > **New here, or not sure this is the right skill?** Start right here — or run `nmt-chat`, describe your situation, and it points you to the right one. Quick map: **new idea →** `nmt-market-research` · **live product or a metric moved →** `nmt-diagnose` · **have customer interviews →** `nmt-analyze-interviews` · **ready to build →** `nmt-product-requirements` · **positioning / launch copy →** `nmt-craft-value-proposition` → `nmt-craft-go-to-market`.
 
@@ -48,12 +48,14 @@ The **post-fieldwork counterpart to `nmt-interview-guide`.** `nmt-interview-guid
 **A single file** (one file per run) with:
 
 1. **Data-quality summary** — how many files, the type/quality mix (AJTBD / partial / non-AJTBD; well / poorly conducted), and whether the set can serve the chosen business task.
-2. **Segments by Core Jobs** — each with a persona (= the causal criteria), Core Jobs in canon grammar, Big Jobs, **a confidence level and the interviews it stands on.**
+2. **Segments by Core Jobs** — each with a persona (= the causal criteria), Core Jobs in canon grammar, Big Jobs, **a confidence level, deduplicated supporting IDs, and `n/N` under the declared counting unit.**
 3. **What they use today and where it falls short** — for each tool they hired, the set of tasks it does for them, and each problem traced to the task it botched (task → tool → problem). DIY counts as a tool.
 4. **What they weighed before choosing** — the options, how they compare, the named products plus a way in, and their fears (their consideration set), as its own block.
 5. **Value-creation hypotheses** — underserved success-criteria + a one-line mechanic direction (no feature list — that is `nmt-craft-value-proposition`'s job).
-6. **Per-interview appendix** — what was extracted from each file, with anchor quotes and confidence.
-7. **Gaps + what to interview next** — what the current data cannot answer for the task, and whom to re-recruit (past-payment screener).
+6. **Single signals** — claims supported by one canonical ID, held out of segment conclusions until corroborated.
+7. **Hypotheses to validate** — ideas added by the model, clearly separated from findings.
+8. **Source → segment map + per-source appendix** — every canonical ID and mapped file/fragment, its assigned segment, anchor quote ID, and what was extracted.
+9. **Gaps + what to interview next** — what the current data cannot answer for the task, and whom to re-recruit (past-payment screener).
 
 **Two modes:**
 - **Quick (default):** no internet. Subagents distill each interview; one primary agent synthesizes the segments.
@@ -107,18 +109,25 @@ The **only** source of methodology is the Next Move Theory canon, read at runtim
 
 ## The fan-out architecture (this is what makes the skill scale)
 
-**The orchestrator never reads the raw transcripts into its own context.** It spawns **one distiller subagent per interview** (or per batch of 3–4 short files). Each distiller reads *its* file plus its canon slice and returns **only a compact structured distillation** (~600–1,200 tokens with 2–3 anchor quotes), not the raw text. The orchestrator synthesizes segments from the distillations.
+**The orchestrator never reads the raw transcripts into its own context.** At intake it assigns each independent respondent or observation a stable deduplicated ID (`R01`, `R02`, …) and records the source-file, episode, fragment, and quote mappings. It declares the counting unit in the report (default: independent respondent; an observation/episode unit is allowed only when intentionally chosen). If independence is ambiguous, mark it `independence: unknown` and do not inflate `N` or support weight. It spawns **one distiller subagent per source file or episode** (or per batch of 3–4 short files), carrying that canonical ID. Each distiller reads *its* file plus its canon slice and returns **only a compact structured distillation** (~600–1,200 tokens with 2–3 anchor quotes), not the raw text. The orchestrator synthesizes segments from the distillations; files and fragments sharing an ID never count as independent evidence.
 
 Why this matters: 18 deep interviews at ~8–10k tokens each are ~150k tokens — they cannot fit one 200k window alongside the canon and the report, and forcing them in triggers compaction that *summarizes away the verbatim customer utterances AJTBD depends on*. Fan-out turns ~150k of raw transcript into ~15k of distillation, fits comfortably, and **preserves the exact quotes on purpose.** The concurrency cap handles the rest — pass all N files; they run in waves.
 
 - Distillers run as one wave of workers; independent workers may run in parallel. The primary agent waits for the wave and collects every return before synthesis.
-- **No per-interview files.** Each distiller returns its distillation in its final message. The orchestrator holds them in context and writes the one report (Rule 4).
+- **No per-interview files.** Each distiller returns its distillation in its final message. The orchestrator holds them in context and writes the one report (Rule 4). A fragment or quote always carries the same canonical respondent/observation ID as its source; a repeated source is not a new observation.
+- For a long fan-out, create or update the same single result file at safe wave boundaries and mark it **INCOMPLETE DRAFT** until final assembly; final assembly removes the marker. Never create per-agent or scratch files, and do not checkpoint short, chat-only, or fileless runs.
 
 ---
 
 ## Plain-language output — the reader is a builder, not a methodologist
 
 Write the report in the plain language the user speaks; when a methodology term genuinely adds precision, lead with the plain meaning and put the term in parentheses the first time — never lead a sentence or heading with a raw term. Keep quotes verbatim. Confidence is reported in plain words (clean read / directional / weak / not usable), with the methodology rubric behind it.
+
+## Evidence discipline — source IDs, counts, and honest confidence
+
+Every consequential finding is tagged in working notes as **backed** (directly in a source), **derived** (an inference from named sources), or **hypothesis** (the model's addition or an unconfirmed input). Every segment-level claim states `n/N` under the declared counting unit and lists the deduplicated respondent/observation IDs. Count people or intentionally selected independent observations, never files, quotations, repeated lines, or episodes from one ID. A claim with one ID is a **single signal** and stays in the dedicated holdout block. If independence cannot be established, mark `independence: unknown` and exclude that item from `N`, support weights, confidence, and single-signal corroboration until resolved. Keep the source → segment map auditable even when one canonical ID has several files, Job episodes, fragments, or quotes.
+
+Do not turn sparse interviews into invented percentages, ranges, or confidence precision. If the available material is thin, say **Thin input**, label segments as hypotheses, and list the three interviews or fields that would most change the result. A respondent's estimate is evidence of what that respondent believes, not a measured market fact.
 
 ---
 
@@ -149,12 +158,14 @@ Skills-Results/{product-slug}/analyze-interviews/{YYYY-MM-DD_HH-MM}_{product-slu
 **First, the orientation block** (`producer-contract.md §1`) — before any question, in plain words:
 
 > **What you'll get:** one report — the customer segments hiding in your interviews (grouped by what they hire a product to do), each with a persona, the existing solutions they use and where those fall short, what they weigh before choosing, value ideas, and — honestly — how much your interviews can be trusted to answer your question.
-> **The steps:** (1) you tell me the business task you're solving (I'll help if you can't name one) → (2) you point me at your interview files → (3) I read each one separately and pull out the tasks people hire a product for, with an honest confidence → (4) I tell you, per interview, what I found and what's missing → (5) I cluster them into segments and tell you which ones the data really supports → (6) one report, plus what to interview next.
+> **The steps:** (1) you tell me the business task you're solving (I'll help if you can't name one) → (2) you point me at your interview files → (3) I assign stable deduplicated respondent/observation IDs, then read each source separately and pull out the tasks people hire a product for, with an honest confidence → (4) I tell you, per canonical ID and mapped source, what I found and what's missing → (5) I cluster them into segments and tell you which ones the data really supports → (6) one report, plus what to interview next.
 > **Where I work vs. where you decide:** I extract and cluster what's in the transcripts; I can't add what isn't there. Where an interview is thin, I'll say so and tell you what to ask next time.
 > **Two modes:** *Quick* (default — no internet; reads and synthesizes your files) · *Deep* (opt-in — also researches the real competing products and review language around the tasks I find, to enrich the competitive picture).
 > **Honest caveat:** the output is only as good as your interviews. If they're about hypotheticals or never touched a real past purchase, I'll flag that — and the right next step is better interviews, not a prettier report.
 
 Then **document language.** Default to **English**; if the user writes in another language, offer to work in it (a structured-input request: English / their language / Other). Hold the choice; all communication and the file use it; canon files and URLs stay as-is.
+
+If the chosen task includes market sizing, local competitors, channels, prices, regulation, or customer-facing copy, also capture the customers' country/region and audience language. Reuse those values from an authorized upstream artifact; ask only if missing. Keep audience language separate from document language. Pure interview reconstruction does not require a market question.
 
 ---
 
@@ -193,6 +204,7 @@ Collect in a short stream + one or two batched structured-input requests (max 4 
 > Point me at your interviews — a folder, or a list of files. They can be deep-interview transcripts, interview notes, sales-call or demo recordings turned to text, support or chat logs, or open-ended survey answers. One file or many; AJTBD-style or not; polished or rough — I'll sort the quality myself.
 
 - Accept a **folder path** (read every text-like file inside) or a **list of paths**. Supported: `.md`, `.txt`, `.docx` (read as text), `.vtt` / `.srt` (strip timestamps), `.csv` (survey open-ends — one row = one mini-interview).
+- Before fan-out, assign a stable deduplicated ID to each independent respondent or observation (`R01`, `R02`, …), map every source file/episode/fragment/quote to that ID, and declare the counting unit. Repeated files from one ID stay one unit; if independence is ambiguous, record `independence: unknown` and exclude it from `N`, support, confidence, and single-signal corroboration until resolved.
 - Everything taken from the files is tagged **[user data]** in-context. **All of it is hypothesis** (`producer-contract.md §3`) — an interview is the respondent's account, not ground truth; a sales call is a pitch, not a Job study.
 - **Light context (optional, free text):** the product these interviews are about, and the segment(s)/Jobs the user already believes exist — held as *prior hypotheses to test against the data*, never merged in as fact.
 
@@ -207,7 +219,7 @@ Collect in a short stream + one or two batched structured-input requests (max 4 
 
 ## STAGE 3 — Per-interview distillation (the fan-out)
 
-Spawn **one distiller subagent per interview** (batch 3–4 short files into one agent). Each distiller reads its file + `job-structure.md` + `job-types-and-properties.md`, applies the **extraction schema** and the **quality rubric** below, conditions its dig on the **chosen business task**, and returns a structured distillation. The orchestrator collects all returns.
+Spawn **one distiller subagent per source file or episode** (batch 3–4 short files into one agent). Each distiller receives the canonical respondent/observation ID and source mapping, reads its file + `job-structure.md` + `job-types-and-properties.md`, applies the **extraction schema** and the **quality rubric** below, conditions its dig on the **chosen business task**, and returns a structured distillation. The orchestrator collects all returns; files or fragments mapped to the same ID remain one counting unit.
 
 ### The extraction schema (what each distiller pulls)
 
@@ -224,7 +236,7 @@ For every distinct Job episode in the interview, extract the **eight Job element
 
 Plus, on each Job: **frequency**, **Job budget** (what they paid / spent), **importance** (if elicited); **the chosen Solution** (brand / route / DIY) structured as *label + the sub-graph of Core + Micro Jobs it installs*; the **Job type** (Regular / Orientation / **Tax** / **Fake** / Emotional / Viral); the **Aha Moment** (a pleasant surprise *while using a product*, beating the criteria they came in with); every **Problem** on its `Job → Solution → Problem` chain; **switching barriers & fears** (habit, identity, objective barriers, fears from real past experience vs. imagination); and the **Previous / Next Jobs** in the chain.
 
-### The quality rubric (per interview → a confidence on its Core Jobs)
+### The quality rubric (per canonical respondent/observation ID → a confidence on its Core Jobs)
 
 **Hard gates** (a "no" caps the interview's Core Jobs at *not usable* — Fake-Job risk):
 - **G1 — real past expenditure.** Did the respondent actually pay money / spend time / burn energy on this outcome in the past?
@@ -260,9 +272,9 @@ The spine (Core Jobs + ranked success criteria + Solutions) is always extracted.
 
 ---
 
-## STAGE 4 — Per-interview feedback (what was found + can it serve the task)
+## STAGE 4 — Per-source feedback (what was found + can it serve the task)
 
-From the distiller returns, build the **per-interview feedback** the user asked for — one row per file:
+From the distiller returns, build the **per-source feedback** the user asked for — one row per file mapped to its canonical respondent/observation ID:
 - **Type & quality** — AJTBD / partial / non-AJTBD; well / poorly conducted (with the one decisive reason).
 - **What was extracted** — the Core Jobs found (with their per-Job confidence) + the key elements present.
 - **What's missing** — the elements absent or thin.
@@ -278,22 +290,24 @@ Cluster the distilled Job extractions across all interviews into candidate segme
 
 **Clustering rule (the segmentation root).** Two interviewees are the **same segment** when they perform **similar Core Jobs with similar success criteria *in a similar priority order*** (`segmentation.md §2`; `ajtbd-key-theses.md §12`). They are **different segments** if any of these differs: the Core Job; the criteria (same outcome + different criteria = different Job); **or the priority order** (*control-first* vs *done-for-me-first* = different segments). Same surface verb ≠ same segment. One person with several Jobs is **one segment** (their whole graph places them), not many.
 
+Before creating or refining a segment, run this compact guard: write the Core Jobs, the concrete success criteria, and the priority order side by side; show the deduplicated independent respondent/observation IDs, declared counting unit, and `n/N`; and state why the grouping changes value, margin, or demand. Mark ambiguous independence unknown and exclude it from the numerator/denominator and support. Channel, demographics, and industry are secondary until their causal effect is evidenced.
+
 **Persona = the causal criteria** (`segmentation.md §7`): the Core Jobs + ranked criteria + the cause-level situational facts that produce them. Demographics are second-order correlates, never the first cut. Each criterion that survives must be a **cause** that changes value, margin, or demand — not a restated value ("they'll save $2,000" is value, not a criterion).
 
-**Confidence propagation (compute it, show the math — no false decimals).** Each extraction carries its interview's confidence weight: **Clean = 1.0 · Directional = 0.66 · Weak = 0.33 · Not-usable = 0** (Not-usable contributes only Big-Job hypotheses, not segment evidence). For each segment:
+**Confidence propagation (compute it, show the basis — no false decimals).** Each canonical ID's extraction carries its confidence weight: **Clean = 1.0 · Directional = 0.66 · Weak = 0.33 · Not-usable = 0** (Not-usable contributes only Big-Job hypotheses, not segment evidence). Group repeated files, episodes, fragments, and quotes by ID before adding support. Unknown independence is excluded until resolved. For each segment, show the supporting IDs, declared counting unit, and `n/N`; do not present the weights as statistical confidence intervals.
 
-- **Support weight** = the sum of the confidence weights of the interviews whose extractions land in the cluster.
+- **Support weight** = the sum of the confidence weights of the deduplicated IDs whose extractions land in the cluster.
 - **Saturation** = did new interviews stop adding new Core Jobs / criteria to the cluster? (a qualitative yes/partial/no).
 - **Coherence** = how tightly the criteria *and* the priority order agree inside the cluster. A split priority order is a signal to **split into two segments**, not to average.
 
 Roll up to a plain-language segment confidence (tune the thresholds to the data, state them):
 - **Solid** — support weight ≥ ~3, coherent, saturating.
 - **Emerging** — support weight ~1.5–3, some coherence.
-- **Hypothesis** — support weight < 1.5, a single supporting interview, or incoherent.
+- **Hypothesis** — support weight < 1.5, a single supporting canonical ID, or incoherent.
 
-Always render the support transparently: *"Segment B — Emerging; stands on interview #2 (Clean), #5 (Directional), #9 (Directional)."*
+Always render the support transparently: *"Segment B — Emerging; counting unit: independent respondent; stands on IDs R02 (Clean), R05 (Directional), R09 (Directional); n/N = 3/12."*
 
-**Inverse read (the data-quality honesty gate).** Report how many interviews were Weak / Not-usable, what that does to the overall trust, and — given the chosen business task — **which task questions the current data cannot answer.** That list becomes "what to interview next."
+**Inverse read (the data-quality honesty gate).** Report how many source files and canonical IDs were Weak / Not-usable, which IDs have `independence: unknown`, what that does to the overall trust, and — given the chosen business task — **which task questions the current data cannot answer.** That list becomes "what to interview next."
 
 ---
 
@@ -306,25 +320,25 @@ Build the single file in this order (top attribution → disclaimers once → th
 ```markdown
 ## What your calls are telling you (read this first)
 - **Can these interviews answer "{business task}"?** {Yes / partly / not yet} — {one line on why}.
-- **The segments that showed up:** {top 2–3, most-supported first} — each one line + one anchor quote (interview #).
-  - {Segment name} ({Solid / Emerging / Hypothesis}): {one line}. *"{anchor quote}"* — #{n}.
+- **The segments that showed up:** {top 2–3, most-supported first} — each one line + one anchor quote (canonical ID).
+  - {Segment name} ({Solid / Emerging / Hypothesis}): {one line}. *"{anchor quote}"* — {ID}.
 - **The single biggest data risk:** {e.g., "11 of 18 are hypothetical-heavy; segment sizes below are directional at best"}.
 
 ## 1. Data-quality summary
-- Files analyzed: {N}. Type mix: {AJTBD x / partial y / non-AJTBD z}. Quality: {clean a / directional b / weak c / not-usable d}.
+- Files analyzed: {file count}. Independent respondents/observations: {n/N} (counting unit: {declared unit}; unknown independence: {count}). Type mix: {AJTBD x / partial y / non-AJTBD z}. Quality: {clean a / directional b / weak c / not-usable d}.
 - **Can these interviews serve "{business task}"?** {Yes / partly / not yet} — {one line on the binding gap}.
 - The single biggest data risk: {e.g., "11 of 18 are hypothetical-heavy; segment sizes below are directional at best"}.
 
 ## 2. Segments by Core Jobs
-{Comparison table: Segment · Core Jobs (short) · dominant ranked criteria · confidence · # interviews supporting. Ordered by confidence.}
+{Comparison table: Segment · Core Jobs (short) · dominant ranked criteria + priority order · confidence · independent IDs / n/N (declared counting unit). Ordered by confidence.}
 
 ### {Segment name — tied to the Jobs and real criteria} — {Solid / Emerging / Hypothesis}
-> **Confidence:** {level} — stands on {interview #s with their per-interview confidence}.
+> **Confidence:** {level} — stands on {deduplicated respondent/observation IDs with their per-ID confidence}; counting unit: {declared unit}; n/N: {n/N}.
 **Persona (the causal criteria):** {one paragraph, then 3–5 causal-criterion bullets, each with the cause it drives}.
 **Core Jobs:**
 1. **When** {context + trigger + negative emotions}, **I want to** {expected outcome}, **with success criteria** {concrete, ranked}, **in order to** {Big Job + positive emotions}.
 **Big Jobs (motivation above the Core Jobs):** {…}
-**Anchor quotes:** {1–3 verbatim, with the interview #}.
+**Anchor quotes:** {1–3 verbatim, each mapped to the same canonical respondent/observation ID and fragment/quote ID}.
 
 ## 3. What they use today and where it falls short
 {For each tool the segment hired: the tool · the set of tasks choosing it does for them (its core + micro tasks) · where it underperforms, each problem traced to the task it botched (task → tool → problem). DIY counts as a tool. (Structurally: each tool is a Solution = label + the sub-graph it installs.)}
@@ -335,10 +349,16 @@ Build the single file in this order (top attribution → disclaimers once → th
 ## 5. Value-creation hypotheses
 {Underserved success-criteria intersections + a one-line mechanic direction per segment — no feature list. "What to build to deliver this is nmt-craft-value-proposition's job."}
 
-## 6. Per-interview appendix
-{One row/block per file: type & quality · Core Jobs found (+ per-Job confidence) · what's present · what's missing · serves-the-task verdict. In HTML, a <details> block.}
+## 6. Single signals — verify before acting
+{Every claim supported by exactly one canonical respondent/observation ID, with its source/fragment/quote ID and the cheapest corroborating test. These signals do not enter segment conclusions until checked.}
 
-## 7. Gaps + what to interview next
+## 7. Hypotheses to validate
+{Model-added ideas or unconfirmed inputs, each tagged hypothesis and paired with a cheap test.}
+
+## 8. Source → segment map and per-interview appendix
+{One row/block per canonical respondent/observation ID, with every mapped source file/episode/fragment/quote: ID · file/respondent · assigned segment (or unassigned) · anchor quote · Core Jobs found · what's present · what's missing · serves-the-task verdict. In HTML, a <details> block.}
+
+## 9. Gaps + what to interview next
 {What the data can't answer for the chosen task; whom to re-recruit (past-payment screener); which segments need more interviews to move from Hypothesis → Emerging → Solid. Suggest nmt-interview-guide for the design.}
 ```
 
@@ -350,7 +370,7 @@ Build the single file in this order (top attribution → disclaimers once → th
 1. Hold the user's inputs in context (the business task, the file list, any prior segment hypotheses).
 2. Read the eager core (`ajtbd-key-theses.md` + `segmentation.md`).
 3. Fan out the distillers (STAGE 3); collect returns. Pull each staged canon file the first time a section needs it.
-4. Build per-interview feedback (STAGE 4).
+4. Build per-source feedback keyed by canonical ID (STAGE 4).
 5. Cluster into segments + compute confidence (STAGE 5).
 6. Run the self-critic criteria; fix in place.
 7. Assemble the one report (STAGE 6); compute the data-quality summary last.
@@ -362,8 +382,8 @@ A skipped stage is never silent — say which and why.
 Everything Quick does, plus a web wave **after** synthesis: subagents take the named Solutions / Consideration Set surfaced from the interviews and (a) confirm the real competitors and their positioning, (b) mine real review language around the Core Jobs to corroborate or challenge the extracted criteria, (c) flag Jobs the interviews missed that the market clearly shows. Web caps + the evidence floor + the self-critic loop + the web-MCP fallback all per `producer-contract.md §6`. Source links mandatory (Rule 2). Never let web data overwrite the interview evidence — it annotates, the interviews lead.
 
 ## Self-critic criteria (before the report ships)
-1. **Segments = similar Core Jobs + similar ranked success criteria** — not demographics, not Big Job, not industry; a split priority order was split, not averaged.
-2. **Every Core Job carries a confidence traceable to specific interviews**; no segment is presented as Solid on a single Directional interview.
+1. **Segments = similar Core Jobs + similar ranked success criteria** — not demographics, not Big Job, not industry; a split priority order was split, not averaged, and every report row carries the supporting IDs and `n/N`.
+2. **Every Core Job carries a confidence traceable to specific canonical IDs**; no segment is presented as Solid on a single Directional ID or repeated file.
 3. **Fake Jobs were not promoted to findings** — future-only respondents contributed Big-Job hypotheses, named Solutions, and orphan Problems only, all labeled as such.
 4. **Criteria are concrete** (direction + level), not adjectives; abstract ones are flagged as "re-elicit," not recorded as criteria.
 5. **Personas are causal criteria**, demographics second-order; each surviving criterion is a cause, not a restated value.
@@ -374,7 +394,7 @@ Everything Quick does, plus a web wave **after** synthesis: subagents take the n
 10. **One file** (Rule 4); disclaimers once at top (Rule 3); attribution top + bottom (Rule 23).
 
 ## End-of-run chat output
-1. **Brief outcome** — 3–5 lines: how many usable interviews, the segments found and their confidence, and whether the data can serve the chosen task.
+1. **Brief outcome** — 3–5 lines: how many usable source files and independent IDs, the segments found and their confidence, and whether the data can serve the chosen task.
 2. **The data-quality summary + the segment table**, printed inline.
 3. **Next step** — the hand-off recommendation (which skill, for which segment).
 4. **Path** — the single result file.

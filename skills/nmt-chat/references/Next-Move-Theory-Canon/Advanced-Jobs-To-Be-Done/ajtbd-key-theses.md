@@ -206,7 +206,7 @@ It's a graph, not a tree. One lower-level Job can connect to many higher-level J
 
 ## 10. The Critical Chain of Jobs — operational delivery
 
-**The Critical Chain of Jobs is the Job Graph projected onto a time axis at a chosen Solution.** Only the lowest-level Jobs at the chosen zoom appear as nodes; higher-level organizing Jobs collapse into what the chain *delivers* by running every lowest-level Job in order. The chain holds the sequence the customer walks, the hand-offs between roles or systems, the cycles, the time-gaps, the slowest links, and the operational dynamics of walking it: predictions and prediction errors at each step, interruptions, drop-offs, Solution switches, per-step emotions, knows-how vs first-time entry.
+**The Critical Chain of Jobs is the Job Graph projected onto a time axis at a chosen Solution.** Start from the higher-level Job the chain must land and place the bottom Job of every necessary branch on the line, at whatever depth that branch ends. A real Job Graph is unbalanced: a branch can end because the person performs that Job as one act, or because the analysis stops mapping deeper. Higher-level organizing Jobs collapse into what the chain *delivers*; a Job and one of its descendants never sit side by side. Use a fixed Micro-level view when implementation detail requires it, but the general chain is terminal-branch based. The chain holds the sequence the customer walks, the hand-offs between roles or systems, the cycles, the time-gaps, the slowest links, and the operational dynamics of walking it: predictions and prediction errors at each step, interruptions, drop-offs, Solution switches, per-step emotions, knows-how vs first-time entry.
 
 Where strategy operates on the Graph, operational delivery operates on the chain — value delivery, communication, activation, retention, churn diagnosis, trigger timing. The Aha Moment fires here, on the chain, the moment the customer notices the value the Graph delivered above prediction.
 
@@ -242,29 +242,34 @@ For the detailed segmentation methodology, see [Segmentation](segmentation.md).
 
 ## 14. The cause-and-effect chain to profit
 
-**In the integrative Next Move Theory framework, business value is the output of one causal chain.** It is sequential up to value creation, then branches into three parallel conditions that must hold simultaneously, then converges into conversion-retention and profit. Detailed version in [Next Move Theory key theses §4](../Next-Move-Theory/nmt-key-theses.md).
+**In the integrative Next Move Theory framework, business value is the output of one causal chain.** It has two causal phases: research and validation, which ends when customers have proven they buy, and scaling, which ends at target profit. The same three conditions are checked in both phases, first as a theory and then as a fact on the customer flow. Detailed version in [Next Move Theory key theses §4](../Next-Move-Theory/nmt-key-theses.md).
 
 The chain below is deliberately simplified. A vast number of detailings sit beneath each step — different business models route through different sub-chains, different channels load at different rates, different segments scale on different cost curves. We work at this abstraction level because it is where the key strategic errors become visible and effort can be deliberately allocated.
 
 ```
-Market with money
-  → Segment + Job   (one analytical entity, not two steps)
-  → Added Value
-  → ┌─ Business Model and Unit Economics — positive per-unit math at the chosen model
-    ├─ Ability to create demand and acquire customers — at target CAC and target lead quality
-    └─ Ability to scale, including scaling customer service — without quality decay
-  → Unit Economics keeps closing at scale — by getting conversions + retention + repeat purchases at target levels
-  → Target Profit
+RESEARCH AND VALIDATION
+  1. Market with money — an explicitly modelled share can cover target profit
+  2. Segment + Job — segments large enough, whose Jobs we can perform with Added Value,
+     with competition open enough to reach the target conversion to purchase
+  3. In theory, three conditions hold at once:
+     ┌─ target margin per unit
+     ├─ target volume of leads
+     └─ scale without quality decay
+  4. Proof of value — customers buy, and we know what value they pay for
+
+SCALING
+  5. In fact, on the customer flow, the same three conditions hold at once
+  6. Target Profit
 ```
 
-- Market with money is the sum customer segments currently spend to perform their Core Jobs. A market is defined in Job terms — not *"the EdTech market"* but *"the sum spent by people who want to learn a skill in order to switch careers."* No paying Jobs, no market.
-- Segment + Job is one analytical entity, not two steps. A segment is defined by its Job Graph — the set of Core Jobs and success criteria its members share. Two groups performing different Core Jobs are two segments, regardless of how identical the demographics look (see §12 and [Segmentation](segmentation.md)).
-- Added Value is performing those Core Jobs above the customer's expectations, against the segment's success criteria (see §6).
-- Three parallel conditions after Value — each must hold; failure of any one stops the chain: business model and unit economics positive; ability to create demand and acquire customers at target CAC and lead quality; ability to scale operations and support without quality decay.
-- Conversion + retention + return at scale — UE keeps closing; people pay, use, and return.
+- Market with money is the sum customer segments currently spend to perform their Core Jobs. A market is defined in Job terms — not *"the EdTech market"* but *"the sum spent by people who want to learn a skill in order to switch careers."* No paying Jobs, no market. A 1%, 5%, or 10% share is an illustrative scenario only; it becomes a usable estimate only when the market base, price, reachable share, and arithmetic are stated.
+- Segment + Job is one analytical entity, not two steps. A segment is defined by its Job Graph — the set of Core Jobs and success criteria its members share. Two groups performing different Core Jobs are two segments, regardless of how identical the demographics look (see §12 and [Segmentation](segmentation.md)). Added Value is performing those Core Jobs above the customer's expectations, against the segment's success criteria (see §6). Competition is part of viability here: the field must be open enough to reach the target conversion to purchase.
+- Three conditions in theory — each must hold on paper before the build; failure of any one stops the chain: target margin per unit; channels that can deliver the target volume of leads at target CAC and lead quality; and operations and support that can scale without quality decay.
+- Proof of value — customers buy, and we know which value they pay for. Sales come first, then UX 4 of 4. This is the gate between the two phases.
+- Three conditions in fact — the same three, proven on a real customer flow. Margin per unit holds only while conversion, churn, and repeat purchase stay at target; retention remains a diagnostic metric inside the first condition rather than a separate root.
 - Target Profit — the residue once every prior step holds.
 
-**An error at any step propagates downstream.** Low conversion almost never means a funnel problem — it almost always means a problem upstream: the wrong segment+Job, value that doesn't beat the alternatives, or one of the three parallel conditions failing. The diagnostic asks *which* of the three is failing, treating them as co-equal candidates, not a sequence.
+**An error at any step propagates downstream.** Low conversion almost never means a funnel problem — it almost always means a problem upstream: the wrong segment+Job, value that doesn't beat the alternatives, or one of the three conditions failing. The diagnostic asks *which* of the three is failing, treating them as co-equal candidates, not a sequence.
 
 **Because the chain runs top-down, the largest single leverage is the upstream choice:** the most economically valuable Job × the segment whose budget supports target margin × the segment large enough to scale × the segment reachable through known channels at target CAC.
 

@@ -61,34 +61,39 @@ Three different segmentations live in the same company. Product segments by Jobs
 
 ---
 
-## 4. The cause-and-effect chain to profit — sequential up to value, then three parallel conditions
+## 4. The cause-and-effect chain to profit — two phases, and the same three conditions checked twice
 
-Business value is the output of one causal chain. The chain is sequential up to value creation. Then it branches into three conditions that must hold at the same time. Then it converges into conversion-retention and profit.
+Business value is the output of one causal chain. The chain has two phases. The first is research and validation: it ends when customers have proven they buy. The second is scaling: it ends at target profit. **The same three conditions appear in both phases. In the first they hold in theory. In the second they hold in fact, on a real customer flow.**
 
 The chain below is deliberately simplified. A vast number of detailings and variations sit beneath each step. Different business models route through different sub-chains, different channels load at different rates, and different segments scale on different cost curves. We work at this abstraction level because it is the level at which the key strategic errors become visible and effort can be deliberately allocated.
 
 ```
-Market with money
-  → Segment + Job   (one analytical entity, not two steps)
-  → Added Value
-  → ┌─ Business Model and Unit Economics — positive per-unit math at the chosen model
-    ├─ Ability to create demand and acquire customers — at target CAC and target lead quality
-    └─ Ability to scale, including scaling customer service — without quality decay
-  → Unit Economics keeps closing at scale — by getting conversions + retention + repeat purchases at target levels
-  → Profit
+RESEARCH AND VALIDATION
+  1. Market with money — an explicitly modelled share can deliver target profit
+  2. Segment + Job — segments large enough, whose Jobs we can perform with Added Value,
+     with competition open enough to reach the target conversion to purchase
+  3. In theory, three conditions hold at once:
+     ┌─ we can earn the target margin per unit
+     ├─ we can acquire the target volume of leads
+     └─ we can scale without quality decay
+  4. Proof of value — customers buy, and we know what value they pay for
+
+SCALING
+  5. In fact, on the customer flow, the same three conditions hold at once:
+     ┌─ we sustain the target margin per unit
+     ├─ we create demand and acquire the target volume of leads
+     └─ we scale without quality decay
+  6. Target Profit
 ```
 
-- Market with money — the sum customer segments currently spend to perform Core Jobs. A market is defined in Job terms. Not *"the EdTech market"* but *"the sum spent by people who want to learn a skill in order to switch careers."*
-- Segment + Job is one analytical entity, not two steps. A segment is defined by its Job Graph, by the set of Core Jobs and success criteria its members share. Two groups performing similar Core Jobs with similar criteria are one segment. Two groups performing different Core Jobs with different criteria are two segments, regardless of how identical their demographics look. See [Segmentation §1](../Advanced-Jobs-To-Be-Done/segmentation.md) and [AJTBD key theses §12](../Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md).
-- Added Value — performing those Jobs above the customer's expectations, against the segment's success criteria. See [Value Creation §2–§5](../Advanced-Jobs-To-Be-Done/value-creation.md) for the prediction-and-compare mechanism that makes the brain register value.
-- Three parallel conditions after Value. Each must hold; failure of any one stops the chain.
-  - Business Model and Unit Economics positive — the chosen business model (one-off, subscription, marketplace, freemium, B2B, and so on) supports per-unit math that closes: LTV > CAC, payback under 12 months, target margin per unit.
-  - Ability to create demand and acquire customers — channels and demand-creation mechanics that deliver leads at the target customer acquisition cost and the target lead quality, in volume.
-  - Ability to scale, including scaling customer service — operations, support, R&D, and hiring keep pace with customer flow without quality decay. The org can grow throughput without breaking the chain.
-- Conversion + retention + return — at customer-flow scale, the UE keeps closing; people pay, use, and return.
+- Market with money — the sum customer segments currently spend to perform Core Jobs. A market is defined in Job terms. Not *"the EdTech market"* but *"the sum spent by people who want to learn a skill in order to switch careers."* A 1%, 5%, or 10% share is an illustrative scenario only; use it only with explicit market, price, reachable-share, and profit arithmetic.
+- Segment + Job is one analytical entity, not two steps. A segment is defined by its Job Graph, by the set of Core Jobs and success criteria its members share. Two groups performing similar Core Jobs with similar criteria are one segment. Two groups performing different Core Jobs with different criteria are two segments, regardless of how identical their demographics look. See [Segmentation §1](../Advanced-Jobs-To-Be-Done/segmentation.md) and [AJTBD key theses §12](../Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md). Added Value is performing those Jobs above the customer's expectations, against the segment's success criteria (see [Value Creation §2–§5](../Advanced-Jobs-To-Be-Done/value-creation.md)). Competition enters here: the field must be open enough to reach target conversion to purchase.
+- Three conditions in theory. Each must hold on paper before the build; failure of any one stops the chain: target margin per unit; channels that can deliver the target volume of leads at target CAC and lead quality; and operations and support that can scale without quality decay.
+- Proof of value — customers buy, and we know which value they pay for. Sales first, then UX 4 of 4 (see [The Algorithm](../Algorithms/the-algorithm.md) Step 9). This is the gate between the phases.
+- Three conditions in fact. The same three, proven on a real customer flow, not on paper. **Margin per unit holds on the flow only while conversion, churn, and repeat purchase stay at target.** Retention and return remain diagnostic signals inside the first condition, not a separate root node.
 - Profit — the residue once every prior step holds.
 
-**The three conditions are tested in parallel, not sequentially.** This is why the [RAT discipline](../Riskiest-Assumption-Test/rat-key-theses.md) treats its baseline risks as simultaneous tests, not stages.
+**The three conditions are tested in parallel, not sequentially, in both phases.** This is why the [RAT discipline](../Riskiest-Assumption-Test/rat-key-theses.md) treats its baseline risks as simultaneous tests, not stages.
 
 ---
 
@@ -96,7 +101,7 @@ Market with money
 
 **Consequence 1: when a downstream metric breaks, investigate the upstream chain first.**
 
-The root cause sits upstream in the majority of cases. Low conversion is most often a Job, segment, value, or communication problem upstream wearing a funnel mask, and only sometimes a funnel mechanic problem. High CAC is most often a segment-and-Job mismatch, and only sometimes a channel-tactic problem. High churn is most often a value problem (the customer is now seeing the value gap clearly) or a segment problem (the wrong people were acquired in the first place), and only sometimes a retention-mechanic problem. The local fix at the broken metric may also work in some cases. But the rate of upstream causation is high enough that the upstream investigation should happen first. In the parallel section of the chain (§4), the diagnostic asks which of the three parallel conditions is failing, treating them as co-equal candidates.
+The root cause sits upstream in the majority of cases. Low conversion is most often a Job, segment, value, or communication problem upstream wearing a funnel mask, and only sometimes a funnel mechanic problem. High CAC is most often a segment-and-Job mismatch, and only sometimes a channel-tactic problem. High churn is most often a value problem (the customer is now seeing the value gap clearly) or a segment problem (the wrong people were acquired in the first place), and only sometimes a retention-mechanic problem. The local fix at the broken metric may also work in some cases. But the rate of upstream causation is high enough that the upstream investigation should happen first. In either phase of the chain (§4), the diagnostic asks which of the three co-equal conditions is failing, first on paper and then on the customer flow.
 
 **Consequence 2: the largest single leverage is choosing the most economically valuable Job in a segment with the budget to sustain the unit economics.**
 
@@ -205,9 +210,9 @@ Next Move Theory produces a set of validation criteria for any product or compan
 5. Have you surfaced the Aha Moment, and have you moved it as far left in the chain as possible?
 6. Do you have a value proposition in the formula `[segment] + [Job] + [how much more effectively] + [features]`?
 7. Do you have proof of value (people pay; people use; people return)?
-8. Do all three parallel conditions hold? (a) Unit economics closes at the segment level, not on average. (b) Acquisition channels modeled, tested, scaling. (c) Service, operations, and R&D scalable without quality decay.
+8. Do all three conditions hold in fact, on the customer flow, not only on paper? (a) Unit economics closes at the segment level, not on average, and conversion, churn, and repeat stay at target. (b) Acquisition channels modeled, tested, scaling. (c) Service, operations, and R&D scalable without quality decay.
 9. Are Discovery, Delivery, Marketing, Sales, Support, R&D, and Finance aligned around the same target segment?
-10. Does conversion + retention keep UE closing as customer flow scales?
+10. Do all three conditions keep holding as the customer flow grows, or does one break at the next order of magnitude?
 
 Failing any one breaks the chain. The diagnostic priority is top-down: investigate the upstream gaps first, because no amount of work downstream will compensate for an unsound segment-and-Job choice.
 

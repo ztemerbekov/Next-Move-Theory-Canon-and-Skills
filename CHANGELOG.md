@@ -5,7 +5,7 @@ is at the top.
 
 The primary distribution is the user-global `next-move-theory` suite. Install
 and update it through the `skills` CLI flow in the
-[`README.md` installation section](README.md#global-plugin-installation). The
+[`README.md` installation section](README.md#getting-started). The
 repository no longer ships the old shell/PowerShell installers. `nmt-upgrade`
 is not the supported global installation or update path; it retains unchanged
 Legacy-only behavior for existing project-local setups.
@@ -23,6 +23,13 @@ The current bundle version is the top entry below. Existing Legacy project-local
 setups may record it in `.nmt-version`; the `skills` CLI manages the installed
 suite snapshot in Client user state. (The README also shows the methodology maturity badges — Advanced JTBD
 `v3.4 · stable` and Next Move Theory `v0.6 · in active development`.)
+
+## 0.6.18 — Selective upstream methodology sync
+**Summary:** Adapted the pinned upstream `f8e87d1` canon and evidence-discipline improvements to the fork's single client-neutral skills tree and bundled Canon.
+
+- Clarified mixed-depth Critical Chains, the two causal phases to profit, and the same three conditions checked in theory and in fact.
+- Added compact claim status, independent `n/N` provenance, source-to-segment traceability, input-sensitive confidence, conditional market-language handling, and first-use HTML explanations.
+- Excluded upstream installers, telemetry, client-specific trees, update renames, and injected project rules to preserve the fork's distribution boundary.
 
 ---
 

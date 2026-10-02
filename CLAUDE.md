@@ -5,7 +5,7 @@
 This file is a repository contributor source. It is not copied into a Consumer
 project by the supported user-global `next-move-theory` suite. Install the
 complete suite with the `skills` CLI command in the
-[`README.md` installation section](README.md#global-plugin-installation); the
+[`README.md` installation section](README.md#getting-started); the
 Client keeps the Plugin, Canon, and Skills in user state. This active tree does
 not ship `install.sh` or `install.ps1`. The unchanged `nmt-upgrade` workflow
 is Legacy-only behavior for existing project-local setups and is not the
@@ -97,7 +97,8 @@ of "JTBD."
 
 ## 5. The algorithm — the operating loop
 
-- **The cause-and-effect chain to profit is the diagnostic spine:** Market with money → **Segment + Job** (one analytical entity) → Added Value → three conditions that must hold *simultaneously* (Unit Economics positive · ability to create demand & acquire at target CAC · ability to scale without quality decay) → conversion + retention + repeat at scale → Target Profit. Diagnose **top-down** — investigate the upstream node first.
+- **The cause-and-effect chain to profit is the diagnostic spine:** research and validation run from Market with money → **Segment + Job** (one analytical entity) → Added Value → three conditions checked in theory (target margin · target lead volume · scale without quality decay) → proof of value; scaling checks the same three conditions in fact on the customer flow → Target Profit. Diagnose **top-down** — investigate the upstream node first. Retention and repeat remain diagnostic metrics inside the margin condition; competition is a viability/demand check within Segment + Job.
+- **The Critical Chain of Jobs is mixed-depth by branch:** it contains the bottom Job of each necessary branch at whatever depth that branch ends. A Job and one of its descendants never sit side by side; use Micro Jobs where requirements require that level of detail.
 - **A market is defined in Job terms, not category terms** — not *"the EdTech market"* but *"the sum people spend to learn a skill in order to switch careers."* No paying Jobs, no market.
 - **Every step inherits the quality of the step above it, so an upstream error corrupts everything downstream.** Low conversion almost never means a funnel problem — it usually means wrong Segment+Job or weak value. High CAC usually means a segment-and-Job mismatch, not a channel tactic. High churn usually means a value or wrong-segment problem, not a retention mechanic.
 - **The largest single point of leverage is choosing the most economically valuable Core Job in a segment whose budget sustains the unit economics** — weighed on four dimensions at once: the value gap vs current Solutions, the segment's budget, its size and reachability, and its accessibility through known channels. Picking on one dimension and ignoring the rest is the most expensive, most frequent strategic error.

@@ -263,11 +263,13 @@ The four producer skills are a **chain**, not four interchangeable buttons. Each
 ## Conversation conventions
 
 - **Language.** Default **English** (public skill). If the user writes in another language, offer to continue in it; then hold that language for the conversation. Canon files and source URLs stay as-is.
+- **Market and audience language are conditional.** For a market-specific recommendation, ask for or reuse the customers' country/region and language; use them for competitors, channels, prices, units, regulation, and copy. Do not force this question for pure methodology chat or ordinary diagnosis, and keep audience language separate from document language.
 - **Audience & examples.** The reader is a **US-based product builder / founder / PM** — speak in their vocabulary (see *Speak the reader's language*). Use US-context analogs and **Tier A/B recognizable brands** — TurboTax, Stripe, Notion, Uber, Wealthfront — not vertical-niche brands the reader has to google. Run the recognition check on every example.
 - **Job grammar, every time** (Rules 7, 8, 14). Jobs stay as `I want to + infinitive`, in quotes; name the level explicitly (Core / Big / Small / Micro); keep terms capitalized; in questions *to* customers use the everyday word *task*, never *Job*.
 - **Density & length** (Rule 9). Plain-language claim first (the conclusion in the reader's own words — *not* a methodology label; see *Speak the reader's language*), one compressed example, no filler, no "let me explain why this matters" preamble. **Default to the shortest answer that fully answers — a few tight sentences, not an essay; length is opt-in (go long only when the user asks to go deep).** The user reads fast.
 - **Inline by default.** No `Skills-Results/` file unless the user asks to save the session. If they do, write a **single** file `Skills-Results/<topic>/nmt-chat/{YYYY-MM-DD_HH-MM}_<topic>-nmt-chat-result.md` with the two-part disclaimer header plus the attribution & UTM block top and bottom (`utm_source=nmt-chat&utm_medium=skill-artifact`).
 - **Flag hypotheses.** When you give numbers or a consequential strategic recommendation, mark it as a methodology-grounded hypothesis to validate — don't present an estimate as a fact.
+- **Show evidence status.** Tag consequential claims as **backed** (named source), **derived** (named inputs plus reasoning), or **hypothesis** (model suggestion). When aggregating evidence, show independent `n/N` and source IDs; one source is a single signal, not corroboration. If input is thin, say so and list the three inputs that would most change the advice; never invent precision.
 
 ---
 

@@ -47,7 +47,7 @@ A chat-first diagnostic for a live product. It finds your real risks and best gr
 - **A Problem ≠ a root cause** — it's the consequence of a Solution hired for a Job and underperforming its success criteria.
 - **A Solution is a thing in the world AND a label for the sub-graph it installs.**
 
-**The load-bearing diagnostic thesis** (`the-algorithm.md §2`): *a broken metric almost never means a problem at that metric.* Low conversion, high CAC, high churn are usually **upstream** — a wrong Segment+Job, value that doesn't beat the alternatives, or one of the three parallel conditions failing. Every symptom is traced **up** the chain to its real cause.
+**The load-bearing diagnostic thesis** (`the-algorithm.md §2`): *a broken metric almost never means a problem at that metric.* Low conversion, high CAC, high churn are usually **upstream** — a wrong Segment+Job, value that doesn't beat the alternatives, or one of the three conditions failing. Every symptom is traced **up** the chain to its real cause.
 
 **Use the human-language terms** (Rule 22): *Aha Moment* / *Problem* for the customer-experience side; *Positive / Negative Prediction Error* (spelled out) only for the neuroscience side.
 
@@ -62,7 +62,7 @@ A chat-first diagnostic for a live product. It finds your real risks and best gr
 | `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/ajtbd-key-theses.md` | **mandatory.** The base methodology: the eight-element Job, the four Job levels, the Job Graph, value & the Aha Moment, segmentation. Grounds every finding; without it the diagnosis drifts into generic JTBD. | ~13k |
 | `../nmt-chat/references/Next-Move-Theory-Canon/Riskiest-Assumption-Test/rat-key-theses.md` | **mandatory.** The engine for challenging the goal and for the "risky assumptions in current initiatives" component; riskiest-cheapest-to-falsify ordering; MVP = probe. | ~6.5k |
 | `../nmt-chat/references/Next-Move-Theory-Canon/Algorithms/the-algorithm.md` | the diagnostic spine: §2 the chain to profit; §4 Step 1 (challenge the goal, 5 Whys, local-vs-global), Step 2 (diagnose state); §5 branches by PMF stage / product type; §6 where unfound value sits. | ~9k |
-| `../nmt-chat/references/Next-Move-Theory-Canon/Next-Move-Theory/nmt-key-theses.md` | §4 the chain (sequential to value, then three parallel conditions); §5 the diagnostic discipline; §8 focus; §9 local vs global; §11 NMT as a diagnostic. | ~5.4k |
+| `../nmt-chat/references/Next-Move-Theory-Canon/Next-Move-Theory/nmt-key-theses.md` | §4 the two-phase chain and the same three conditions checked in theory and fact; §5 the diagnostic discipline; §8 focus; §9 local vs global; §11 NMT as a diagnostic. | ~5.4k |
 
 **Staged — load only at the stage that needs it:**
 
@@ -82,16 +82,16 @@ This skill grounds **only in the public canon** (all files above are public). Fo
 
 ## The diagnostic model — the chain, the symptom map, the growth lens
 
-The chain to profit (`the-algorithm.md §2` / `nmt §4`) — **sequential up to value, then three parallel conditions, then convergence:**
+The chain to profit (`the-algorithm.md §2` / `nmt §4`) has two causal phases: research and validation ends with proof that customers buy; scaling checks the same conditions on the customer flow and ends at profit.
 
 ```
-Market with money
-  → Segment + Job            (one entity: similar Core Jobs + similar success criteria)
-  → Added Value              (noticeable vs. the current way — the Aha)
-  → ┌─ Unit economics        (positive per-unit math)
-    ├─ Demand & acquisition  (reachable at target CAC + lead quality)
-    └─ Scale incl. service   (no quality decay)
-  → Conversion + Retention + Repeat
+RESEARCH AND VALIDATION
+  Market with money → Segment + Job → Added Value
+  → three conditions in theory (target margin · target lead volume · scale without quality decay)
+  → proof of value (customers buy and we know which value they pay for)
+
+SCALING
+  → the same three conditions in fact on the customer flow
   → Target Profit
 ```
 
@@ -182,6 +182,8 @@ Then, the fuller picture — **capped and ranked, not a dump:**
 
 **The one move + its cheapest check are the deliverable; the inventory is there if they want it.** Mark the **findings only this method surfaces** (§ the growth lens) so they don't get lost — they're the point.
 
+For any segment you create or refine, run a compact sanity guard: write the Core Jobs, concrete success criteria, and their priority order; cite the evidence and `n/N`; and explain the causal effect on value, margin, or demand. Demographics, channels, and industry are secondary unless that effect is shown. Tag findings as **backed**, **derived**, or **hypothesis**; a single source is a single signal, not a segment-level conclusion.
+
 ### File (only if the user asks)
 Default: write nothing. On request, write **one** file (Rule 4): `Skills-Results/{project}/diagnose/{YYYY-MM-DD_HH-MM}_{project}-diagnose-result.{md|html}` (custom path / format per `../nmt-chat/references/producer-contract.md §5, §2`). Contents = the chat blocks above + a short "what you told me, treated as hypothesis" note, with the Rule 3 disclaimers + Rule 23 attribution (`utm_source=diagnose&utm_medium=skill-artifact`).
 
@@ -212,6 +214,8 @@ Per `../nmt-chat/references/producer-contract.md`, this chat-first skill applies
 - **§4 Validation framing — yes** as the per-finding "cheapest validation step"; no separate validation-debt counter unless a file is written.
 - **§2 output format / §5 output path — only when the user asks to save** (then `.md`/`.html` + custom path apply).
 - **§6 Deep-mode QA / web-MCP — N/A by default** (the diagnosis is reasoning over the user's data; web research is the routed skill's job).
+- **§7 Market and audience language — conditional:** ask or reuse it before market-specific recommendations; do not force it for a pure diagnosis or methodology explanation.
+- **§9–§11 Evidence status — yes:** tag consequential findings as backed / derived / hypothesis, cite `n/N` source IDs when aggregating, keep single signals separate, and scale confidence to the input.
 
 ---
 

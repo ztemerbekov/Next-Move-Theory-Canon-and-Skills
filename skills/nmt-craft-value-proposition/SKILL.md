@@ -28,7 +28,7 @@ The output is a single file. **The default the reader sees is short** — a one-
 2. **Layer 2 — The reasoning (opt-in, plain English):** *how we got here* for each Layer-1 claim — what the customer wants most, why you'd win, the before→after, the moment it clicks for them (the Aha moment) in plain terms, the riskiest bet — each linking down to the full work.
 3. **Layer 3 — The full work (opt-in/collapsed):** the value-move tables, before→after, competitor matrix, test cards, the **PRD-ready implementation spec** `nmt-product-requirements` consumes, and the methodology appendix.
 
-> **Producer contract (binding) — `../nmt-chat/references/producer-contract.md`.** Six cross-cutting behaviors shared by all producer skills, from user feedback: (1) print a **helicopter-view** before the first question; (2) ask **Markdown or HTML** output; (3) treat **all** user input as hypothesis and emit a *"risks I see in what you gave me"* block; (4) print **validation debt** and write any go-ahead as **`GO (to validation)`**, never a bare "build it now"; (5) accept a **custom output path**; (6) Deep mode runs an **evidence floor + self-critic loop** and offers a **web-MCP fallback**. The hooks below wire each into this skill; the contract is the source of truth for the wording.
+> **Producer contract (binding) — `../nmt-chat/references/producer-contract.md`.** Alongside the shared orientation, output, input-as-hypothesis, path, validation-debt, and Deep-mode rules, this skill must ask or reuse the customers' market and audience language when it changes the value proposition, permission repo-context reads, tag consequential claims `backed` / `derived` / `hypothesis`, report independent `n/N` source counts and source IDs, separate single signals, and scale confidence to the evidence. The hooks below wire each into this skill.
 
 ---
 
@@ -54,7 +54,7 @@ The output is a single file. **The default the reader sees is short** — a one-
 - **Unit economics is a filter** — value that does not convert to margin (LTV > CAC, Job budget covers cost-to-serve) is not a product (`nmt-key-theses.md §4`).
 - **Risks compound** — a value prop stacking ≥5 unvalidated assumptions gets flagged (`rat-key-theses.md §1`).
 
-Shared output guardrails: every named external source in any output is a clickable Markdown link `[Name](https://...)`. Put the numerical + hallucination disclaimers at the top of `result.md`. Outputs are written for a **US product audience** — default to US-context analogs.
+Shared output guardrails: every named external source in any output is a clickable Markdown link `[Name](https://...)`. Put the numerical + hallucination disclaimers at the top of `result.md`. Outputs use the supplied market and audience language; if those are missing for market-specific work, state the assumption and mark local numbers unverified. Keep audience language separate from document language.
 
 ---
 
@@ -220,6 +220,8 @@ Hold the choice in context. **Just the essentials** → ask only the load-bearin
 ### Language
 Default **English**. If the user writes in another language, offer to work in it via a structured-input request (English / their language / Other). Hold the choice in context. The report uses the chosen language; canon files and source URLs stay as-is.
 
+For local competitors, channels, prices, regulations, units, or customer-facing copy, also capture the customers' country/region and audience language. Reuse an authorized upstream value; ask only when missing. Pure methodology or value-mechanic work can stay market-neutral.
+
 ### Determine input path
 Lead with the standalone path — it is a first-class door, not a fallback. Open with: *"Tell me your customer group and what they're trying to get done — or point me at a `nmt-market-research` result if you have one. Both work."* Then ask via a structured-input request:
 
@@ -275,10 +277,11 @@ Ask in one batched structured-input request (defaults keep the common case frict
 
 ### User materials, claims ledger, direction confirmation (all paths)
 
-- **Materials.** Ask once: *"Any files or folders with material I should use — a Notion export (markdown), past research, interview notes, a strategy doc, your current site, a deck, a codebase?"* Read what's given; tag everything taken from it **[user data]** in-context. "Nothing" is a fine answer.
+- **Materials.** List automatically found local product-context files and ask before reading them; explicitly named or already-authorized files may be read directly. Ask once: *"Any files or folders with material I should use — a Notion export (markdown), past research, interview notes, a strategy doc, your current site, a deck, a codebase?"* Tag everything taken from it **[user data]** in-context. "Nothing" is a fine answer.
 - **Input-as-hypothesis gate (`producer-contract.md §3`).** Treat *all* input — the nmt-market-research result, the user's free-text claims, every uploaded deck / landing / codebase / past research — as **hypothesis, never established fact**. A landing page is the team's belief about value, not proof customers want it; the Job stated in a deck may be the team's projection, not the customer's real Job (the most expensive error). Don't just record the input — **actively hunt the risks inside it**: for each load-bearing input ask — is this customer-validated or the team's belief? Does the stated Job / segment look like the real one? Any internal contradictions, or guesses dressed as data? What must be true for it to hold, and is that checked? Hold the findings in context — they become the **"What you told me — and the risks I see in it"** block in Layer 2, with the single worst one surfaced in Layer 1. Never silently bake an unvalidated input into the wedge or the value prop.
 - **User-claims ledger.** Collect the strong factual claims the user made (segment beliefs, competitor facts, "customers always…"), tag each as **data / observation / hunch** (ask in one batched question if unclear; hunch is the default for anything from a deck / landing / idea stream). User claims enter the pipeline as *hypotheses, never facts*: GATE-4's competitiveness check treats an unverified user claim as unsupported evidence, and a primary value prop resting mainly on a user hunch gets flagged in `result.md` with a RAT card pointed at that claim.
 - **Hard gate.** No value prop or wedge may rest *primarily* on an unvalidated user input without the document saying so explicitly and pointing a RAT card at it. If the wedge is built on a Job taken from the user's materials and not confirmed by customer evidence, name that as the single most expensive risk.
+- **Evidence status.** Tag consequential claims as **backed** (source ID), **derived** (named inputs plus reasoning), or **hypothesis** (model suggestion or unverified input). Aggregated customer or competitor claims carry independent `n/N` and source IDs; a one-source claim stays a single signal in the evidence block. If input is thin, show a **Thin input** warning, avoid invented ranges or precision, and list the three missing inputs that would most change the value decision.
 - **Direction confirmation.** Before S1 starts, play the understanding back in one short block — *"Here's what I understood: {segment, Core Jobs, business goal, what's out of scope}"* — and confirm via one structured-input request (Confirm / Correct). Cheapest moment to fix a wrong direction.
 
 **Output (held in context):** target segment + causal criteria · Core Jobs (canonical form, "in order to" not "so that") · Big Jobs (+ personal Big Job for B2B) · known alternatives/competitors (direct · indirect · turnkey) · the nmt-market-research why-we-win line & first mechanic guess (path A) · user materials + claims ledger · mode · language · business goal.
@@ -306,7 +309,7 @@ Procedure:
 
 ## S2 — Job-Graph substrate (Micro + Critical Chain of Jobs)  → GATE-2
 
-**Objective.** Build the surface the mechanics operate over: the Job Graph **one level below** the top 1–2 Core Jobs (the Micro Jobs the person performs in order to perform the Core Job), *and* the Critical Chain of Jobs (the graph projected onto a time axis) with break-points marked. Mechanics apply to a graph, not a Job in isolation.
+**Objective.** Build the surface the mechanics operate over: the Job Graph below the top 1–2 Core Jobs, including Micro Jobs where implementation detail is needed, *and* the Critical Chain of Jobs (the graph projected onto a time axis) with break-points marked. The chain contains the bottom Job of each necessary branch at whatever depth that branch ends; it is not a fixed Micro-only slice. Mechanics apply to a graph, not a Job in isolation.
 
 For each of the top 1–2 Core Jobs (highest importance × frequency), generate the lower-level graph using this prompt:
 
@@ -643,6 +646,7 @@ The current §0–§12 substance, kept whole, sitting below the plain layers. Ad
 - [ ] ≤3 unvalidated assumptions stacked in the chosen prop
 - [ ] §11 implementation spec is PRD-ready
 - [ ] Every external source is a clickable link
+- [ ] **HTML Gate 9 applied** — first-use methodology terms and abbreviations get a plain `<abbr title>` gloss outside ready-to-use customer copy; the value proposition and other customer-facing copy remains exact.
 - [ ] **Producer contract satisfied** (`../nmt-chat/references/producer-contract.md`): helicopter-view printed before intake; output-format + output-path asked; if HTML, one self-contained `.html` with resolving anchors + `<details>`; the **"What you told me — and the risks I see in it"** block present (unless no input given); **validation-debt line** in Layer 1; the next step framed as **validate first, not build** (no bare "build it now"); on hand-off from nmt-market-research, asked what debt has been retired; Deep mode hit its evidence floor + self-critic loop (or flagged thin coverage + offered the web MCP).
 
 ## What this enables next
@@ -669,7 +673,9 @@ The current §0–§12 substance, kept whole, sitting below the plain layers. Ad
 
 # Deep mode (~30–45 min, with internet)
 
-Same S0→S6 chain, but substantive stages are delegated to waves of workers and web-grounded; independent workers may run in parallel. **Each worker returns its full result in its final message — no per-worker files.** The primary agent holds those returns in context and writes the single output file at the end. Every external source is a clickable link.
+Same S0→S6 chain, but substantive stages are delegated to waves of workers and web-grounded; independent workers may run in parallel. **Each worker returns its full result in its final message — no per-worker files.** The primary agent holds those returns in context and writes the single output file. For a long run, create or update that one result file at safe wave boundaries and mark it **INCOMPLETE DRAFT**; final assembly removes the marker. Short, chat-only, or fileless runs write once and do not checkpoint. Every external source is a clickable link.
+
+For a long run, checkpoint completed waves into the same single result file at safe boundaries and mark it **INCOMPLETE DRAFT** until final assembly. Final assembly removes the marker. Short, chat-only, or fileless runs do not checkpoint, and no per-worker or scratch files are created.
 
 **Shared preamble for every agent:**
 > You work with Ivan Zamesin's AJTBD / Next Move Theory methodology. Use ONLY the canon files this prompt names for your wave as the methodology source — do NOT use generic JTBD from the internet or prior training, and do NOT read files outside your slice (the eager core is `../nmt-chat/references/Next-Move-Theory-Canon/Advanced-Jobs-To-Be-Done/value-creation.md` + `…/value-creation-mechanics.md`; other files are named per-agent below). (If a path is not found, retry with a `1-` prefix on the canon folder.) Write *Aha Moment* / *Problem*, never PPE / NPE. **Keep methodology citations and canon paths out of report prose** — hold them in context; the orchestrator fences any that belong in Layer 3 into a `▸ methodology trace` line. Every named external source is a clickable Markdown link. **Return your full result in your final message — do not write any files.**
